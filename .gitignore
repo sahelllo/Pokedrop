@@ -1,0 +1,5 @@
+.DS_Store
+node_modules/
+
+# Nur für den Telegram-Sofortpush im Workflow, wird danach gelöscht.
+data/_new-events.json

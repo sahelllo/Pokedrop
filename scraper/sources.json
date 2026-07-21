@@ -1,0 +1,53 @@
+{
+  "//": "Jede Quelle = eine Produktseite bei einem Händler. 'sku' verbindet mehrere Händler zum selben Produkt.",
+  "//selector": "Optional: 'text' = Liste von Zeichenketten, die 'ausverkauft' bedeuten. Fallback, wenn kein JSON-LD vorhanden ist.",
+  "watch": [
+    {
+      "sku": "dunkelnacht-ttb",
+      "produkt": "Mega-Entwicklung: Dunkelnacht — Top-Trainer-Box",
+      "uvp": 54.99,
+      "shops": [
+        { "shop": "Card-Corner", "typ": "TCG-Fachhandel", "url": "https://www.card-corner.de/Pokemon-Mega-Entwicklung-Dunkelnacht-Top-Trainer-Box" },
+        { "shop": "Gate to the Games", "typ": "TCG-Fachhandel", "url": "https://www.gatetothegames.de/pokemon-dunkelnacht-top-trainer-box" },
+        { "shop": "Elbenwald", "typ": "Fanshop", "url": "https://www.elbenwald.de/pokemon-dunkelnacht-top-trainer-box" },
+        { "shop": "Müller", "typ": "Filialhandel", "url": "https://www.mueller.de/suche/?q=Dunkelnacht%20Top-Trainer-Box" }
+      ]
+    },
+    {
+      "sku": "dunkelnacht-display",
+      "produkt": "Mega-Entwicklung: Dunkelnacht — Booster-Display (36)",
+      "uvp": 179.64,
+      "shops": [
+        { "shop": "Card-Corner", "typ": "TCG-Fachhandel", "url": "https://www.card-corner.de/Pokemon-Mega-Entwicklung-Dunkelnacht-Display" },
+        { "shop": "Gate to the Games", "typ": "TCG-Fachhandel", "url": "https://www.gatetothegames.de/pokemon-dunkelnacht-display" }
+      ]
+    },
+    {
+      "sku": "first-partner-s3",
+      "produkt": "First Partner Collection Serie 3",
+      "uvp": 29.99,
+      "shops": [
+        { "shop": "Card-Corner", "typ": "TCG-Fachhandel", "url": "https://www.card-corner.de/Pokemon-First-Partner-Collection-Serie-3" },
+        { "shop": "Elbenwald", "typ": "Fanshop", "url": "https://www.elbenwald.de/pokemon-first-partner-collection-3" }
+      ]
+    },
+    {
+      "sku": "mega-forces-tin",
+      "produkt": "Mega Forces Tin",
+      "uvp": 19.99,
+      "shops": [
+        { "shop": "Card-Corner", "typ": "TCG-Fachhandel", "url": "https://www.card-corner.de/Pokemon-Mega-Forces-Tin" },
+        { "shop": "GameStop", "typ": "Filialhandel", "url": "https://www.gamestop.de/Search/?q=Pokemon%20Mega%20Forces%20Tin" }
+      ]
+    },
+    {
+      "sku": "jubilaeum-30",
+      "produkt": "30 Jahre Pokémon — Jubiläums-Set",
+      "uvp": 64.99,
+      "shops": [
+        { "shop": "Card-Corner", "typ": "TCG-Fachhandel", "url": "https://www.card-corner.de/Pokemon-30-Jahre-Jubilaeum" },
+        { "shop": "Gate to the Games", "typ": "TCG-Fachhandel", "url": "https://www.gatetothegames.de/pokemon-30-jahre" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+name: Stock-Check
+
+on:
+  schedule:
+    # Alle 5 Minuten. Achtung: GitHub verzögert Cron unter Last teils um Minuten.
+    # Für echte Sekunden-Genauigkeit später auf Cloudflare Workers Cron wechseln.
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: stock-check
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Verfügbarkeit prüfen
+        env:
+          CHECK_INTERVAL_MIN: '5'
+        run: node scraper/check-stock.mjs
+
+      - name: Telegram-Sofortmeldung
+        if: ${{ secrets.TELEGRAM_BOT_TOKEN != '' && secrets.TELEGRAM_CHAT_ID != '' }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          node scraper/telegram-push.mjs
+          rm -f data/_new-events.json
+
+      - name: Temp-Datei aufräumen
+        if: always()
+        run: rm -f data/_new-events.json
+
+      - name: Daten committen
+        run: |
+          git config user.name  "pokedrop-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add data/stock.json data/history.json data/events.json
+          if git diff --staged --quiet; then
+            echo "Keine Änderungen."
+          else
+            git commit -m "stock: $(date -u '+%Y-%m-%d %H:%M UTC')"
+            git push
+          fi

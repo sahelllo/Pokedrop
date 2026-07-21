@@ -1,0 +1,95 @@
+{
+  "stand": "2026-07-21T00:00:00Z",
+  "drops": [
+    {
+      "id": "dunkelnacht",
+      "set": "Mega-Entwicklung: Dunkelnacht",
+      "release": "2026-07-17T00:00:00+02:00",
+      "star": "Mega-Darkrai-ex",
+      "mockup": "dunkelnacht",
+      "kartenset": "me5",
+      "heldenkarte": "me5-116",
+      "fakten": [
+        "120 Karten im Hauptset, dazu 36 Secret Rares",
+        "Top-Trainer-Box enthält die Zarude-Promokarte",
+        "Zweite Welle der Mega-Entwicklung-Reihe"
+      ],
+      "produkte": [
+        { "sku": "dunkelnacht-booster", "name": "Boosterpack", "uvp": 4.99 },
+        { "sku": "dunkelnacht-ttb", "name": "Top-Trainer-Box", "uvp": 54.99 },
+        { "sku": "dunkelnacht-display", "name": "Booster-Display (36)", "uvp": 179.64 }
+      ],
+      "quellen": [
+        { "titel": "Offizielle Ankündigung", "url": "https://www.pokemon.com/de/pokemon-tcg" },
+        { "titel": "Produktkalender", "url": "https://www.pokemon.com/de/pokemon-tcg/produkte" }
+      ]
+    },
+    {
+      "id": "first-partner-3",
+      "set": "First Partner Collection Serie 3",
+      "release": "2026-08-07T00:00:00+02:00",
+      "star": "Starter-Trio",
+      "mockup": "firstpartner",
+      "fakten": [
+        "Dritte Serie der Starter-Sammlung",
+        "Je eine überformatige Karte pro Region"
+      ],
+      "produkte": [
+        { "sku": "first-partner-s3", "name": "Collection Box", "uvp": 29.99 }
+      ],
+      "quellen": [
+        { "titel": "Produktkalender", "url": "https://www.pokemon.com/de/pokemon-tcg/produkte" }
+      ]
+    },
+    {
+      "id": "mega-forces",
+      "set": "Mega Forces Tins",
+      "release": "2026-08-28T00:00:00+02:00",
+      "star": "Mega-Entwicklungen",
+      "mockup": "tin",
+      "fakten": [
+        "Metall-Tin mit Promokarte und vier Boosterpacks",
+        "Drei Motive zur Auswahl"
+      ],
+      "produkte": [
+        { "sku": "mega-forces-tin", "name": "Tin-Dose", "uvp": 19.99 }
+      ],
+      "quellen": [
+        { "titel": "Produktkalender", "url": "https://www.pokemon.com/de/pokemon-tcg/produkte" }
+      ]
+    },
+    {
+      "id": "jubilaeum-30",
+      "set": "30 Jahre Pokémon",
+      "release": "2026-09-16T00:00:00+02:00",
+      "star": "Jubiläums-Set",
+      "mockup": "jubilaeum",
+      "fakten": [
+        "Erster weltweit zeitgleicher TCG-Release",
+        "Karten aus drei Jahrzehnten neu aufgelegt",
+        "Erwartete Nachfrage: sehr hoch — früh vorbestellen"
+      ],
+      "produkte": [
+        { "sku": "jubilaeum-30", "name": "Jubiläums-Box", "uvp": 64.99 }
+      ],
+      "quellen": [
+        { "titel": "Offizielle Ankündigung", "url": "https://www.pokemon.com/de/pokemon-tcg" }
+      ]
+    }
+  ],
+  "shops": [
+    { "name": "Card-Corner", "typ": "TCG-Fachhandel", "url": "https://www.card-corner.de/", "note": "Meist als Erstes gelistet" },
+    { "name": "Gate to the Games", "typ": "TCG-Fachhandel", "url": "https://www.gatetothegames.de/", "note": "Zuverlässige Vorbestellungen" },
+    { "name": "Müller", "typ": "Filialhandel", "url": "https://www.mueller.de/", "note": "Filialware oft morgens eingeräumt" },
+    { "name": "Rossmann", "typ": "Filialhandel", "url": "https://www.rossmann.de/", "note": "Kleine Kontingente, unangekündigt" },
+    { "name": "GameStop", "typ": "Filialhandel", "url": "https://www.gamestop.de/", "note": "Allokation zum Launch" },
+    { "name": "Elbenwald", "typ": "Fanshop", "url": "https://www.elbenwald.de/", "note": "Exklusive Bundles" },
+    { "name": "Amazon", "typ": "Marktplatz", "url": "https://www.amazon.de/", "note": "Auf Verkäufer achten" },
+    { "name": "Cardmarket", "typ": "Marktplatz", "url": "https://www.cardmarket.com/de/Pokemon", "note": "Referenz für Marktpreise" },
+    { "name": "idealo", "typ": "Preisvergleich", "url": "https://www.idealo.de/", "note": "Preisverlauf über alle Shops" }
+  ],
+  "prospekte": [
+    { "name": "marktguru", "url": "https://www.marktguru.de/search?q=pokemon" },
+    { "name": "kaufDA", "url": "https://www.kaufda.de/Suche?q=pokemon" }
+  ]
+}

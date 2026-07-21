@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PokéDrop – Live-Radar für Pokémon-Karten</title>
+<meta name="description" content="Sieh sofort, wo Pokémon-Sammelkarten in Deutschland gerade verfügbar sind – mit Preis, Shop und Direktlink.">
+<meta name="theme-color" content="#070b1c" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f3f5ff" media="(prefers-color-scheme: light)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<canvas id="partikel" aria-hidden="true"></canvas>
+<div id="holoregen" aria-hidden="true"></div>
+
+<!-- Echte Kartenbilder: live von api.pokemontcg.io geladen (siehe assets/app.js),
+     nicht im Repo gespeichert. SVG-Mockups darunter sind der Fallback,
+     falls die API nicht erreichbar ist. -->
+<!-- SVG-Mockups: eigene Illustrationen, keine geschützten Grafiken -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="g-dunkel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2b1a5e"/><stop offset="1" stop-color="#120b2c"/>
+    </linearGradient>
+    <linearGradient id="g-first" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1d5a4a"/><stop offset="1" stop-color="#0e2c3f"/>
+    </linearGradient>
+    <linearGradient id="g-tin" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c9d2e6"/><stop offset=".5" stop-color="#7d8aa8"/><stop offset="1" stop-color="#aeb9d1"/>
+    </linearGradient>
+    <linearGradient id="g-jub" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#241d0c"/><stop offset="1" stop-color="#0b0a06"/>
+    </linearGradient>
+
+    <symbol id="mk-dunkelnacht" viewBox="0 0 320 160">
+      <rect x="8" y="18" width="200" height="128" rx="8" fill="url(#g-dunkel)" stroke="#6b4fd6" stroke-width="1.5"/>
+      <circle cx="70" cy="66" r="26" fill="#8a6bff" opacity=".85"/>
+      <circle cx="80" cy="58" r="26" fill="url(#g-dunkel)"/>
+      <rect x="26" y="106" width="164" height="4" rx="2" fill="#ffe14d" opacity=".7"/>
+      <rect x="26" y="118" width="96" height="4" rx="2" fill="#8a6bff" opacity=".55"/>
+      <rect x="214" y="42" width="90" height="104" rx="6" fill="#1a1140" stroke="#8a6bff" stroke-width="1.2"/>
+      <rect x="226" y="58" width="66" height="40" rx="4" fill="#3a2a7a"/>
+      <rect x="226" y="108" width="46" height="4" rx="2" fill="#ffe14d" opacity=".6"/>
+    </symbol>
+
+    <symbol id="mk-firstpartner" viewBox="0 0 320 160">
+      <rect x="30" y="24" width="260" height="118" rx="10" fill="url(#g-first)" stroke="#3ddc9a" stroke-width="1.5"/>
+      <circle cx="105" cy="80" r="24" fill="#3ddc9a" opacity=".8"/>
+      <circle cx="160" cy="80" r="24" fill="#ff6b6b" opacity=".8"/>
+      <circle cx="215" cy="80" r="24" fill="#5aa9ff" opacity=".8"/>
+      <rect x="52" y="120" width="120" height="4" rx="2" fill="#ffe14d" opacity=".65"/>
+    </symbol>
+
+    <symbol id="mk-tin" viewBox="0 0 320 160">
+      <ellipse cx="160" cy="42" rx="86" ry="18" fill="url(#g-tin)"/>
+      <rect x="74" y="42" width="172" height="82" fill="url(#g-tin)"/>
+      <ellipse cx="160" cy="124" rx="86" ry="18" fill="#8d99b8"/>
+      <rect x="98" y="62" width="124" height="42" rx="5" fill="#28324e" opacity=".85"/>
+      <rect x="112" y="76" width="60" height="4" rx="2" fill="#ffe14d" opacity=".8"/>
+      <rect x="112" y="88" width="36" height="4" rx="2" fill="#7ee8ff" opacity=".7"/>
+    </symbol>
+
+    <symbol id="mk-jubilaeum" viewBox="0 0 320 160">
+      <rect x="40" y="20" width="240" height="126" rx="8" fill="url(#g-jub)" stroke="#d4af37" stroke-width="2"/>
+      <text x="160" y="88" text-anchor="middle" fill="#d4af37" font-family="Space Grotesk, sans-serif" font-size="42" font-weight="700">30</text>
+      <rect x="112" y="104" width="96" height="3" rx="1.5" fill="#d4af37" opacity=".8"/>
+      <rect x="132" y="116" width="56" height="3" rx="1.5" fill="#d4af37" opacity=".4"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="huelle">
+
+  <header class="kopf">
+    <h1 class="marke">Poké<span>Drop</span></h1>
+    <div class="puls"><span class="punkt"></span><span id="uhr">--:--:--</span></div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Bereiche">
+    <button class="tab" role="tab" id="tab-drops"     aria-selected="true"  aria-controls="p-drops">Drops</button>
+    <button class="tab" role="tab" id="tab-merkliste" aria-selected="false" aria-controls="p-merkliste">Merkliste</button>
+    <button class="tab" role="tab" id="tab-shops"     aria-selected="false" aria-controls="p-shops">Shops</button>
+    <button class="tab" role="tab" id="tab-pro"       aria-selected="false" aria-controls="p-pro">Pro</button>
+  </nav>
+
+  <!-- Radar: Verfügbarkeit zuerst, Countdown danach -->
+  <section class="radar" id="radar" aria-live="polite">
+    <div class="radar-innen">
+      <div class="radar-kopf">
+        <h2 class="radar-titel">Jetzt kaufbar</h2>
+        <span class="radar-zeit" id="radar-stand">wird geladen…</span>
+      </div>
+      <div id="radar-liste"><p class="leer">Verfügbarkeit wird geprüft…</p></div>
+    </div>
+  </section>
+
+  <main>
+    <section id="p-drops" role="tabpanel" aria-labelledby="tab-drops">
+      <div class="karte skeleton" aria-hidden="true">
+        <div class="sk-zeile w-40"></div>
+        <div class="sk-zeile gross w-70"></div>
+        <div class="sk-block"></div>
+        <div class="sk-zeile w-90"></div>
+        <div class="sk-zeile w-60"></div>
+      </div>
+    </section>
+    <section id="p-merkliste" role="tabpanel" aria-labelledby="tab-merkliste" class="versteckt"></section>
+    <section id="p-shops" role="tabpanel" aria-labelledby="tab-shops" class="versteckt"></section>
+    <section id="p-pro" role="tabpanel" aria-labelledby="tab-pro" class="versteckt"></section>
+  </main>
+
+  <footer class="fuss">
+    <p id="datenstand">Daten werden geladen…</p>
+    <p>
+      Inoffizielles Fan-Projekt. Keine Verbindung zu Nintendo, Creatures Inc.,
+      GAME FREAK oder The Pokémon Company. Alle Marken gehören ihren Inhabern.
+      Preise und Verfügbarkeiten sind Momentaufnahmen der jeweiligen Händlerseiten
+      und können abweichen. Einige Links sind Partnerlinks.
+    </p>
+  </footer>
+
+</div>
+
+<script src="assets/app.js" type="module"></script>
+</body>
+</html>

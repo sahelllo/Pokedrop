@@ -1,0 +1,188 @@
+{
+  "stand": "2026-07-21T01:28:16.911208Z",
+  "intervall_minuten": 5,
+  "produkte": [
+    {
+      "sku": "dunkelnacht-ttb",
+      "produkt": "Mega-Entwicklung: Dunkelnacht — Top-Trainer-Box",
+      "uvp": 54.99,
+      "status": "in_stock",
+      "bester_preis": 52.9,
+      "shops_verfuegbar": 2,
+      "shops": [
+        {
+          "shop": "Card-Corner",
+          "typ": "TCG-Fachhandel",
+          "url": "https://www.example.de/dunkelnacht-ttb",
+          "geprueft": "2026-07-21T01:28:16.911208Z",
+          "status": "in_stock",
+          "preis": 52.9,
+          "waehrung": "EUR",
+          "quelle": "json-ld",
+          "http": 200
+        },
+        {
+          "shop": "Gate to the Games",
+          "typ": "TCG-Fachhandel",
+          "url": "https://www.example.de/dunkelnacht-ttb",
+          "geprueft": "2026-07-21T01:28:16.911208Z",
+          "status": "in_stock",
+          "preis": 54.99,
+          "waehrung": "EUR",
+          "quelle": "json-ld",
+          "http": 200
+        },
+        {
+          "shop": "Elbenwald",
+          "typ": "Fanshop",
+          "url": "https://www.example.de/dunkelnacht-ttb",
+          "geprueft": "2026-07-21T01:28:16.911208Z",
+          "status": "out_of_stock",
+          "preis": null,
+          "waehrung": "EUR",
+          "quelle": "json-ld",
+          "http": 200
+        },
+        {
+          "shop": "Müller",
+          "typ": "Filialhandel",
+          "url": "https://www.example.de/dunkelnacht-ttb",
+          "geprueft": "2026-07-21T01:28:16.911208Z",
+          "status": "unknown",
+          "preis": null,
+          "waehrung": "EUR",
+          "quelle": "json-ld",
+          "http": 200
+        }
+      ]
+    },
+    {
+      "sku": "dunkelnacht-display",
+      "produkt": "Mega-Entwicklung: Dunkelnacht — Booster-Display (36)",
+      "uvp": 179.64,
+      "status": "in_stock",
+      "bester_preis": 174.95,
+      "shops_verfuegbar": 1,
+      "shops": [
+        {
+          "shop": "Card-Corner",
+          "typ": "TCG-Fachhandel",
+          "url": "https://www.example.de/dunkelnacht-display",
+          "geprueft": "2026-07-21T01:28:16.911208Z",
+          "status": "out_of_stock",
+          "preis": null,
+          "waehrung": "EUR",
+          "quelle": "json-ld",
+          "http": 200
+        },
+        {
+          "shop": "Gate to the Games",
+          "typ": "TCG-Fachhandel",
+          "url": "https://www.example.de/dunkelnacht-display",
+          "geprueft": "2026-07-21T01:28:16.911208Z",
+          "status": "in_stock",
+          "preis": 174.95,
+          "waehrung": "EUR",
+          "quelle": "json-ld",
+          "http": 200
+        }
+      ]
+    },
+    {
+      "sku": "first-partner-s3",
+      "produkt": "First Partner Collection Serie 3",
+      "uvp": 29.99,
+      "status": "preorder",
+      "bester_preis": 28.9,
+      "shops_verfuegbar": 0,
+      "shops": [
+        {
+          "shop": "Card-Corner",
+          "typ": "TCG-Fachhandel",
+          "url": "https://www.example.de/first-partner-s3",
+          "geprueft": "2026-07-21T01:28:16.911208Z",
+          "status": "preorder",
+          "preis": 28.9,
+          "waehrung": "EUR",
+          "quelle": "json-ld",
+          "http": 200
+        },
+        {
+          "shop": "Elbenwald",
+          "typ": "Fanshop",
+          "url": "https://www.example.de/first-partner-s3",
+          "geprueft": "2026-07-21T01:28:16.911208Z",
+          "status": "preorder",
+          "preis": 29.99,
+          "waehrung": "EUR",
+          "quelle": "json-ld",
+          "http": 200
+        }
+      ]
+    },
+    {
+      "sku": "mega-forces-tin",
+      "produkt": "Mega Forces Tin",
+      "uvp": 19.99,
+      "status": "unknown",
+      "bester_preis": null,
+      "shops_verfuegbar": 0,
+      "shops": [
+        {
+          "shop": "Card-Corner",
+          "typ": "TCG-Fachhandel",
+          "url": "https://www.example.de/mega-forces-tin",
+          "geprueft": "2026-07-21T01:28:16.911208Z",
+          "status": "unknown",
+          "preis": null,
+          "waehrung": "EUR",
+          "quelle": "json-ld",
+          "http": 200
+        },
+        {
+          "shop": "GameStop",
+          "typ": "Filialhandel",
+          "url": "https://www.example.de/mega-forces-tin",
+          "geprueft": "2026-07-21T01:28:16.911208Z",
+          "status": "unknown",
+          "preis": null,
+          "waehrung": "EUR",
+          "quelle": "json-ld",
+          "http": 200
+        }
+      ]
+    },
+    {
+      "sku": "jubilaeum-30",
+      "produkt": "30 Jahre Pokémon — Jubiläums-Set",
+      "uvp": 64.99,
+      "status": "preorder",
+      "bester_preis": 62.9,
+      "shops_verfuegbar": 0,
+      "shops": [
+        {
+          "shop": "Card-Corner",
+          "typ": "TCG-Fachhandel",
+          "url": "https://www.example.de/jubilaeum-30",
+          "geprueft": "2026-07-21T01:28:16.911208Z",
+          "status": "preorder",
+          "preis": 62.9,
+          "waehrung": "EUR",
+          "quelle": "json-ld",
+          "http": 200
+        },
+        {
+          "shop": "Gate to the Games",
+          "typ": "TCG-Fachhandel",
+          "url": "https://www.example.de/jubilaeum-30",
+          "geprueft": "2026-07-21T01:28:16.911208Z",
+          "status": "unknown",
+          "preis": null,
+          "waehrung": "EUR",
+          "quelle": "json-ld",
+          "http": 200
+        }
+      ]
+    }
+  ]
+}
