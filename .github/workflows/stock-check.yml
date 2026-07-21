@@ -39,7 +39,11 @@ jobs:
         run: node scraper/karten-cache.mjs
 
       - name: Telegram-Sofortmeldung
-        if: ${{ secrets.TELEGRAM_BOT_TOKEN != '' && secrets.TELEGRAM_CHAT_ID != '' }}
+        # Kein "if: secrets...." hier - das lässt GitHub Actions den kompletten
+        # Workflow mit "Unrecognized named-value: 'secrets'" ablehnen, noch
+        # bevor überhaupt ein Job startet (0s-Fehlschlag für JEDEN Lauf).
+        # telegram-push.mjs prüft TOKEN/CHAT_ID selbst und beendet sich sauber,
+        # wenn sie fehlen - siehe Skript-Kommentar dort.
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
