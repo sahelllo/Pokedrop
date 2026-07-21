@@ -1,0 +1,415 @@
+/* PokéDrop – Mobile-first Styles */
+
+:root {
+  --red: #e3350d;
+  --red-dark: #b52a0b;
+  --yellow: #ffcb05;
+  --blue: #2a75bb;
+  --bg: #f4f5f7;
+  --card: #ffffff;
+  --text: #1c1c1e;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --green: #16a34a;
+  --radius: 14px;
+  --shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121214;
+    --card: #1e1e22;
+    --text: #f3f4f6;
+    --text-muted: #9ca3af;
+    --border: #2e2e33;
+    --shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Header */
+.app-header {
+  background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+  color: #fff;
+  padding: calc(12px + env(safe-area-inset-top)) 16px 14px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo h1 {
+  font-size: 1.4rem;
+  letter-spacing: 0.5px;
+}
+
+.pokeball {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, #fff 0 45%, #1c1c1e 45% 55%, var(--red) 55% 100%);
+  border: 2px solid #1c1c1e;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.pokeball::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border: 2px solid #1c1c1e;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.tagline {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  margin-top: 2px;
+}
+
+.icon-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.icon-btn:active {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Panels */
+main {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 12px;
+}
+
+.panel {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 14px;
+  margin-bottom: 12px;
+}
+
+.location-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.location-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  min-width: 0;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot-off { background: #9ca3af; }
+.dot-on { background: var(--green); box-shadow: 0 0 6px var(--green); }
+.dot-wait { background: var(--yellow); animation: pulse 1s infinite; }
+
+@keyframes pulse {
+  50% { opacity: 0.4; }
+}
+
+.radius-row {
+  margin-top: 12px;
+  font-size: 0.9rem;
+}
+
+.radius-row input[type="range"] {
+  width: 100%;
+  margin-top: 6px;
+  accent-color: var(--red);
+}
+
+/* Buttons */
+.btn {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-primary {
+  background: var(--red);
+  color: #fff;
+}
+
+.btn-primary:active { background: var(--red-dark); }
+
+.btn-secondary {
+  background: var(--border);
+  color: var(--text);
+}
+
+/* Filter */
+.filter-chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.chip {
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.chip.active {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+}
+
+.filter-toggles {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.toggle input {
+  accent-color: var(--red);
+  width: 18px;
+  height: 18px;
+}
+
+/* Markt-Karten */
+.market-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.market-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.market-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.75rem;
+  color: #fff;
+  flex-shrink: 0;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.market-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.market-info h2 {
+  font-size: 1rem;
+}
+
+.market-info .address {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.market-distance {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--blue);
+  white-space: nowrap;
+}
+
+/* Drops */
+.drop {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.drop:last-child { border-bottom: none; }
+
+.drop:active { background: var(--bg); }
+
+.drop-emoji {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.drop-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.drop-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.badge-new { background: var(--yellow); color: #1c1c1e; }
+.badge-out { background: var(--border); color: var(--text-muted); }
+
+.drop-meta {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.drop-price {
+  font-weight: 800;
+  color: var(--red);
+  white-space: nowrap;
+}
+
+/* Leerzustand */
+.empty-state {
+  text-align: center;
+  padding: 40px 16px;
+  color: var(--text-muted);
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.empty-state .hint {
+  font-size: 0.8rem;
+  margin: 8px 0 16px;
+}
+
+/* Footer */
+.app-footer {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  padding: 16px 12px calc(24px + env(safe-area-inset-bottom));
+}
+
+/* Dialog */
+dialog {
+  border: none;
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--text);
+  max-width: 420px;
+  width: calc(100vw - 40px);
+  padding: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+dialog h3 {
+  margin-bottom: 8px;
+}
+
+dialog p {
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+dialog .btn {
+  margin-top: 12px;
+  width: 100%;
+}
