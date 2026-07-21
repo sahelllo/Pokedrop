@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0b0e1a">
-  <meta name="description" content="PokéDrop – Live-Radar für Pokémon-TCG-Releases und Angebote in Deutschland. Countdowns, Händler-Links und Prospekt-Suche.">
+  <meta name="description" content="PokéDrop – Live-Radar für Pokémon-TCG-Releases in Deutschland: Countdowns, seriöse Shops und Prospekt-Angebote.">
   <title>PokéDrop – Drop-Radar für Sammelkarten</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
@@ -20,36 +20,41 @@
         LIVE&nbsp;·&nbsp;<time id="clock" datetime="">--:--:--</time>
       </span>
     </div>
+    <nav class="tabs" aria-label="Bereiche">
+      <button class="tab active" data-tab="drops">Drops</button>
+      <button class="tab" data-tab="shops">Shops</button>
+      <button class="tab" data-tab="angebote">Angebote</button>
+    </nav>
   </header>
 
   <main>
 
-    <!-- Hero: aktuellster Drop -->
-    <section class="hero" id="hero" aria-label="Aktueller Drop">
-      <!-- wird per JS befüllt -->
-    </section>
+    <!-- Tab 1: Drops -->
+    <div class="tab-panel active" id="panel-drops">
+      <section class="hero" id="hero" aria-label="Aktueller Drop"></section>
+      <section aria-labelledby="h-upcoming">
+        <h2 id="h-upcoming" class="section-title">Kommende Drops</h2>
+        <div id="upcoming" class="stack"></div>
+      </section>
+    </div>
 
-    <!-- Kommende Drops mit Countdown -->
-    <section aria-labelledby="h-upcoming">
-      <p class="eyebrow">Release-Radar Deutschland</p>
-      <h2 id="h-upcoming">Kommende Drops</h2>
-      <div id="upcoming" class="stack"></div>
-    </section>
+    <!-- Tab 2: Shops -->
+    <div class="tab-panel" id="panel-shops">
+      <section aria-labelledby="h-retailers">
+        <h2 id="h-retailers" class="section-title">Seriöse Shops</h2>
+        <p class="section-note">Etablierte Händler mit Pokémon-TCG-Sortiment – Filialketten, bekannte Fachhändler und Preisvergleiche. Alle Links führen direkt zum Pokémon-Bereich.</p>
+        <div id="retailers" class="stack"></div>
+      </section>
+    </div>
 
-    <!-- Händler -->
-    <section aria-labelledby="h-retailers">
-      <p class="eyebrow">Direkt zum Sortiment</p>
-      <h2 id="h-retailers">Bei diesen Händlern kaufen</h2>
-      <div id="retailers" class="grid"></div>
-    </section>
-
-    <!-- Prospekte in der Nähe -->
-    <section aria-labelledby="h-flyers">
-      <p class="eyebrow">Angebote in deiner Umgebung</p>
-      <h2 id="h-flyers">Prospekt-Suche</h2>
-      <p class="section-note">Diese Dienste durchsuchen die aktuellen Prospekte der Märkte in deiner Nähe – z.&nbsp;B. Marktkauf, REWE, EDEKA und Kaufland – nach Pokémon-Produkten.</p>
-      <div id="flyers" class="stack"></div>
-    </section>
+    <!-- Tab 3: Angebote -->
+    <div class="tab-panel" id="panel-angebote">
+      <section aria-labelledby="h-flyers">
+        <h2 id="h-flyers" class="section-title">Angebote in deiner Umgebung</h2>
+        <p class="section-note">Diese Dienste durchsuchen die aktuellen Prospekte der Märkte in deiner Nähe – z.&nbsp;B. Marktkauf, REWE, EDEKA und Kaufland – nach Pokémon-Produkten.</p>
+        <div id="flyers" class="stack"></div>
+      </section>
+    </div>
 
   </main>
 
@@ -59,8 +64,9 @@
       PokéDrop ist ein inoffizielles Fan-Projekt und steht in keiner Verbindung zu
       Nintendo, Game Freak oder The Pokémon Company. Alle genannten Produkt- und
       Markennamen sind Eigentum ihrer jeweiligen Inhaber und werden nur zur
-      Beschreibung der Produkte genannt. Preisangaben sind unverbindliche Richtwerte –
-      maßgeblich ist der jeweilige Händler.
+      Beschreibung der Produkte genannt. Die gezeigten Motive sind eigene,
+      stilisierte Illustrationen – keine offiziellen Artworks. Preisangaben sind
+      unverbindliche Richtwerte – maßgeblich ist der jeweilige Händler.
     </p>
   </footer>
 

@@ -2,8 +2,8 @@
  *
  * Palette: Mitternachtsblau als Grund, Elektro-Gelb als einziger Akzent,
  * dazu ein zurückhaltender "Foil"-Verlauf als Zitat der Holo-Karten.
- * Keine geschützten Marken-Grafiken – die Anmutung entsteht nur über
- * Farbe, Typografie und den Foil-Schimmer.
+ * Keine geschützten Marken-Grafiken – Anmutung nur über Farbe,
+ * Typografie und eigene, stilisierte Set-Illustrationen.
  */
 
 :root {
@@ -66,13 +66,13 @@ body {
   line-height: 1.55;
 }
 
-/* ---- Topbar ---- */
+/* ---- Topbar + Tabs ---- */
 
 .topbar {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: color-mix(in srgb, var(--ink) 86%, transparent);
+  background: color-mix(in srgb, var(--ink) 88%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
@@ -82,7 +82,7 @@ body {
 .topbar-inner {
   max-width: 720px;
   margin: 0 auto;
-  padding: 14px 20px;
+  padding: 13px 20px 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -94,10 +94,7 @@ body {
   letter-spacing: 0.18em;
 }
 
-.wordmark em {
-  font-style: normal;
-  color: var(--volt-text);
-}
+.wordmark em { font-style: normal; color: var(--volt-text); }
 
 .live {
   display: flex;
@@ -124,31 +121,57 @@ body {
 
 @keyframes blink { 50% { opacity: 0.25; } }
 
+.tabs {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 20px 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.tab {
+  flex: 1;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+  padding: 8px 0;
+  border-radius: 999px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.tab.active {
+  background: var(--volt);
+  border-color: var(--volt);
+  color: var(--on-volt);
+}
+
+.tab:focus-visible { outline: 2px solid var(--volt); outline-offset: 2px; }
+
 /* ---- Layout ---- */
 
 main {
   max-width: 720px;
   margin: 0 auto;
-  padding: 28px 20px 8px;
+  padding: 20px 20px 8px;
+}
+
+.tab-panel { display: none; }
+
+.tab-panel.active {
   display: flex;
   flex-direction: column;
-  gap: 44px;
+  gap: 36px;
 }
 
-.eyebrow {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--volt-text);
-  margin-bottom: 6px;
-}
-
-h2 {
-  font-size: 1.35rem;
+.section-title {
+  font-size: 1.3rem;
   letter-spacing: -0.01em;
   text-wrap: balance;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .section-note {
@@ -160,16 +183,24 @@ h2 {
 
 .stack { display: flex; flex-direction: column; gap: 14px; }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 12px;
+.stack-sm { display: flex; flex-direction: column; gap: 8px; }
+
+/* ---- Set-Artwork ---- */
+
+.art {
+  aspect-ratio: 8 / 3;
+  overflow: hidden;
+}
+
+.art svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 /* ---- Hero (aktueller Drop) ---- */
 
 .hero-card {
-  position: relative;
   border-radius: var(--radius);
   padding: 1px;                      /* Platz für den Foil-Rand */
   background: var(--foil);
@@ -177,11 +208,11 @@ h2 {
 
 .hero-card-inner {
   border-radius: calc(var(--radius) - 1px);
-  background:
-    radial-gradient(120% 90% at 85% -10%, color-mix(in srgb, var(--volt) 14%, transparent), transparent 55%),
-    var(--panel);
-  padding: 26px 22px 22px;
+  background: var(--panel);
+  overflow: hidden;
 }
+
+.hero-body { padding: 20px 20px 22px; }
 
 .hero-status {
   display: inline-flex;
@@ -195,54 +226,22 @@ h2 {
   color: var(--on-volt);
   border-radius: 999px;
   padding: 5px 12px;
-  margin-bottom: 14px;
-}
-
-.hero-series {
-  font-size: 0.78rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 4px;
+  margin-bottom: 12px;
 }
 
 .hero-card h1 {
-  font-size: clamp(1.9rem, 7vw, 2.6rem);
+  font-size: clamp(1.8rem, 6.5vw, 2.4rem);
   line-height: 1.1;
   letter-spacing: -0.02em;
   text-wrap: balance;
-  margin-bottom: 10px;
+  margin: 2px 0 8px;
 }
 
 .hero-tagline {
   color: var(--muted);
+  font-size: 0.92rem;
   max-width: 52ch;
-  margin-bottom: 16px;
-}
-
-.facts {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 18px;
-  font-size: 0.88rem;
-}
-
-.facts li {
-  padding-left: 18px;
-  position: relative;
-}
-
-.facts li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.55em;
-  width: 7px;
-  height: 7px;
-  border-radius: 2px;
-  background: var(--foil);
+  margin-bottom: 14px;
 }
 
 .products {
@@ -263,29 +262,108 @@ h2 {
 
 .product-chip strong { color: var(--volt-text); font-weight: 700; }
 
-.links { display: flex; flex-direction: column; gap: 8px; }
+.buy-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--volt-text);
+  margin-bottom: 8px;
+}
 
-.link-out {
-  display: flex;
+/* ---- Shop-Zeilen ---- */
+
+.shop-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+  column-gap: 10px;
   text-decoration: none;
   color: var(--text);
   background: var(--panel-2);
   border: 1px solid var(--line);
   border-radius: 12px;
   padding: 11px 14px;
-  font-size: 0.88rem;
-  font-weight: 600;
   transition: border-color 0.15s ease;
 }
 
-.link-out:hover, .link-out:focus-visible { border-color: var(--volt); }
+.shop-row:hover, .shop-row:focus-visible { border-color: var(--volt); }
 
-.link-out:focus-visible { outline: 2px solid var(--volt); outline-offset: 2px; }
+.shop-row:focus-visible { outline: 2px solid var(--volt); outline-offset: 2px; }
 
-.link-out .arrow { color: var(--volt-text); flex-shrink: 0; }
+.shop-name { font-size: 0.92rem; font-weight: 700; }
+
+.shop-type {
+  grid-column: 1;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.shop-note {
+  grid-column: 1;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.shop-cta {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--volt-text);
+  white-space: nowrap;
+}
+
+.shop-row-lg {
+  background: var(--panel);
+  padding: 15px 16px;
+  border-radius: var(--radius);
+}
+
+.shop-row-lg .shop-name { font-size: 1rem; }
+
+/* ---- Aufklappbare Details ---- */
+
+.more { margin-top: 12px; }
+
+.more summary {
+  cursor: pointer;
+  list-style: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel-2);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.more summary::-webkit-details-marker { display: none; }
+
+.more summary::after { content: " ▾"; color: var(--volt-text); }
+
+.more[open] summary::after { content: " ▴"; }
+
+.more summary:focus-visible { outline: 2px solid var(--volt); outline-offset: 2px; }
+
+.more-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 2px 2px;
+}
+
+.info-link {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 2px 0;
+}
+
+.info-link:hover, .info-link:focus-visible { color: var(--volt-text); }
 
 /* ---- Kommende Drops ---- */
 
@@ -293,8 +371,12 @@ h2 {
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 18px 20px;
+  overflow: hidden;
 }
+
+.drop-card .art { aspect-ratio: 16 / 5; }
+
+.drop-body { padding: 16px 18px 18px; }
 
 .drop-head {
   display: flex;
@@ -302,6 +384,7 @@ h2 {
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
+  margin-bottom: 12px;
 }
 
 .drop-series {
@@ -325,15 +408,31 @@ h2 {
   font-size: 0.88rem;
   color: var(--muted);
   max-width: 58ch;
-  margin: 6px 0 14px;
+}
+
+.facts {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+}
+
+.facts li { padding-left: 18px; position: relative; }
+
+.facts li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--foil);
 }
 
 /* Countdown – tickt jede Sekunde */
-.countdown {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 14px;
-}
+.countdown { display: flex; gap: 10px; }
 
 .cd-cell {
   flex: 1;
@@ -364,51 +463,13 @@ h2 {
   color: var(--muted);
 }
 
-.drop-links { display: flex; flex-direction: column; gap: 8px; }
-
-/* ---- Händler ---- */
-
-.retailer {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  text-decoration: none;
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 16px;
-  color: var(--text);
-  transition: border-color 0.15s ease, transform 0.15s ease;
-}
-
-.retailer:hover, .retailer:focus-visible { border-color: var(--volt); transform: translateY(-1px); }
-
-.retailer:focus-visible { outline: 2px solid var(--volt); outline-offset: 2px; }
-
-@media (prefers-reduced-motion: reduce) {
-  .retailer:hover { transform: none; }
-}
-
-.retailer strong { font-size: 0.95rem; }
-
-.retailer span { font-size: 0.78rem; color: var(--muted); }
-
-.retailer .goto {
-  margin-top: 6px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--volt-text);
-}
-
 /* ---- Footer ---- */
 
 .footer {
   max-width: 720px;
-  margin: 0 auto;
-  padding: 36px 20px calc(40px + env(safe-area-inset-bottom));
+  margin: 44px auto 0;
+  padding: 32px 20px calc(40px + env(safe-area-inset-bottom));
   border-top: 1px solid var(--line);
-  margin-top: 44px;
 }
 
 #update-status {
