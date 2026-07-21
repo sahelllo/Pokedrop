@@ -22,24 +22,34 @@ data/drops.json             Sets, Release-Daten, Produkte, Quellen (gepflegt)
 data/stock.json             Verfügbarkeit + Preise (vom Checker geschrieben)
 data/history.json           Preisverlauf pro SKU/Shop
 data/events.json            Statuswechsel – Grundlage für Push
+data/karten-cache.json       Echte Kartenbild-URLs, serverseitig geholt (siehe unten)
 data/_new-events.json       Ungetrackt, nur für den Telegram-Push eines Laufs (.gitignore)
 
 scraper/sources.json        Welche Produktseiten überwacht werden
 scraper/check-stock.mjs     Der Stock-Checker
+scraper/karten-cache.mjs    Holt echte Kartenbild-URLs mit Retries
 scraper/telegram-push.mjs   Sofortmeldung neuer Ereignisse an Telegram
-.github/workflows/          Cron alle 5 Minuten + Telegram-Push + Auto-Commit
+.github/workflows/          Cron alle 5 Minuten + Kartenbild-Cache + Telegram-Push + Auto-Commit
 ```
 
 ## Echte Kartenbilder & Holo-Hintergrund
 
-Die App lädt bei jedem Besuch live echte, offizielle Kartenbilder von der
-**Pokémon TCG API** (`api.pokemontcg.io`, kein API-Key nötig) – für den
-schwebenden, rotierenden Karten-Hintergrund (`#holoregen`) und für die
-Produktkarte selbst, wo eine passende Karten-ID hinterlegt ist. Es wird
-nichts heruntergeladen oder im Repo gespeichert; die Bilder werden per
-`<img src>` direkt vom Bild-CDN der API verlinkt (Hotlinking). Schlägt die
-Anfrage fehl (offline, Rate-Limit, API down), bleibt automatisch der eigene
-SVG-Mockup sichtbar – die Seite bricht nie deswegen.
+Kartenbilder kommen von der **Pokémon TCG API** (`api.pokemontcg.io`) – aber
+**nicht** live aus jedem Besucher-Browser. Der kostenlose, schlüssellose
+Zugang dieser API ist unter Last unzuverlässig (im Test: gut die Hälfte der
+Anfragen HTTP 500). Stattdessen holt `scraper/karten-cache.mjs` die Bilder
+**serverseitig im GitHub-Workflow** (mit Wiederholversuchen, alle paar
+Stunden) und schreibt nur die Bild-URLs in `data/karten-cache.json`. Die App
+liest diese eigene, zuverlässige Datei – wie `drops.json`/`stock.json` auch.
+Es wird nichts heruntergeladen oder im Repo gespeichert, nur URLs; die Bilder
+selbst werden per `<img src>` weiterhin direkt vom Bild-CDN der API verlinkt.
+Ist der Cache leer oder veraltet, bleibt automatisch der eigene SVG-Mockup
+sichtbar – die Seite bricht nie deswegen.
+
+Optional: Mit einem kostenlosen Key von [dev.pokemontcg.io](https://dev.pokemontcg.io/)
+als Secret `POKEMONTCG_API_KEY` wird der Cache-Lauf im Workflow noch
+zuverlässiger (höheres Rate-Limit). Ohne Key funktioniert es dank Retries und
+dem 12-Stunden-Cache trotzdem meistens beim ersten oder zweiten Versuch.
 
 Pro Drop in `data/drops.json` steuerbar:
 

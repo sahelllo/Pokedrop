@@ -84,71 +84,66 @@ async function aktualisieren({ still = false } = {}) {
   if (!state.holoGestartet) { state.holoGestartet = true; holoRegen(); }
 }
 
-/* ---------------- Echte Kartenbilder (Pokémon TCG API) ----------------
-   Lädt echte, offizielle Kartenbilder live von api.pokemontcg.io (der
-   Community-Referenzdatenbank für das Pokémon-TCG). Die Bilder werden nur
-   verlinkt, nicht im Repo gespeichert. Ist die API nicht erreichbar, bleibt
-   automatisch der eigene SVG-Mockup bzw. das Partikelsystem als Fallback
-   sichtbar – die Seite bricht nie deswegen. */
+/* ---------------- Echte Kartenbilder (vorberechneter Cache) ----------------
+   Die Bilder kommen NICHT live aus jedem Browser von api.pokemontcg.io –
+   der kostenlose, schlüssellose API-Zugang ist dafür zu unzuverlässig
+   (haeufig HTTP 500 unter Last). Stattdessen holt scraper/karten-cache.mjs
+   sie serverseitig im GitHub-Workflow mit Wiederholversuchen und schreibt
+   sie in data/karten-cache.json. Die App liest hier nur diese eigene,
+   zuverlässige Datei – genau wie bei drops.json/stock.json. Fehlt die Datei
+   oder ist sie leer, bleibt automatisch der SVG-Mockup sichtbar. */
 
-const KARTEN_API = 'https://api.pokemontcg.io/v2';
-const KARTEN_CACHE_MS = 6 * 60 * 60 * 1000;
+let kartenCache = null;
 
-async function kartenApiHolen(pfad) {
-  const ctrl = new AbortController();
-  const timeout = setTimeout(() => ctrl.abort(), 8000);
-  try {
-    const res = await fetch(`${KARTEN_API}${pfad}`, { signal: ctrl.signal });
-    if (!res.ok) throw new Error(String(res.status));
-    const json = await res.json();
-    return json.data ?? null;
-  } catch {
-    return null;
-  } finally {
-    clearTimeout(timeout);
-  }
+async function kartenCacheHolen() {
+  if (kartenCache) return kartenCache;
+  const ergebnis = await holen('data/karten-cache.json', null);
+  // Nur ein echtes Ergebnis merken – bei einem Fehlschlag (holen() liefert dann
+  // null) beim nächsten Aufruf erneut versuchen, statt für immer leer zu bleiben.
+  if (ergebnis) kartenCache = ergebnis;
+  return ergebnis ?? { helden: {}, pool: [] };
 }
 
 async function heldenkarteHolen(id) {
   if (!id) return null;
-  const key = `pd.karte.${id}`;
-  try {
-    const cache = JSON.parse(localStorage.getItem(key) || 'null');
-    if (cache && Date.now() - cache.zeit < KARTEN_CACHE_MS) return cache.bild;
-  } catch {}
-  const karte = await kartenApiHolen(`/cards/${id}`);
-  const bild = karte?.images?.large ?? null;
-  if (bild) { try { localStorage.setItem(key, JSON.stringify({ bild, zeit: Date.now() })); } catch {} }
-  return bild;
+  const cache = await kartenCacheHolen();
+  return cache?.helden?.[id] ?? null;
 }
 
 async function kartenPoolHolen() {
-  const key = 'pd.kartenpool';
-  try {
-    const cache = JSON.parse(localStorage.getItem(key) || 'null');
-    if (cache?.bilder?.length && Date.now() - cache.zeit < KARTEN_CACHE_MS) return cache.bilder;
-  } catch {}
-  const karten = await kartenApiHolen('/cards?pageSize=40&orderBy=-set.releaseDate');
-  const bilder = (karten ?? []).filter((k) => k.images?.large).map((k) => k.images.large);
-  if (bilder.length) { try { localStorage.setItem(key, JSON.stringify({ bilder, zeit: Date.now() })); } catch {} }
-  return bilder;
+  const cache = await kartenCacheHolen();
+  return cache?.pool ?? [];
 }
 
 async function echteBilderEinsetzen() {
   if (!state.drops) return;
   for (const drop of state.drops.drops) {
     if (!drop.heldenkarte) continue;
-    const wrap = document.querySelector(`.karte[data-drop-id="${drop.id}"] .mockup-wrap`);
-    if (!wrap || wrap.dataset.geladen) continue;
-    wrap.dataset.geladen = '1';
+    const wrapJetzt = document.querySelector(`.karte[data-drop-id="${drop.id}"] .mockup-wrap`);
+    if (!wrapJetzt || wrapJetzt.dataset.geladen) continue;
+    wrapJetzt.dataset.geladen = '1';
     const bild = await heldenkarteHolen(drop.heldenkarte);
     if (!bild) continue;
+
     const img = new Image();
     img.alt = `${drop.set} – ${drop.star} (offizielles Kartenbild)`;
-    img.loading = 'lazy';
+    // Kein loading="lazy" hier: Das Bild wird erst NACH dem Laden ins DOM
+    // eingefügt (siehe onload unten) – ein noch nicht angehängtes Bild hat
+    // keinen Sichtbarkeitskontext, Lazy-Loading würde den Ladevorgang nie
+    // auslösen und das Bild bliebe für immer leer.
     img.decoding = 'async';
     img.className = 'mockup mockup-foto';
-    img.onload = () => { wrap.prepend(img); wrap.classList.add('foto-bereit'); };
+    img.onload = () => {
+      // Zwischen Fetch-Start und Bild-Ladeende kann zeichneDrops() die Karte
+      // beliebig oft neu gebaut haben – deshalb die Ziel-Wrap ERST JETZT,
+      // im Moment des Einfügens, frisch aus dem DOM holen statt eine
+      // möglicherweise längst entfernte Referenz zu benutzen.
+      const ziel = document.querySelector(`.karte[data-drop-id="${drop.id}"] .mockup-wrap`);
+      if (!ziel) return;
+      ziel.dataset.geladen = '1';
+      ziel.prepend(img);
+      ziel.classList.add('foto-bereit');
+    };
     img.src = bild;
   }
 }
