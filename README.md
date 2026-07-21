@@ -19,17 +19,68 @@ sw.js                       Service Worker: App cache-first, Daten netz-first
 manifest.webmanifest        Installation auf dem Home-Bildschirm
 
 data/drops.json             Sets, Release-Daten, Produkte, Quellen (gepflegt)
-data/stock.json             Verfügbarkeit + Preise (vom Checker geschrieben)
+data/stock.json             Verfügbarkeit + Preise: kuratierte Watchlist + Live-Radar-Funde
 data/history.json           Preisverlauf pro SKU/Shop
 data/events.json            Statuswechsel – Grundlage für Push
 data/karten-cache.json       Echte Kartenbild-URLs, serverseitig geholt (siehe unten)
+data/discoveries-state.json Letzter bekannter Stand der Live-Radar-Funde (Dopplungs-/Flut-Schutz)
 data/_new-events.json       Ungetrackt, nur für den Telegram-Push eines Laufs (.gitignore)
 
-scraper/sources.json        Welche Produktseiten überwacht werden
-scraper/check-stock.mjs     Der Stock-Checker
+scraper/sources.json        Welche Produktseiten (kuratierte Watchlist) überwacht werden
+scraper/check-stock.mjs     Der Stock-Checker für die kuratierte Watchlist
+scraper/discover-shops.mjs  Live-Radar: durchsucht ganze Shops + kaufDA-Prospekte (siehe unten)
 scraper/karten-cache.mjs    Holt echte Kartenbild-URLs mit Retries
 scraper/telegram-push.mjs   Sofortmeldung neuer Ereignisse an Telegram
-.github/workflows/          Cron alle 5 Minuten + Kartenbild-Cache + Telegram-Push + Auto-Commit
+.github/workflows/          Cron alle 5 Minuten + Live-Radar + Kartenbild-Cache + Telegram-Push + Auto-Commit
+```
+
+## Live-Radar (`scraper/discover-shops.mjs`)
+
+Der Stock-Checker oben prüft nur eine feste, manuell gepflegte Liste bekannter
+Produktseiten. `discover-shops.mjs` ergänzt das um eine **breite** Suche über
+zwei echte, verifizierte Quellen – findet also auch Angebote, die noch
+niemand manuell eingetragen hat:
+
+1. **5 verifizierte TCG-Online-Shops** (CardBuddys, Webbas Kartenecke,
+   Celestial Gameshop, CardStore.at, Lairos) über ihren öffentlichen
+   Shopify-Endpunkt `/products.json` – Standard-Feature jedes Shopify-Shops,
+   kein Login nötig. Jede Domain wurde vor der Aufnahme geprüft.
+2. **kaufDA-Prospekt-Aggregator** (`kaufda.de/Angebote/Pokemon`) liest das
+   schema.org-`Product`-JSON-LD aus, das kaufDA serverseitig für Google
+   einbettet – dieselbe Quelle, die Google für Rich Snippets liest. Das
+   erkennt automatisch, sobald eine der 19 hinterlegten großen Ketten
+   (Kaufland, Marktkauf, Edeka, REWE, Aldi, Lidl, MediaMarkt, Rossmann, dm,
+   Netto, Penny, GameStop, Smyths Toys, Galeria, …) einen
+   Pokémon-Wochenprospekt veröffentlicht. `kaufda.de/robots.txt` erlaubt das
+   (`crawl-delay: 2`, `/Angebote/` ist nicht gesperrt) – der Scanner hält
+   sich daran.
+
+Nur ein Händlername, den `discover-shops.mjs` nicht kennt, wird ignoriert und
+geloggt statt einen geratenen Link zu erzeugen – jeder "Jetzt ansehen"-Link
+führt garantiert zur echten, offiziellen Seite.
+
+Funde landen als zusätzliche `sku`-Einträge (Präfix `disc-`) in
+`data/stock.json`, direkt neben der kuratierten Watchlist – die bestehende
+Radar-Ansicht (`assets/app.js`, `alleAngebote()`) zeigt beides automatisch
+zusammen an, sortiert nach Verfügbarkeit/Preis. Es sind **keine
+Frontend-Änderungen** nötig. Pro Lauf werden maximal 30 Funde übernommen
+(max. 8 pro Shop), damit `stock.json` und die Git-Historie nicht unbegrenzt
+wachsen. Neue Funde lösen genau wie Watchlist-Treffer ein Ereignis in
+`data/events.json` aus – und damit automatisch auch die
+Telegram-Sofortmeldung, ganz ohne Änderung an `telegram-push.mjs`.
+
+**Ehrlicher Stand:** Große Elektronik-/Kaufhausketten (MediaMarkt, Saturn,
+GameStop, Galeria, …) laufen aktuell nur über die kaufDA-Prospekt-Schiene,
+nicht mit direkter Lagerbestandsabfrage ihrer eigenen Online-Shops (die haben
+kein offenes Produkt-Feed wie Shopify). Weitere TCG-Shopify-Shops lassen sich
+in `SHOPIFY_SHOPS` in `scraper/discover-shops.mjs` in Minuten ergänzen –
+vorher kurz prüfen, dass `https://DOMAIN/products.json` echte Produktdaten
+liefert.
+
+Lokal einzeln testbar:
+
+```bash
+node scraper/discover-shops.mjs
 ```
 
 ## Echte Kartenbilder & Holo-Hintergrund

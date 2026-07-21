@@ -79,17 +79,22 @@
   ],
   "shops": [
     { "name": "Card-Corner", "typ": "TCG-Fachhandel", "url": "https://www.card-corner.de/", "note": "Meist als Erstes gelistet" },
-    { "name": "Gate to the Games", "typ": "TCG-Fachhandel", "url": "https://www.gatetothegames.de/", "note": "Zuverlässige Vorbestellungen" },
+    { "name": "Gate to the Games", "typ": "TCG-Fachhandel", "url": "https://www.gate-to-the-games.de/", "note": "Zuverlässige Vorbestellungen" },
     { "name": "Müller", "typ": "Filialhandel", "url": "https://www.mueller.de/", "note": "Filialware oft morgens eingeräumt" },
     { "name": "Rossmann", "typ": "Filialhandel", "url": "https://www.rossmann.de/", "note": "Kleine Kontingente, unangekündigt" },
     { "name": "GameStop", "typ": "Filialhandel", "url": "https://www.gamestop.de/", "note": "Allokation zum Launch" },
     { "name": "Elbenwald", "typ": "Fanshop", "url": "https://www.elbenwald.de/", "note": "Exklusive Bundles" },
     { "name": "Amazon", "typ": "Marktplatz", "url": "https://www.amazon.de/", "note": "Auf Verkäufer achten" },
     { "name": "Cardmarket", "typ": "Marktplatz", "url": "https://www.cardmarket.com/de/Pokemon", "note": "Referenz für Marktpreise" },
-    { "name": "idealo", "typ": "Preisvergleich", "url": "https://www.idealo.de/", "note": "Preisverlauf über alle Shops" }
+    { "name": "idealo", "typ": "Preisvergleich", "url": "https://www.idealo.de/", "note": "Preisverlauf über alle Shops" },
+    { "name": "CardBuddys", "typ": "TCG-Fachhandel", "url": "https://www.cardbuddys.de/", "note": "Automatisch überwacht (Live-Radar)" },
+    { "name": "Webbas Kartenecke", "typ": "TCG-Fachhandel", "url": "https://webbas-kartenecke.de/", "note": "Automatisch überwacht (Live-Radar)" },
+    { "name": "Celestial Gameshop", "typ": "TCG-Fachhandel", "url": "https://www.celestial-gameshop.de/", "note": "Automatisch überwacht (Live-Radar)" },
+    { "name": "CardStore.at", "typ": "TCG-Fachhandel", "url": "https://www.cardstore.at/", "note": "Automatisch überwacht (Live-Radar), Österreich" },
+    { "name": "Lairos", "typ": "TCG-Fachhandel", "url": "https://lairos.shop/", "note": "Automatisch überwacht (Live-Radar), Österreich" }
   ],
   "prospekte": [
     { "name": "marktguru", "url": "https://www.marktguru.de/search?q=pokemon" },
-    { "name": "kaufDA", "url": "https://www.kaufda.de/Suche?q=pokemon" }
+    { "name": "kaufDA", "url": "https://www.kaufda.de/Angebote/Pokemon" }
   ]
 }

@@ -25,10 +25,13 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Verfügbarkeit prüfen
+      - name: Verfügbarkeit prüfen (kuratierte Watchlist)
         env:
           CHECK_INTERVAL_MIN: '5'
         run: node scraper/check-stock.mjs
+
+      - name: Live-Radar (verifizierte Shops + kaufDA-Prospekte)
+        run: node scraper/discover-shops.mjs
 
       - name: Kartenbild-Cache aktualisieren
         env:
@@ -52,7 +55,7 @@ jobs:
         run: |
           git config user.name  "pokedrop-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add data/stock.json data/history.json data/events.json data/karten-cache.json
+          git add data/stock.json data/history.json data/events.json data/karten-cache.json data/discoveries-state.json
           if git diff --staged --quiet; then
             echo "Keine Änderungen."
           else

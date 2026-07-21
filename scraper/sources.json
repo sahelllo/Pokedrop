@@ -3,12 +3,22 @@
   "//selector": "Optional: 'text' = Liste von Zeichenketten, die 'ausverkauft' bedeuten. Fallback, wenn kein JSON-LD vorhanden ist.",
   "watch": [
     {
+      "sku": "dunkelnacht-booster",
+      "produkt": "Mega-Entwicklung: Dunkelnacht — Boosterpack",
+      "uvp": 4.99,
+      "shops": [
+        { "shop": "CardBuddys", "typ": "TCG-Fachhandel", "url": "https://www.cardbuddys.de/products/mega-entwicklungen-dunkelnacht-booster-de" },
+        { "shop": "Webbas Kartenecke", "typ": "TCG-Fachhandel", "url": "https://webbas-kartenecke.de/products/pokemon-tcg-mega-entwicklung-dunkelnacht-booster-deutsch" }
+      ]
+    },
+    {
       "sku": "dunkelnacht-ttb",
       "produkt": "Mega-Entwicklung: Dunkelnacht — Top-Trainer-Box",
       "uvp": 54.99,
       "shops": [
+        { "shop": "Webbas Kartenecke", "typ": "TCG-Fachhandel", "url": "https://webbas-kartenecke.de/products/pokemon-tcg-mega-entwicklungen-dunkelnacht-top-trainer-box-ttb-deutsch" },
         { "shop": "Card-Corner", "typ": "TCG-Fachhandel", "url": "https://www.card-corner.de/Pokemon-Mega-Entwicklung-Dunkelnacht-Top-Trainer-Box" },
-        { "shop": "Gate to the Games", "typ": "TCG-Fachhandel", "url": "https://www.gatetothegames.de/pokemon-dunkelnacht-top-trainer-box" },
+        { "shop": "Gate to the Games", "typ": "TCG-Fachhandel", "url": "https://www.gate-to-the-games.de/pokemon-dunkelnacht-top-trainer-box" },
         { "shop": "Elbenwald", "typ": "Fanshop", "url": "https://www.elbenwald.de/pokemon-dunkelnacht-top-trainer-box" },
         { "shop": "Müller", "typ": "Filialhandel", "url": "https://www.mueller.de/suche/?q=Dunkelnacht%20Top-Trainer-Box" }
       ]
@@ -18,8 +28,10 @@
       "produkt": "Mega-Entwicklung: Dunkelnacht — Booster-Display (36)",
       "uvp": 179.64,
       "shops": [
+        { "shop": "CardBuddys", "typ": "TCG-Fachhandel", "url": "https://www.cardbuddys.de/products/mega-entwicklungen-wachsendes-chaos-booster-display-de-kopie" },
+        { "shop": "Webbas Kartenecke", "typ": "TCG-Fachhandel", "url": "https://webbas-kartenecke.de/products/pokemon-tcg-mega-entwicklung-dunkelnacht-display-36-booster-deutsch" },
         { "shop": "Card-Corner", "typ": "TCG-Fachhandel", "url": "https://www.card-corner.de/Pokemon-Mega-Entwicklung-Dunkelnacht-Display" },
-        { "shop": "Gate to the Games", "typ": "TCG-Fachhandel", "url": "https://www.gatetothegames.de/pokemon-dunkelnacht-display" }
+        { "shop": "Gate to the Games", "typ": "TCG-Fachhandel", "url": "https://www.gate-to-the-games.de/pokemon-dunkelnacht-display" }
       ]
     },
     {
@@ -46,7 +58,7 @@
       "uvp": 64.99,
       "shops": [
         { "shop": "Card-Corner", "typ": "TCG-Fachhandel", "url": "https://www.card-corner.de/Pokemon-30-Jahre-Jubilaeum" },
-        { "shop": "Gate to the Games", "typ": "TCG-Fachhandel", "url": "https://www.gatetothegames.de/pokemon-30-jahre" }
+        { "shop": "Gate to the Games", "typ": "TCG-Fachhandel", "url": "https://www.gate-to-the-games.de/pokemon-30-jahre" }
       ]
     }
   ]
