@@ -23,8 +23,38 @@ const state = {
   pro: localStorage.getItem('pd.pro') === '1',
   gesehen: new Set(JSON.parse(localStorage.getItem('pd.gesehen') || '[]')),
   alarme: new Map(JSON.parse(localStorage.getItem('pd.alarme') || '[]')),
-  holoGestartet: false
+  holoGestartet: false,
+  filter: { suche: '', kategorie: 'alle', preisVon: null, preisBis: null },
+  letzteFrisch: new Set()
 };
+
+/* ---------------- Radar-Filter: Kartenart, Suche, Preisspanne ----------------
+   Die Kartenart steht bei keiner Quelle als eigenes Feld zur Verfügung, nur
+   im Freitext-Produktnamen ("Booster Display", "Top-Trainer-Box", ...).
+   Deshalb wird sie hier aus dem Namen erraten – Reihenfolge ist wichtig,
+   spezifischere Muster (z. B. "Display") müssen vor allgemeineren
+   ("Booster") geprüft werden, sonst würde ein "Booster Display" fälschlich
+   als "Booster" statt als "Display" einsortiert. */
+
+const KATEGORIE_REGELN = [
+  ['Display', /display/i],
+  ['Top-Trainer-Box', /top[- ]?trainer|\bttb\b/i],
+  ['Tin', /\btin\b/i],
+  ['Deck', /\bdeck\b/i],
+  ['Zubehör', /sleeve|h[üu]lle|binder|playmat|spielmatte|\bcase\b|zubeh[öo]r/i],
+  ['Booster', /booster|blister/i],
+  ['Collection/Box', /collection|bundle|\bbox\b/i]
+];
+
+function kategorieVon(produktName) {
+  for (const [label, regex] of KATEGORIE_REGELN) if (regex.test(produktName)) return label;
+  return 'Sonstiges';
+}
+
+function filterAktiv() {
+  const f = state.filter;
+  return Boolean(f.suche.trim()) || f.kategorie !== 'alle' || f.preisVon != null || f.preisBis != null;
+}
 
 const vorZeit = (iso) => {
   if (!iso) return null;
@@ -72,6 +102,7 @@ async function aktualisieren({ still = false } = {}) {
   state.history = history ?? {};
 
   const frisch = frischeTreffer(vorherStock, stock);
+  state.letzteFrisch = frisch;
 
   zeichneRadar(frisch);
   zeichneDrops();
@@ -250,26 +281,76 @@ function trefferZeile(a, frisch) {
   return el;
 }
 
-function zeichneRadar(frisch) {
+function gefilterteAngebote() {
+  const angebote = alleAngebote();
+  if (!filterAktiv()) return angebote.filter((a) => a.status === 'in_stock' || a.status === 'preorder');
+
+  const such = state.filter.suche.trim().toLowerCase();
+  return angebote.filter((a) => {
+    if (such && !`${a.produkt} ${a.shop}`.toLowerCase().includes(such)) return false;
+    if (state.filter.kategorie !== 'alle' && kategorieVon(a.produkt) !== state.filter.kategorie) return false;
+    if (state.filter.preisVon != null && (a.preis == null || a.preis < state.filter.preisVon)) return false;
+    if (state.filter.preisBis != null && (a.preis == null || a.preis > state.filter.preisBis)) return false;
+    return true;
+  });
+}
+
+function zeichneFilterKategorien() {
+  const box = $('#filter-kategorien');
+  if (!box) return;
+
+  const vorhanden = new Set(alleAngebote().map((a) => kategorieVon(a.produkt)));
+  const reihenfolge = [...KATEGORIE_REGELN.map(([label]) => label), 'Sonstiges'].filter((k) => vorhanden.has(k));
+
+  box.replaceChildren();
+  const alleKnopf = document.createElement('button');
+  alleKnopf.type = 'button';
+  alleKnopf.className = 'chip';
+  alleKnopf.textContent = 'Alle Arten';
+  alleKnopf.dataset.kategorie = 'alle';
+  alleKnopf.setAttribute('aria-pressed', String(state.filter.kategorie === 'alle'));
+  box.append(alleKnopf);
+
+  reihenfolge.forEach((label) => {
+    const knopf = document.createElement('button');
+    knopf.type = 'button';
+    knopf.className = 'chip';
+    knopf.textContent = label;
+    knopf.dataset.kategorie = label;
+    knopf.setAttribute('aria-pressed', String(state.filter.kategorie === label));
+    box.append(knopf);
+  });
+}
+
+function zeichneRadar(frisch = state.letzteFrisch) {
   const box = $('#radar-liste');
   const stand = $('#radar-stand');
-  const angebote = alleAngebote();
-  const live = angebote.filter((a) => a.status === 'in_stock' || a.status === 'preorder');
+  const anzahlText = $('#filter-anzahl');
+  const resetKnopf = $('#filter-reset');
+  const aktiv = filterAktiv();
+  const angebote = gefilterteAngebote();
 
   stand.dataset.iso = state.stock?.stand ?? '';
   stand.textContent = state.stock?.stand ? `geprüft ${vorZeit(state.stock.stand)}` : 'kein Feed';
 
+  zeichneFilterKategorien();
+  resetKnopf.hidden = !aktiv;
+  anzahlText.hidden = !aktiv;
+  if (aktiv) anzahlText.textContent = `${angebote.length} Treffer`;
+
   box.replaceChildren();
-  if (!live.length) {
+  if (!angebote.length) {
     const p = document.createElement('p');
     p.className = 'leer';
-    p.textContent = angebote.length
+    if (aktiv) p.textContent = 'Keine Treffer für diese Filter. Suchbegriff, Kartenart oder Preisspanne anpassen.';
+    else p.textContent = alleAngebote().length
       ? 'Gerade nirgends auf Lager. Der Radar prüft weiter – aktiviere Benachrichtigungen im Pro-Tab.'
       : 'Noch kein Verfügbarkeits-Feed. Starte den Stock-Checker (scraper/check-stock.mjs).';
     box.append(p);
     return;
   }
-  live.slice(0, 6).forEach((a) => box.append(trefferZeile(a, frisch)));
+  const zeigen = aktiv ? angebote : angebote.slice(0, 6);
+  zeigen.forEach((a) => box.append(trefferZeile(a, frisch)));
 }
 
 /* ---------------- Drops ---------------- */
@@ -579,6 +660,40 @@ function zeichneFuss() {
   teile.push(navigator.onLine ? 'Verbunden' : 'Offline – letzter Stand');
   $('#datenstand').textContent = teile.join(' · ');
 }
+
+/* ---------------- Radar-Filter: Interaktion ---------------- */
+
+$('#radar-suche')?.addEventListener('input', (e) => {
+  state.filter.suche = e.target.value;
+  zeichneRadar();
+});
+
+$('#radar-preis-von')?.addEventListener('input', (e) => {
+  const wert = parseFloat(e.target.value);
+  state.filter.preisVon = Number.isFinite(wert) ? wert : null;
+  zeichneRadar();
+});
+
+$('#radar-preis-bis')?.addEventListener('input', (e) => {
+  const wert = parseFloat(e.target.value);
+  state.filter.preisBis = Number.isFinite(wert) ? wert : null;
+  zeichneRadar();
+});
+
+$('#filter-kategorien')?.addEventListener('click', (e) => {
+  const knopf = e.target.closest('.chip');
+  if (!knopf) return;
+  state.filter.kategorie = knopf.dataset.kategorie;
+  zeichneRadar();
+});
+
+$('#filter-reset')?.addEventListener('click', () => {
+  state.filter = { suche: '', kategorie: 'alle', preisVon: null, preisBis: null };
+  $('#radar-suche').value = '';
+  $('#radar-preis-von').value = '';
+  $('#radar-preis-bis').value = '';
+  zeichneRadar();
+});
 
 /* ---------------- Tabs & Interaktion ---------------- */
 

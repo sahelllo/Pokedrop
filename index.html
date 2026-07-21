@@ -97,6 +97,29 @@
         <h2 class="radar-titel">Jetzt kaufbar</h2>
         <span class="radar-zeit" id="radar-stand">wird geladen…</span>
       </div>
+
+      <div class="radar-filter">
+        <input type="search" id="radar-suche" class="filter-suche"
+               placeholder="Suchen… z. B. Display, Tin, CardBuddys" autocomplete="off" inputmode="search">
+
+        <div class="filter-kategorien" id="filter-kategorien" role="group" aria-label="Nach Kartenart filtern"></div>
+
+        <div class="filter-preis">
+          <label class="filter-preis-feld">
+            <span>Von</span>
+            <input type="number" id="radar-preis-von" inputmode="decimal" min="0" step="1" placeholder="0 €">
+          </label>
+          <span class="filter-bis-strich" aria-hidden="true">–</span>
+          <label class="filter-preis-feld">
+            <span>Bis</span>
+            <input type="number" id="radar-preis-bis" inputmode="decimal" min="0" step="1" placeholder="∞">
+          </label>
+          <button type="button" class="chip chip-reset" id="filter-reset" hidden>Zurücksetzen ✕</button>
+        </div>
+
+        <p class="filter-anzahl" id="filter-anzahl" hidden></p>
+      </div>
+
       <div id="radar-liste"><p class="leer">Verfügbarkeit wird geprüft…</p></div>
     </div>
   </section>
