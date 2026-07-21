@@ -5,7 +5,7 @@
  * würden Live-Updates von alten Kopien verdeckt.
  */
 
-const CACHE_NAME = "pokedrop-v3";
+const CACHE_NAME = "pokedrop-v4";
 const ASSETS = [
   "./",
   "./index.html",

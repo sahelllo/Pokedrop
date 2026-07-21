@@ -15,54 +15,118 @@
 
   const $ = (sel) => document.querySelector(sel);
 
-  // ---- Set-Artworks (eigene, stilisierte Illustrationen – keine offiziellen Grafiken) ----
+  // ---- Set-Artworks: eigene Produkt-Illustrationen (Box, Pack, Tin) ----
+  // Keine offiziellen Grafiken – nur Formen und Farbwelt des jeweiligen Sets.
+
+  function productBox(uid, cfg) {
+    // Display-Box mit Boosterpack davor, leichte 3D-Perspektive.
+    return (
+      '<defs>' +
+      '<linearGradient id="bf-' + uid + '" x1="0" y1="0" x2="0" y2="1">' +
+      '<stop offset="0" stop-color="' + cfg.boxTop + '"/><stop offset="1" stop-color="' + cfg.boxBottom + '"/></linearGradient>' +
+      '<linearGradient id="pk-' + uid + '" x1="0" y1="0" x2="1" y2="1">' +
+      '<stop offset="0" stop-color="' + cfg.packTop + '"/><stop offset="1" stop-color="' + cfg.packBottom + '"/></linearGradient>' +
+      "</defs>" +
+      '<ellipse cx="320" cy="208" rx="160" ry="14" fill="' + cfg.accent + '" opacity="0.16"/>' +
+      // Box: Seite, Deckel, Front
+      '<polygon points="400,66 436,52 436,182 400,196" fill="' + cfg.boxBottom + '" stroke="' + cfg.accent + '" stroke-opacity="0.35" stroke-width="1.5"/>' +
+      '<polygon points="270,66 306,52 436,52 400,66" fill="' + cfg.boxTop + '" stroke="' + cfg.accent + '" stroke-opacity="0.35" stroke-width="1.5"/>' +
+      '<rect x="270" y="66" width="130" height="130" fill="url(#bf-' + uid + ')" stroke="' + cfg.accent + '" stroke-opacity="0.5" stroke-width="1.5"/>' +
+      cfg.motif +
+      '<text x="335" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="12.5" font-weight="800" letter-spacing="1.5" fill="' + cfg.labelColor + '">' + cfg.label + "</text>" +
+      // Boosterpack, leicht gedreht
+      '<g transform="rotate(-7 234 148)">' +
+      '<rect x="196" y="92" width="76" height="112" rx="6" fill="url(#pk-' + uid + ')" stroke="' + cfg.accent + '" stroke-opacity="0.55" stroke-width="1.5"/>' +
+      '<rect x="196" y="92" width="76" height="14" rx="6" fill="' + cfg.accent + '" opacity="0.35"/>' +
+      '<rect x="196" y="190" width="76" height="14" rx="6" fill="' + cfg.accent + '" opacity="0.35"/>' +
+      '<circle cx="234" cy="148" r="20" fill="' + cfg.accent + '" opacity="0.5"/>' +
+      '<circle cx="228" cy="141" r="6" fill="#ffffff" opacity="0.4"/>' +
+      "</g>"
+    );
+  }
+
+  function productTin(uid, cfg) {
+    // Runde Metall-Tin mit Deckel.
+    return (
+      '<defs>' +
+      '<linearGradient id="tb-' + uid + '" x1="0" y1="0" x2="1" y2="0">' +
+      '<stop offset="0" stop-color="#77879f"/><stop offset="0.45" stop-color="#d9e3f2"/><stop offset="1" stop-color="#5d6c85"/></linearGradient>' +
+      "</defs>" +
+      '<ellipse cx="320" cy="208" rx="150" ry="14" fill="' + cfg.accent + '" opacity="0.16"/>' +
+      '<rect x="252" y="76" width="136" height="122" fill="url(#tb-' + uid + ')"/>' +
+      '<ellipse cx="320" cy="198" rx="68" ry="15" fill="#4b596f"/>' +
+      '<ellipse cx="320" cy="76" rx="68" ry="16" fill="#e8eefb" stroke="#9fb0c9" stroke-width="2"/>' +
+      '<ellipse cx="320" cy="76" rx="54" ry="11" fill="#c3cfe2"/>' +
+      '<rect x="252" y="118" width="136" height="42" fill="' + cfg.accent + '" opacity="0.75"/>' +
+      '<text x="320" y="145" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="800" letter-spacing="1.5" fill="#101522">' + cfg.label + "</text>"
+    );
+  }
+
+  function makeArt(cfg) {
+    const shape = cfg.tin ? productTin(cfg.uid, cfg) : productBox(cfg.uid, cfg);
+    return (
+      '<svg viewBox="0 0 640 240" preserveAspectRatio="xMidYMid slice" role="img" aria-label="' + cfg.alt + '">' +
+      '<defs><linearGradient id="sc-' + cfg.uid + '" x1="0" y1="0" x2="1" y2="1">' +
+      '<stop offset="0" stop-color="' + cfg.sceneTop + '"/><stop offset="1" stop-color="' + cfg.sceneBottom + '"/></linearGradient></defs>' +
+      '<rect width="640" height="240" fill="url(#sc-' + cfg.uid + ')"/>' +
+      cfg.scene + shape + "</svg>"
+    );
+  }
 
   const ART = {
-    dunkelnacht:
-      '<svg viewBox="0 0 640 240" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Stilisierte Nachthimmel-Illustration">' +
-      '<defs><linearGradient id="g-dn" x1="0" y1="0" x2="1" y2="1">' +
-      '<stop offset="0" stop-color="#1a1038"/><stop offset="0.6" stop-color="#0d0a24"/><stop offset="1" stop-color="#05040f"/></linearGradient>' +
-      '<radialGradient id="m-dn" cx="0.5" cy="0.5" r="0.5">' +
-      '<stop offset="0.7" stop-color="#efe9ff"/><stop offset="1" stop-color="#b9a7f5"/></radialGradient></defs>' +
-      '<rect width="640" height="240" fill="url(#g-dn)"/>' +
-      '<circle cx="500" cy="86" r="52" fill="url(#m-dn)"/><circle cx="482" cy="74" r="46" fill="#0d0a24"/>' +
-      '<circle cx="120" cy="60" r="2.5" fill="#cfc3ff"/><circle cx="210" cy="140" r="2" fill="#8f7fe0"/>' +
-      '<circle cx="320" cy="50" r="2.5" fill="#cfc3ff"/><circle cx="90" cy="180" r="2" fill="#8f7fe0"/>' +
-      '<circle cx="400" cy="180" r="2.5" fill="#cfc3ff"/><circle cx="580" cy="190" r="2" fill="#8f7fe0"/>' +
-      '<circle cx="260" cy="100" r="1.6" fill="#6f5fc0"/><circle cx="560" cy="40" r="1.6" fill="#6f5fc0"/>' +
-      '<path d="M0 240 L110 168 L200 208 L330 150 L470 205 L640 160 L640 240 Z" fill="#0a0819"/></svg>',
-    partner:
-      '<svg viewBox="0 0 640 240" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Stilisierte Illustration mit drei Farbkugeln">' +
-      '<defs><linearGradient id="g-pt" x1="0" y1="0" x2="1" y2="1">' +
-      '<stop offset="0" stop-color="#12304a"/><stop offset="1" stop-color="#0b1a2c"/></linearGradient></defs>' +
-      '<rect width="640" height="240" fill="url(#g-pt)"/>' +
-      '<circle cx="200" cy="120" r="58" fill="#4caf6d" opacity="0.9"/>' +
-      '<circle cx="320" cy="120" r="58" fill="#e2543f" opacity="0.9"/>' +
-      '<circle cx="440" cy="120" r="58" fill="#3f7fd6" opacity="0.9"/>' +
-      '<circle cx="182" cy="102" r="16" fill="#ffffff" opacity="0.35"/>' +
-      '<circle cx="302" cy="102" r="16" fill="#ffffff" opacity="0.35"/>' +
-      '<circle cx="422" cy="102" r="16" fill="#ffffff" opacity="0.35"/></svg>',
-    tins:
-      '<svg viewBox="0 0 640 240" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Stilisierte Metall-Illustration">' +
-      '<defs><linearGradient id="g-tn" x1="0" y1="0" x2="0" y2="1">' +
-      '<stop offset="0" stop-color="#3a4358"/><stop offset="0.5" stop-color="#232a3c"/><stop offset="1" stop-color="#161b29"/></linearGradient>' +
-      '<linearGradient id="s-tn" x1="0" y1="0" x2="1" y2="0">' +
-      '<stop offset="0" stop-color="#9fb2cf"/><stop offset="0.5" stop-color="#e6eefb"/><stop offset="1" stop-color="#8296b5"/></linearGradient></defs>' +
-      '<rect width="640" height="240" fill="url(#g-tn)"/>' +
-      '<path d="M320 40 L390 80 L390 160 L320 200 L250 160 L250 80 Z" fill="none" stroke="url(#s-tn)" stroke-width="10"/>' +
-      '<path d="M480 90 L520 113 L520 159 L480 182 L440 159 L440 113 Z" fill="none" stroke="#5c6b88" stroke-width="6"/>' +
-      '<path d="M160 90 L200 113 L200 159 L160 182 L120 159 L120 113 Z" fill="none" stroke="#5c6b88" stroke-width="6"/></svg>',
-    jubilee:
-      '<svg viewBox="0 0 640 240" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Stilisierte Jubiläums-Illustration mit der Zahl 30">' +
-      '<defs><linearGradient id="g-jb" x1="0" y1="0" x2="1" y2="1">' +
-      '<stop offset="0" stop-color="#2a1e08"/><stop offset="1" stop-color="#120d04"/></linearGradient>' +
-      '<linearGradient id="t-jb" x1="0" y1="0" x2="0" y2="1">' +
-      '<stop offset="0" stop-color="#ffe9a3"/><stop offset="0.5" stop-color="#f5c445"/><stop offset="1" stop-color="#b98a1d"/></linearGradient></defs>' +
-      '<rect width="640" height="240" fill="url(#g-jb)"/>' +
-      '<text x="320" y="164" text-anchor="middle" font-family="Arial, sans-serif" font-size="130" font-weight="800" fill="url(#t-jb)" letter-spacing="6">30</text>' +
-      '<circle cx="150" cy="70" r="3" fill="#f5c445"/><circle cx="480" cy="52" r="3" fill="#ffe9a3"/>' +
-      '<circle cx="540" cy="150" r="3" fill="#f5c445"/><circle cx="100" cy="170" r="3" fill="#b98a1d"/>' +
-      '<circle cx="220" cy="40" r="2" fill="#ffe9a3"/><circle cx="420" cy="200" r="2" fill="#f5c445"/></svg>'
+    dunkelnacht: makeArt({
+      uid: "dn",
+      alt: "Stilisierte Produkt-Illustration: Booster-Box und Pack im Dunkelnacht-Look",
+      sceneTop: "#1a1038", sceneBottom: "#05040f",
+      scene:
+        '<circle cx="540" cy="60" r="34" fill="#efe9ff"/><circle cx="528" cy="52" r="30" fill="#140d2e"/>' +
+        '<circle cx="90" cy="50" r="2.5" fill="#cfc3ff"/><circle cx="150" cy="120" r="2" fill="#8f7fe0"/>' +
+        '<circle cx="480" cy="170" r="2" fill="#8f7fe0"/><circle cx="590" cy="150" r="2.5" fill="#cfc3ff"/>' +
+        '<circle cx="120" cy="200" r="2" fill="#6f5fc0"/>',
+      boxTop: "#2c1a56", boxBottom: "#150c33", accent: "#b9a7f5", labelColor: "#e6ddff",
+      label: "DUNKELNACHT",
+      motif: '<circle cx="335" cy="118" r="26" fill="#efe9ff" opacity="0.9"/><circle cx="326" cy="111" r="22" fill="#1d1240"/>',
+      packTop: "#3b2570", packBottom: "#1a0f3d"
+    }),
+    partner: makeArt({
+      uid: "pt",
+      alt: "Stilisierte Produkt-Illustration: Kollektions-Box mit drei Farbkugeln",
+      sceneTop: "#12304a", sceneBottom: "#0b1a2c",
+      scene:
+        '<circle cx="100" cy="70" r="30" fill="#4caf6d" opacity="0.25"/>' +
+        '<circle cx="560" cy="180" r="34" fill="#3f7fd6" opacity="0.25"/>' +
+        '<circle cx="520" cy="60" r="24" fill="#e2543f" opacity="0.25"/>',
+      boxTop: "#155a41", boxBottom: "#0a2e21", accent: "#7fd6a8", labelColor: "#dcf5e8",
+      label: "FIRST PARTNER",
+      motif:
+        '<circle cx="305" cy="115" r="13" fill="#4caf6d"/><circle cx="335" cy="115" r="13" fill="#e2543f"/>' +
+        '<circle cx="365" cy="115" r="13" fill="#3f7fd6"/>',
+      packTop: "#1d6b4e", packBottom: "#0d3a29"
+    }),
+    tins: makeArt({
+      uid: "tn",
+      alt: "Stilisierte Produkt-Illustration: Metall-Tin-Dose",
+      sceneTop: "#2c3346", sceneBottom: "#141928",
+      scene:
+        '<path d="M60 80 L92 98 L92 134 L60 152 L28 134 L28 98 Z" fill="none" stroke="#4c5a74" stroke-width="5"/>' +
+        '<path d="M580 110 L608 126 L608 158 L580 174 L552 158 L552 126 Z" fill="none" stroke="#4c5a74" stroke-width="5"/>',
+      accent: "#ffd60a",
+      label: "MEGA FORCES",
+      tin: true
+    }),
+    jubilee: makeArt({
+      uid: "jb",
+      alt: "Stilisierte Produkt-Illustration: goldene Jubiläums-Box 30 Jahre",
+      sceneTop: "#2a1e08", sceneBottom: "#120d04",
+      scene:
+        '<circle cx="120" cy="60" r="3" fill="#f5c445"/><circle cx="520" cy="46" r="3" fill="#ffe9a3"/>' +
+        '<circle cx="560" cy="170" r="3" fill="#f5c445"/><circle cx="80" cy="170" r="3" fill="#b98a1d"/>' +
+        '<circle cx="180" cy="36" r="2" fill="#ffe9a3"/><circle cx="460" cy="205" r="2" fill="#f5c445"/>',
+      boxTop: "#3d2c0d", boxBottom: "#1c1405", accent: "#f5c445", labelColor: "#ffe9a3",
+      label: "30 JAHRE",
+      motif: '<text x="335" y="132" text-anchor="middle" font-family="Arial, sans-serif" font-size="52" font-weight="800" fill="#f5c445">30</text>',
+      packTop: "#4d380f", packBottom: "#241a06"
+    })
   };
 
   // ---- Formatierung ----
@@ -278,4 +342,97 @@
       navigator.serviceWorker.register("sw.js").catch(() => {});
     });
   }
+
+  // ---- Hintergrund-Animation: schwebende Funken und Karten ----
+
+  function initBackground() {
+    const canvas = $("#bg");
+    if (!canvas || !canvas.getContext) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const ctx = canvas.getContext("2d");
+    const FOIL = ["#6ecbff", "#a98bff", "#ff8fc4", "#ffd60a"];
+    let w = 0, h = 0, dpr = 1, particles = [], raf = 0, last = 0;
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = window.innerWidth;
+      h = window.innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      spawn();
+    }
+
+    function rnd(a, b) { return a + Math.random() * (b - a); }
+
+    function spawn() {
+      const count = Math.min(64, Math.round((w * h) / 22000));
+      particles = [];
+      for (let i = 0; i < count; i++) {
+        const card = Math.random() < 0.28; // gut ein Viertel sind Karten, der Rest Funken
+        particles.push({
+          card: card,
+          x: rnd(0, w),
+          y: rnd(0, h),
+          vy: card ? rnd(-14, -7) : rnd(-26, -10),
+          vx: rnd(-4, 4),
+          size: card ? rnd(10, 18) : rnd(1, 2.6),
+          rot: rnd(0, Math.PI * 2),
+          spin: rnd(-0.4, 0.4),
+          color: card ? FOIL[i % FOIL.length] : (Math.random() < 0.5 ? "#ffd60a" : "#cfd6f2"),
+          alpha: card ? rnd(0.08, 0.2) : rnd(0.25, 0.7),
+          phase: rnd(0, Math.PI * 2)   // fürs Funkeln
+        });
+      }
+    }
+
+    function step(t) {
+      const dt = Math.min((t - last) / 1000, 0.05);
+      last = t;
+      ctx.clearRect(0, 0, w, h);
+      for (const p of particles) {
+        p.y += p.vy * dt;
+        p.x += p.vx * dt;
+        p.rot += p.spin * dt;
+        p.phase += dt * 2;
+        if (p.y < -30) { p.y = h + 30; p.x = rnd(0, w); }
+        if (p.x < -30) p.x = w + 30;
+        if (p.x > w + 30) p.x = -30;
+
+        ctx.save();
+        ctx.globalAlpha = p.alpha * (p.card ? 1 : 0.7 + 0.3 * Math.sin(p.phase));
+        if (p.card) {
+          // kleine schwebende Sammelkarte
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+          const cw = p.size, ch = p.size * 1.4;
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          if (ctx.roundRect) ctx.roundRect(-cw / 2, -ch / 2, cw, ch, 2.5);
+          else ctx.rect(-cw / 2, -ch / 2, cw, ch);
+          ctx.fill();
+        } else {
+          // Energie-Funke
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+      raf = requestAnimationFrame(step);
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) cancelAnimationFrame(raf);
+      else { last = performance.now(); raf = requestAnimationFrame(step); }
+    });
+
+    window.addEventListener("resize", resize);
+    resize();
+    raf = requestAnimationFrame(step);
+  }
+
+  initBackground();
 })();
