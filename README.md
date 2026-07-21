@@ -1,62 +1,68 @@
-# PokéDrop 🎴
+# PokéDrop ⚡
 
-**Pokémon-Drops & Prospekt-Angebote der Märkte in deiner Umgebung.**
+**Drop-Radar für Sammelkarten – Releases, Countdowns und Angebote in Deutschland.**
 
-PokéDrop zeigt dir die neuesten Pokémon-Produkte (Booster, Boxen, Plüsch & Co.)
-aus den Prospekten der Märkte in deinem Umkreis – z. B. Marktkauf, REWE, EDEKA,
-Kaufland, Lidl, Müller, Rossmann oder GameStop.
+PokéDrop zeigt live, welches Pokémon-TCG-Set gerade erschienen ist, zählt
+sekundengenau auf die nächsten Drops herunter und verlinkt direkt zu deutschen
+Händlern und zur Prospekt-Suche für Angebote in der Umgebung.
 
-## Features (aktueller Stand)
+## Features
 
-- 📍 **Umkreissuche per GPS** – einstellbarer Radius von 1–50 km
-- 🏪 **Märkte in der Nähe** mit Entfernungsanzeige, nach Distanz sortiert
-- 🎴 **Drops pro Markt** mit Preis, Aktionszeitraum und Verfügbarkeit
-- 🔍 **Filter** nach Marktkette, „nur verfügbar“ und „nur neue Drops“
-- 📱 **Installierbar als App (PWA)** – funktioniert auf praktisch allen
-  Smartphones und Tablets der letzten ~10 Jahre (iPhone/iPad, Samsung,
-  alle Android-Geräte) direkt im Browser, ohne App Store
-- 🌙 Automatischer Dark Mode
-- 📶 Offline-fähig dank Service Worker
+- ⚡ **Echte Release-Daten** für den deutschen Markt (z. B. „Mega-Entwicklung:
+  Dunkelnacht“ seit 17.07.2026, „30 Jahre Pokémon“ am 16.09.2026), recherchiert
+  aus offiziellen Ankündigungen und Produktkalendern
+- ⏱️ **Live-Countdowns**, die jede Sekunde ticken – inkl. Live-Uhr im Header
+- 🔄 **Auto-Update-System:** Die App lädt jede Minute `data/drops.json` neu.
+  Wird die Datei im Repo aktualisiert, sehen alle Nutzer die neuen Daten
+  sofort – ohne Seiten-Reload. Erreicht ein Countdown null, baut sich die
+  Seite automatisch um und der Drop wandert in den „Jetzt erhältlich“-Bereich.
+- 🛒 **Direkte Händler-Links** (Müller, Rossmann, Kaufland, GameStop, Amazon,
+  Cardmarket, idealo, Card-Corner)
+- 📰 **Prospekt-Suche** über marktguru und kaufDA – echte aktuelle Angebote
+  der Märkte in der Nähe (Marktkauf, REWE, EDEKA, Kaufland …)
+- 📱 **PWA:** installierbar auf praktisch allen Smartphones/Tablets der
+  letzten ~10 Jahre, offline-fähig, Dark & Light Mode
 
-> ⚠️ **Demo-Version:** Die Märkte und Drops sind derzeit Beispieldaten, die
-> relativ zum eigenen Standort platziert werden. Eine Anbindung an echte
-> Prospekt-/Angebotsdaten ist der nächste Schritt.
+## Rechtliches Design-Konzept
+
+Die App verwendet bewusst **keine geschützten Grafiken**: kein Pokéball, keine
+offiziellen Logos, Schriftarten oder Charakter-Artworks. Die Pokémon-Anmutung
+entsteht nur über Farbwelt (Mitternachtsblau + Elektro-Gelb), einen dezenten
+„Holo-Foil“-Verlauf und Typografie. Produktnamen werden rein beschreibend
+genannt; ein Disclaimer im Footer stellt die Nicht-Zugehörigkeit zu
+Nintendo/The Pokémon Company klar.
+
+## Daten aktualisieren
+
+Neue Drops einfach in **`data/drops.json`** eintragen (und `lastUpdated`
+hochsetzen) – die laufende App übernimmt die Änderung innerhalb von 60
+Sekunden automatisch. `js/data.js` enthält dieselben Daten als eingebauten
+Offline-Fallback und sollte mitgepflegt werden.
 
 ## App starten
 
-Es wird kein Build-Schritt benötigt – ein beliebiger statischer Webserver
-reicht:
+Kein Build nötig – ein statischer Webserver reicht:
 
 ```bash
-# Variante 1: Python
 python3 -m http.server 8080
-
-# Variante 2: Node
-npx serve .
 ```
 
-Dann im Browser `http://localhost:8080` öffnen.
-
-> Hinweis: Die GPS-Standortabfrage funktioniert nur über `https://` oder
-> `localhost` (Browser-Sicherheitsrichtlinie). Ohne Standortfreigabe läuft die
-> App mit einem Demo-Standort.
-
-## Auf dem Handy installieren
-
-1. Die gehostete Seite im Browser öffnen (z. B. via GitHub Pages).
-2. **Android/Samsung:** Menü → „Zum Startbildschirm hinzufügen“
-3. **iPhone/iPad (Safari):** Teilen-Symbol → „Zum Home-Bildschirm“
+Dann `http://localhost:8080` öffnen. Für die Installation als App auf dem
+Handy: Seite über `https://` hosten (z. B. GitHub Pages) und „Zum
+Startbildschirm hinzufügen“ wählen.
 
 ## Technik
 
-- Reines HTML/CSS/JavaScript – keine Frameworks, kein Build
-- PWA mit Web-App-Manifest und Service Worker (Cache-first)
-- Entfernungsberechnung per Haversine-Formel
+- Reines HTML/CSS/JavaScript, keine Frameworks, kein Build-Schritt
+- Sekunden-Ticker (`setInterval` 1 s) für Uhr und Countdowns
+- Minuten-Polling des JSON-Feeds mit `cache: no-store`
+- Service Worker: App-Dateien cache-first, Daten-Feed immer frisch vom Netz
+- Design-Tokens mit automatischem Dark/Light Mode
 
 ## Roadmap-Ideen
 
-- [ ] Echte Prospekt-Daten anbinden (z. B. Marktguru/offizielle Händler-APIs)
-- [ ] Push-Benachrichtigungen bei neuen Drops im Umkreis
-- [ ] Merkliste / Favoriten
-- [ ] Kartenansicht der Märkte
-- [ ] Community-Meldungen („Drop gesichtet!“)
+- [ ] Push-Benachrichtigungen bei neuen Drops
+- [ ] Automatischer Scraper (GitHub Action), der Release-Kalender und
+      Händler-Verfügbarkeiten regelmäßig in `data/drops.json` schreibt
+- [ ] Merkliste / Erinnerungen pro Set
+- [ ] Preis-Historie über Cardmarket-Daten

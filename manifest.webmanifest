@@ -1,14 +1,14 @@
 {
-  "name": "PokéDrop – Pokémon-Drops in deiner Nähe",
+  "name": "PokéDrop – Drop-Radar für Sammelkarten",
   "short_name": "PokéDrop",
-  "description": "Finde die neuesten Pokémon-Drops und Prospekt-Angebote der Märkte in deiner Umgebung.",
+  "description": "Live-Radar für Pokémon-TCG-Releases und Angebote in Deutschland: Countdowns, Händler-Links, Prospekt-Suche.",
   "lang": "de",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#f4f5f7",
-  "theme_color": "#e3350d",
+  "background_color": "#0b0e1a",
+  "theme_color": "#0b0e1a",
   "icons": [
     {
       "src": "icons/icon.svg",

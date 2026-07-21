@@ -1,273 +1,191 @@
-/* PokéDrop – App-Logik */
+/* PokéDrop – App-Logik
+ *
+ * Zwei Update-Ebenen:
+ *  1. Jede Sekunde: Uhr und alle Countdowns ticken (setInterval 1000 ms).
+ *  2. Jede Minute: data/drops.json wird neu vom Server geladen. Ändert
+ *     sich dort etwas (neuer Drop, neue Infos), wird die Seite sofort neu
+ *     gerendert – ohne Reload. So erreichen Daten-Updates im Repo alle
+ *     Nutzer automatisch.
+ */
 
 (function () {
   "use strict";
 
-  const state = {
-    position: null,        // { lat, lng, label }
-    radiusKm: 10,
-    activeChain: "all",
-    onlyAvailable: true,
-    onlyNew: false,
-    markets: []            // Märkte mit berechneten Koordinaten + Distanz
-  };
+  let data = DROP_DATA; // eingebauter Fallback aus js/data.js
+  const FEED_URL = "data/drops.json";
+  const FEED_INTERVAL_MS = 60000;
 
-  // --- DOM ---
   const $ = (sel) => document.querySelector(sel);
-  const resultsEl = $("#results");
-  const emptyStateEl = $("#empty-state");
-  const locationTextEl = $("#location-text");
-  const locationDotEl = $("#location-dot");
-  const radiusInput = $("#radius");
-  const radiusValueEl = $("#radius-value");
-  const chainFiltersEl = $("#chain-filters");
-  const dialog = $("#drop-dialog");
-  const dialogContent = $("#drop-dialog-content");
 
-  // --- Geo-Helfer ---
+  // ---- Formatierung ----
 
-  function haversineKm(lat1, lng1, lat2, lng2) {
-    const R = 6371;
-    const toRad = (d) => (d * Math.PI) / 180;
-    const dLat = toRad(lat2 - lat1);
-    const dLng = toRad(lng2 - lng1);
-    const a =
-      Math.sin(dLat / 2) ** 2 +
-      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
-    return 2 * R * Math.asin(Math.sqrt(a));
-  }
+  const dateFmt = new Intl.DateTimeFormat("de-DE", {
+    weekday: "short", day: "2-digit", month: "2-digit", year: "numeric"
+  });
 
-  /* Verschiebt eine Position um [Ost, Nord] in km – für die Demo-Märkte. */
-  function offsetPosition(lat, lng, eastKm, northKm) {
-    const dLat = northKm / 111.32;
-    const dLng = eastKm / (111.32 * Math.cos((lat * Math.PI) / 180));
-    return { lat: lat + dLat, lng: lng + dLng };
-  }
-
-  function buildMarkets() {
-    const { lat, lng } = state.position;
-    state.markets = DEMO_MARKETS.map((m) => {
-      const pos = offsetPosition(lat, lng, m.offsetKm[0], m.offsetKm[1]);
-      return {
-        ...m,
-        lat: pos.lat,
-        lng: pos.lng,
-        distanceKm: haversineKm(lat, lng, pos.lat, pos.lng)
-      };
-    }).sort((a, b) => a.distanceKm - b.distanceKm);
-  }
-
-  // --- Standort ---
-
-  function setLocationStatus(mode, text) {
-    locationDotEl.className = "dot " + mode;
-    locationTextEl.textContent = text;
-  }
-
-  function locate() {
-    if (!("geolocation" in navigator)) {
-      startDemo("Gerät unterstützt kein GPS – Demo-Standort aktiv");
-      return;
-    }
-    setLocationStatus("dot-wait", "Standort wird ermittelt …");
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        state.position = {
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude,
-          label: "Dein Standort"
-        };
-        setLocationStatus("dot-on", "Standort aktiv");
-        refresh();
-      },
-      () => {
-        startDemo("Standort abgelehnt – Demo-Standort aktiv");
-      },
-      { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])
     );
   }
 
-  function startDemo(statusText) {
-    state.position = { ...FALLBACK_POSITION };
-    setLocationStatus("dot-on", statusText || "Demo-Standort aktiv");
-    refresh();
+  function linksHtml(links) {
+    return links.map((l) =>
+      '<a class="link-out" href="' + esc(l.url) + '" target="_blank" rel="noopener">' +
+      "<span>" + esc(l.label) + '</span><span class="arrow" aria-hidden="true">→</span></a>'
+    ).join("");
   }
 
-  // --- Rendering ---
+  // ---- Rendering ----
 
-  function formatPrice(p) {
-    return p.toFixed(2).replace(".", ",") + " €";
+  function released(set) {
+    return new Date(set.date).getTime() <= Date.now();
   }
 
-  function formatDateRange(from, to) {
-    const fmt = (iso) => {
-      const d = new Date(iso + "T00:00:00");
-      return d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" });
-    };
-    return from === to ? "nur am " + fmt(from) : fmt(from) + " – " + fmt(to);
+  function renderHero() {
+    const current = data.sets.filter(released).sort(
+      (a, b) => new Date(b.date) - new Date(a.date)
+    )[0];
+    if (!current) { $("#hero").innerHTML = ""; return; }
+
+    const days = Math.floor((Date.now() - new Date(current.date)) / 86400000);
+    const since = days === 0 ? "heute erschienen"
+      : days === 1 ? "seit gestern erhältlich"
+      : "seit " + days + " Tagen erhältlich";
+
+    $("#hero").innerHTML =
+      '<div class="hero-card"><div class="hero-card-inner">' +
+      '<span class="hero-status">● Neu · ' + since + "</span>" +
+      '<p class="hero-series">' + esc(current.series) + "</p>" +
+      "<h1>" + esc(current.name) + "</h1>" +
+      '<p class="hero-tagline">' + esc(current.tagline) + "</p>" +
+      '<ul class="facts">' + current.facts.map((f) => "<li>" + esc(f) + "</li>").join("") + "</ul>" +
+      '<div class="products">' + current.products.map((p) =>
+        '<span class="product-chip">' + esc(p.name) + " · <strong>" + esc(p.price) + "</strong></span>"
+      ).join("") + "</div>" +
+      '<div class="links">' + linksHtml(current.links) + "</div>" +
+      "</div></div>";
   }
 
-  function chipHtml(key, label, active) {
-    return (
-      '<button class="chip' + (active ? " active" : "") + '" data-chain="' +
-      key + '">' + label + "</button>"
+  function renderUpcoming() {
+    const upcoming = data.sets.filter((s) => !released(s)).sort(
+      (a, b) => new Date(a.date) - new Date(b.date)
     );
+    $("#upcoming").innerHTML = upcoming.map((set) =>
+      '<article class="drop-card">' +
+      '<div class="drop-head"><div>' +
+      '<p class="drop-series">' + esc(set.series) + "</p>" +
+      "<h3>" + esc(set.name) + "</h3></div>" +
+      '<span class="drop-date">' + dateFmt.format(new Date(set.date)) + "</span></div>" +
+      '<p class="drop-tagline">' + esc(set.tagline) + "</p>" +
+      '<div class="countdown" data-date="' + esc(set.date) + '" role="timer" aria-label="Countdown bis Release">' +
+      cdCell("--", "Tage") + cdCell("--", "Std") + cdCell("--", "Min") + cdCell("--", "Sek") +
+      "</div>" +
+      '<div class="drop-links">' + linksHtml(set.links) + "</div>" +
+      "</article>"
+    ).join("");
   }
 
-  function renderChainFilters() {
-    const chainsInRange = new Set(
-      state.markets
-        .filter((m) => m.distanceKm <= state.radiusKm)
-        .map((m) => m.chain)
-    );
-    let html = chipHtml("all", "Alle Märkte", state.activeChain === "all");
-    for (const key of Object.keys(CHAINS)) {
-      if (chainsInRange.has(key)) {
-        html += chipHtml(key, CHAINS[key].name, state.activeChain === key);
-      }
-    }
-    chainFiltersEl.innerHTML = html;
+  function cdCell(num, label) {
+    return '<div class="cd-cell"><span class="cd-num">' + num +
+      '</span><span class="cd-label">' + label + "</span></div>";
   }
 
-  function filteredDrops(market) {
-    return market.drops.filter((d) => {
-      if (state.onlyAvailable && !d.available) return false;
-      if (state.onlyNew && !d.isNew) return false;
-      return true;
+  function renderRetailers() {
+    $("#retailers").innerHTML = data.retailers.map((r) =>
+      '<a class="retailer" href="' + esc(r.url) + '" target="_blank" rel="noopener">' +
+      "<strong>" + esc(r.name) + "</strong><span>" + esc(r.note) + "</span>" +
+      '<span class="goto">Zum Shop →</span></a>'
+    ).join("");
+  }
+
+  function renderFlyers() {
+    $("#flyers").innerHTML = data.flyers.map((f) =>
+      '<a class="link-out" href="' + esc(f.url) + '" target="_blank" rel="noopener">' +
+      "<span><strong>" + esc(f.name) + "</strong> – " + esc(f.note) +
+      '</span><span class="arrow" aria-hidden="true">→</span></a>'
+    ).join("");
+  }
+
+  function renderAll() {
+    renderHero();
+    renderUpcoming();
+    renderRetailers();
+    renderFlyers();
+    tick();
+  }
+
+  // ---- Sekunden-Ticker: Uhr + Countdowns ----
+
+  const timeFmt = new Intl.DateTimeFormat("de-DE", {
+    hour: "2-digit", minute: "2-digit", second: "2-digit"
+  });
+
+  function tick() {
+    const now = new Date();
+    const clock = $("#clock");
+    clock.textContent = timeFmt.format(now) + " Uhr";
+    clock.setAttribute("datetime", now.toISOString());
+
+    let needsRerender = false;
+    document.querySelectorAll(".countdown").forEach((el) => {
+      let diff = new Date(el.dataset.date) - now;
+      if (diff <= 0) { needsRerender = true; return; } // Release erreicht → Hero neu aufbauen
+      const d = Math.floor(diff / 86400000); diff -= d * 86400000;
+      const h = Math.floor(diff / 3600000); diff -= h * 3600000;
+      const m = Math.floor(diff / 60000);
+      const s = Math.floor((diff - m * 60000) / 1000);
+      const nums = el.querySelectorAll(".cd-num");
+      nums[0].textContent = d;
+      nums[1].textContent = String(h).padStart(2, "0");
+      nums[2].textContent = String(m).padStart(2, "0");
+      nums[3].textContent = String(s).padStart(2, "0");
     });
+    if (needsRerender) renderAll();
   }
 
-  function renderMarkets() {
-    const visible = state.markets.filter((m) => {
-      if (m.distanceKm > state.radiusKm) return false;
-      if (state.activeChain !== "all" && m.chain !== state.activeChain) return false;
-      return filteredDrops(m).length > 0;
+  setInterval(tick, 1000);
+
+  // ---- Minuten-Feed: Daten automatisch aktualisieren ----
+
+  function setStatus(extra) {
+    const stand = new Date(data.lastUpdated).toLocaleString("de-DE", {
+      day: "2-digit", month: "2-digit", year: "numeric",
+      hour: "2-digit", minute: "2-digit"
     });
+    $("#update-status").innerHTML =
+      "Datenstand: " + stand + " Uhr · prüft automatisch jede Minute auf Updates" +
+      (extra ? ' · <span class="fresh">' + extra + "</span>" : "");
+  }
 
-    if (!state.position) return;
-
-    if (visible.length === 0) {
-      resultsEl.innerHTML =
-        '<div class="empty-state"><div class="empty-icon">😢</div>' +
-        "<p>Keine Pokémon-Drops im Umkreis von " + state.radiusKm + " km gefunden.</p>" +
-        '<p class="hint">Vergrößere den Umkreis oder ändere die Filter.</p></div>';
-      return;
-    }
-
-    let html = "";
-    for (const m of visible) {
-      const chain = CHAINS[m.chain];
-      const drops = filteredDrops(m);
-      html +=
-        '<article class="market-card">' +
-        '<div class="market-header">' +
-        '<div class="market-logo" style="background:' + chain.color +
-        (chain.textColor ? ";color:" + chain.textColor : "") + '">' +
-        chain.name + "</div>" +
-        '<div class="market-info"><h2>' + m.branch + "</h2>" +
-        '<div class="address">' + m.address + "</div></div>" +
-        '<div class="market-distance">' + m.distanceKm.toFixed(1).replace(".", ",") +
-        " km</div></div>";
-
-      for (const d of drops) {
-        html +=
-          '<div class="drop" data-market="' + m.id + '" data-drop="' + d.id + '">' +
-          '<div class="drop-emoji">' + d.emoji + "</div>" +
-          '<div class="drop-body"><div class="drop-title">' + d.title +
-          (d.isNew ? ' <span class="badge badge-new">Neu</span>' : "") +
-          (!d.available ? ' <span class="badge badge-out">Ausverkauft</span>' : "") +
-          "</div>" +
-          '<div class="drop-meta">' + formatDateRange(d.validFrom, d.validTo) + "</div></div>" +
-          '<div class="drop-price">' + formatPrice(d.price) + "</div></div>";
+  async function checkFeed() {
+    try {
+      const res = await fetch(FEED_URL + "?t=" + Date.now(), { cache: "no-store" });
+      if (!res.ok) return;
+      const fresh = await res.json();
+      if (fresh.lastUpdated !== data.lastUpdated) {
+        data = fresh;
+        renderAll();
+        setStatus("gerade aktualisiert");
+      } else {
+        setStatus();
       }
-
-      html += "</article>";
+    } catch (_) {
+      /* offline oder Feed nicht erreichbar – eingebaute Daten bleiben aktiv */
+      setStatus();
     }
-    resultsEl.innerHTML = html;
   }
 
-  function refresh() {
-    if (!state.position) return;
-    buildMarkets();
-    renderChainFilters();
-    renderMarkets();
-    $("#last-update").textContent =
-      "Stand: " + new Date().toLocaleString("de-DE", {
-        day: "2-digit", month: "2-digit", year: "numeric",
-        hour: "2-digit", minute: "2-digit"
-      }) + " Uhr";
-  }
+  // ---- Start ----
 
-  function showDropDialog(marketId, dropId) {
-    const market = state.markets.find((m) => m.id === marketId);
-    if (!market) return;
-    const drop = market.drops.find((d) => d.id === dropId);
-    if (!drop) return;
-    const chain = CHAINS[market.chain];
+  renderAll();
+  setStatus();
+  checkFeed();
+  setInterval(checkFeed, FEED_INTERVAL_MS);
 
-    dialogContent.innerHTML =
-      "<h3>" + drop.emoji + " " + drop.title + "</h3>" +
-      "<p><strong>" + formatPrice(drop.price) + "</strong></p>" +
-      "<p>🏪 " + chain.name + " – " + market.branch + ", " + market.address + "</p>" +
-      "<p>📍 Entfernung: " + market.distanceKm.toFixed(1).replace(".", ",") + " km</p>" +
-      "<p>🗓️ Aktionszeitraum: " + formatDateRange(drop.validFrom, drop.validTo) + "</p>" +
-      "<p>" + (drop.available ? "✅ Verfügbar" : "❌ Aktuell ausverkauft") + "</p>" +
-      (drop.note ? '<p class="hint">ℹ️ ' + drop.note + "</p>" : "");
-    dialog.showModal();
-  }
-
-  // --- Events ---
-
-  $("#btn-locate").addEventListener("click", locate);
-  $("#btn-demo").addEventListener("click", () => startDemo());
-  $("#btn-refresh").addEventListener("click", () => {
-    if (state.position) refresh();
-    else locate();
-  });
-
-  radiusInput.addEventListener("input", () => {
-    state.radiusKm = Number(radiusInput.value);
-    radiusValueEl.textContent = state.radiusKm + " km";
-    if (state.position) {
-      renderChainFilters();
-      renderMarkets();
-    }
-  });
-
-  chainFiltersEl.addEventListener("click", (e) => {
-    const chip = e.target.closest(".chip");
-    if (!chip) return;
-    state.activeChain = chip.dataset.chain;
-    renderChainFilters();
-    renderMarkets();
-  });
-
-  $("#filter-available").addEventListener("change", (e) => {
-    state.onlyAvailable = e.target.checked;
-    renderMarkets();
-  });
-
-  $("#filter-new").addEventListener("change", (e) => {
-    state.onlyNew = e.target.checked;
-    renderMarkets();
-  });
-
-  resultsEl.addEventListener("click", (e) => {
-    const dropEl = e.target.closest(".drop");
-    if (dropEl) showDropDialog(dropEl.dataset.market, dropEl.dataset.drop);
-  });
-
-  $("#btn-close-dialog").addEventListener("click", () => dialog.close());
-  dialog.addEventListener("click", (e) => {
-    if (e.target === dialog) dialog.close();
-  });
-
-  // --- Service Worker (PWA / offline) ---
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("sw.js").catch(() => {
-        /* Offline-Modus ist optional – Fehler hier nicht kritisch. */
-      });
+      navigator.serviceWorker.register("sw.js").catch(() => {});
     });
   }
 })();

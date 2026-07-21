@@ -1,219 +1,101 @@
 /*
- * PokéDrop – Demodaten
+ * PokéDrop – Echte Release- und Händlerdaten (Deutschland)
  *
- * Solange es keine echte Prospekt-/Drop-API gibt, werden Beispiel-Märkte
- * relativ zur Position des Nutzers erzeugt, damit die Umkreissuche
- * überall in Deutschland sinnvoll demonstriert werden kann.
+ * Quellen: pokemon.com/de, ICv2-Produktkalender 2026, deutsche
+ * Release-Kalender (PokeZentrum, TCG-Händler). Stand: 21.07.2026.
  *
- * offsetKm: Verschiebung [Ost, Nord] in km gegenüber dem Nutzerstandort.
+ * Diese Daten sind der eingebaute Fallback. Die App versucht zusätzlich,
+ * data/drops.json vom Server zu laden und alle 60 Sekunden zu
+ * aktualisieren – so erscheinen Daten-Updates im Repo sofort bei allen
+ * Nutzern, ohne dass sie die Seite neu laden müssen.
  */
 
-const CHAINS = {
-  marktkauf: { name: "Marktkauf", color: "#e30613" },
-  rewe:      { name: "REWE",      color: "#cc071e" },
-  edeka:     { name: "EDEKA",     color: "#ffd500", textColor: "#1c1c1e" },
-  kaufland:  { name: "Kaufland",  color: "#e10915" },
-  lidl:      { name: "Lidl",      color: "#0050aa" },
-  mueller:   { name: "Müller",    color: "#f39200" },
-  rossmann:  { name: "Rossmann",  color: "#c3002d" },
-  gamestop:  { name: "GameStop",  color: "#000000" }
+const DROP_DATA = {
+  lastUpdated: "2026-07-21T09:00:00+02:00",
+  sets: [
+    {
+      id: "dunkelnacht",
+      series: "Mega-Entwicklung · Hauptset Nr. 5",
+      name: "Dunkelnacht",
+      date: "2026-07-17T00:00:00+02:00",
+      tagline: "Mega-Darkrai-ex erscheint zum ersten Mal – das dunkelste Set der Mega-Entwicklung-Reihe.",
+      facts: [
+        "120 Karten + 36 Secret Rares",
+        "Mega-Darkrai-ex, Mega-Zeraora-ex, Mega-Skelabra-ex, Mega-Stalobor-ex",
+        "Top-Trainer-Box mit exklusiver Zarude-Promokarte"
+      ],
+      products: [
+        { name: "Boosterpack", price: "ca. 4,99 €" },
+        { name: "Top-Trainer-Box", price: "ca. 54,99 €" },
+        { name: "Kollektionen & Blister", price: "ab ca. 12,99 €" }
+      ],
+      links: [
+        { label: "Offizielle Ankündigung (pokemon.com)", url: "https://www.pokemon.com/de/news/die-erweiterung-mega-entwicklung-dunkelnacht-des-pokemon-sammelkartenspiels-erscheint-am-17-juli-2026" },
+        { label: "Kartenliste & Galerie (PokeZentrum)", url: "https://pokezentrum.de/pokemon-karten-news/pokemon-dunkelnacht-kartenliste-und-kartengalerie/" },
+        { label: "Preisvergleich (Cardmarket)", url: "https://www.cardmarket.com/de/Pokemon" }
+      ]
+    },
+    {
+      id: "first-partner-3",
+      series: "Sammel-Kollektion",
+      name: "First Partner Collection – Serie 3",
+      date: "2026-08-07T00:00:00+02:00",
+      tagline: "Dritte Runde der Jumbo-Karten-Kollektion mit den Starter-Pokémon.",
+      facts: ["Jumbo-Karten im Übergrößen-Format", "Teil der Reihe zum 30-jährigen Jubiläum"],
+      products: [{ name: "Kollektions-Box", price: "Preis noch offen" }],
+      links: [
+        { label: "Produktkalender 2026 (ICv2)", url: "https://icv2.com/articles/news/view/61079/pokemon-tcg-2026-product-calendar" }
+      ]
+    },
+    {
+      id: "mega-forces-tins",
+      series: "Tin-Boxen",
+      name: "Mega Forces Tins",
+      date: "2026-08-28T00:00:00+02:00",
+      tagline: "Neue Sammel-Tins zur Mega-Entwicklung-Reihe mit Boosterpacks und Promokarte.",
+      facts: ["Metallboxen mit Boosterpacks", "Motive aus der Mega-Entwicklung-Serie"],
+      products: [{ name: "Tin-Box", price: "ca. 29,99 €" }],
+      links: [
+        { label: "Produktkalender 2026 (ICv2)", url: "https://icv2.com/articles/news/view/61079/pokemon-tcg-2026-product-calendar" }
+      ]
+    },
+    {
+      id: "30-jahre",
+      series: "Spezialset · Jubiläum",
+      name: "30 Jahre Pokémon",
+      date: "2026-09-16T00:00:00+02:00",
+      tagline: "Das große Jubiläums-Set: erster weltweit zeitgleicher Release der TCG-Geschichte.",
+      facts: [
+        "Nostalgie-Reise durch 30 Jahre Sammelkartenspiel",
+        "Komplett-Foil-Set folgt am 18.09.2026 – jede Karte glänzt",
+        "Ab Oktober: 9 Jubiläums-Kartensets, eines pro Generation"
+      ],
+      products: [
+        { name: "Jubiläums-Boosterpacks", price: "Preis noch offen" },
+        { name: "All-Foil-Set (ab 18.09.)", price: "Preis noch offen" }
+      ],
+      links: [
+        { label: "Release-Kalender (Kaisaking TCG)", url: "https://www.kaisaking-tcg.de/pokemon/release-kalender" },
+        { label: "Produktkalender 2026 (ICv2)", url: "https://icv2.com/articles/news/view/61079/pokemon-tcg-2026-product-calendar" }
+      ]
+    }
+  ],
+
+  /* Deutsche Händler mit direkten Links zum Pokémon-TCG-Sortiment. */
+  retailers: [
+    { name: "Müller", note: "Große TCG-Auswahl in Filialen & online", url: "https://www.mueller.de/search/?q=pok%C3%A9mon%20karten" },
+    { name: "Rossmann", note: "Booster & Blister, oft Aktionspreise", url: "https://www.rossmann.de/de/search?text=pokemon" },
+    { name: "Kaufland", note: "Online-Marktplatz mit vielen Anbietern", url: "https://www.kaufland.de/s/?search_value=pokemon%20karten" },
+    { name: "GameStop", note: "Release-Drops & Vorbestellungen", url: "https://www.gamestop.de/SearchResult/QuickSearch?q=pokemon" },
+    { name: "Amazon", note: "Schnelle Verfügbarkeits-Checks", url: "https://www.amazon.de/s?k=pokemon+karten" },
+    { name: "Cardmarket", note: "Europas größter TCG-Marktplatz, Preisvergleich", url: "https://www.cardmarket.com/de/Pokemon" },
+    { name: "idealo", note: "Preisvergleich über viele Shops", url: "https://www.idealo.de/preisvergleich/MainSearchProductCategory.html?q=pokemon+karten" },
+    { name: "Card-Corner", note: "TCG-Fachhändler, aktuelle Sets", url: "https://www.card-corner.de/pokemon-dunkelnacht" }
+  ],
+
+  /* Prospekt-Suche: zeigt echte aktuelle Angebote der Märkte in der Nähe. */
+  flyers: [
+    { name: "marktguru", note: "Pokémon-Angebote aus allen aktuellen Prospekten deiner Umgebung", url: "https://www.marktguru.de/search?q=pokemon" },
+    { name: "kaufDA", note: "Prospekte von Marktkauf, REWE, EDEKA & Co. durchsuchen", url: "https://www.kaufda.de/webapp/search?query=pokemon" }
+  ]
 };
-
-const DEMO_MARKETS = [
-  {
-    id: "m1",
-    chain: "marktkauf",
-    branch: "Marktkauf-Center",
-    address: "Hauptstraße 12",
-    offsetKm: [2.1, 1.4],
-    drops: [
-      {
-        id: "d1",
-        emoji: "🎴",
-        title: "Pokémon TCG: Karmesin & Purpur – Boosterpack",
-        price: 4.99,
-        validFrom: "2026-07-20",
-        validTo: "2026-07-26",
-        available: true,
-        isNew: true,
-        note: "Neu im aktuellen Prospekt. Limitiert auf 10 Packs pro Kunde."
-      },
-      {
-        id: "d2",
-        emoji: "📦",
-        title: "Pokémon TCG: Top-Trainer-Box",
-        price: 44.99,
-        validFrom: "2026-07-20",
-        validTo: "2026-07-26",
-        available: true,
-        isNew: false,
-        note: "Solange der Vorrat reicht."
-      }
-    ]
-  },
-  {
-    id: "m2",
-    chain: "rewe",
-    branch: "REWE Markt",
-    address: "Bahnhofstraße 3",
-    offsetKm: [-1.2, 3.8],
-    drops: [
-      {
-        id: "d3",
-        emoji: "🎴",
-        title: "Pokémon TCG: 3er-Booster-Blister",
-        price: 12.99,
-        validFrom: "2026-07-21",
-        validTo: "2026-07-27",
-        available: true,
-        isNew: true,
-        note: "Mit Promo-Münze. Ab Montag im Regal."
-      }
-    ]
-  },
-  {
-    id: "m3",
-    chain: "edeka",
-    branch: "EDEKA Center",
-    address: "Am Markt 7",
-    offsetKm: [4.5, -2.2],
-    drops: [
-      {
-        id: "d4",
-        emoji: "🧸",
-        title: "Pokémon Plüschfigur (Pikachu, Evoli u.a.)",
-        price: 14.99,
-        validFrom: "2026-07-18",
-        validTo: "2026-07-25",
-        available: true,
-        isNew: false,
-        note: "Verschiedene Figuren, ca. 20 cm."
-      },
-      {
-        id: "d5",
-        emoji: "🎴",
-        title: "Pokémon TCG: Themendeck",
-        price: 16.99,
-        validFrom: "2026-07-18",
-        validTo: "2026-07-25",
-        available: false,
-        isNew: false,
-        note: "Aktuell ausverkauft – Nachlieferung erwartet."
-      }
-    ]
-  },
-  {
-    id: "m4",
-    chain: "kaufland",
-    branch: "Kaufland",
-    address: "Industriering 22",
-    offsetKm: [-5.9, -4.1],
-    drops: [
-      {
-        id: "d6",
-        emoji: "🎁",
-        title: "Pokémon TCG: Kollektions-Box (exklusive Promokarte)",
-        price: 29.99,
-        validFrom: "2026-07-22",
-        validTo: "2026-07-29",
-        available: true,
-        isNew: true,
-        note: "Drop startet Mittwoch, 8 Uhr."
-      }
-    ]
-  },
-  {
-    id: "m5",
-    chain: "lidl",
-    branch: "Lidl",
-    address: "Gewerbestraße 5",
-    offsetKm: [7.8, 5.5],
-    drops: [
-      {
-        id: "d7",
-        emoji: "🎴",
-        title: "Pokémon TCG: Booster-Bundle (6 Packs)",
-        price: 24.99,
-        validFrom: "2026-07-24",
-        validTo: "2026-07-27",
-        available: true,
-        isNew: true,
-        note: "Nur Donnerstag bis Sonntag, Aktionsware."
-      }
-    ]
-  },
-  {
-    id: "m6",
-    chain: "mueller",
-    branch: "Müller Drogerie",
-    address: "Fußgängerzone 9",
-    offsetKm: [0.8, -8.3],
-    drops: [
-      {
-        id: "d8",
-        emoji: "🎴",
-        title: "Pokémon TCG: Elite-Trainer-Box",
-        price: 54.99,
-        validFrom: "2026-07-19",
-        validTo: "2026-08-01",
-        available: true,
-        isNew: false,
-        note: "Große Auswahl an Einzelpacks vor Ort."
-      },
-      {
-        id: "d9",
-        emoji: "🕹️",
-        title: "Pokémon Sammelfiguren-Set",
-        price: 9.99,
-        validFrom: "2026-07-19",
-        validTo: "2026-08-01",
-        available: true,
-        isNew: false,
-        note: ""
-      }
-    ]
-  },
-  {
-    id: "m7",
-    chain: "rossmann",
-    branch: "Rossmann",
-    address: "Lindenallee 14",
-    offsetKm: [-9.6, 7.9],
-    drops: [
-      {
-        id: "d10",
-        emoji: "🎴",
-        title: "Pokémon TCG: Sleeved Booster",
-        price: 5.49,
-        validFrom: "2026-07-20",
-        validTo: "2026-07-31",
-        available: true,
-        isNew: false,
-        note: ""
-      }
-    ]
-  },
-  {
-    id: "m8",
-    chain: "gamestop",
-    branch: "GameStop",
-    address: "City-Galerie, EG",
-    offsetKm: [12.4, -10.8],
-    drops: [
-      {
-        id: "d11",
-        emoji: "💎",
-        title: "Pokémon TCG: Ultra-Premium-Kollektion",
-        price: 129.99,
-        validFrom: "2026-07-25",
-        validTo: "2026-07-25",
-        available: true,
-        isNew: true,
-        note: "Release-Drop am Samstag – Vorbestellung empfohlen!"
-      }
-    ]
-  }
-];
-
-/* Fallback-Standort (Kiel), falls der Nutzer die Demo ohne GPS startet. */
-const FALLBACK_POSITION = { lat: 54.3233, lng: 10.1228, label: "Demo-Standort" };
