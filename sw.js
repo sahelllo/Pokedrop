@@ -2,7 +2,7 @@
    App-Dateien cache-first (schneller Start, offline nutzbar),
    Datendateien immer aus dem Netz (Verfügbarkeit muss frisch sein). */
 
-const VERSION = 'pokedrop-v4';
+const VERSION = 'pokedrop-v5';
 const SCHALE = [
   './',
   './index.html',
