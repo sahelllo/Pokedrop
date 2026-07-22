@@ -1,0 +1,56 @@
+name: Deploy PokeDrop zu GitHub Pages
+
+# Baut die Next.js-App als statischen Export und veröffentlicht sie auf dem
+# Branch `gh-pages`, den GitHub Pages ausliefert. Läuft automatisch bei jedem
+# Push auf den Entwicklungs-Branch oder main – und manuell über "Run workflow".
+on:
+  push:
+    branches:
+      - main
+      - claude/website-gitter-tasks-p12l90
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pokedrop-pages
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      - name: Statischen Export bauen
+        env:
+          GITHUB_PAGES: "true"
+        run: npm run build
+
+      - name: Pages-Dateien vorbereiten
+        run: |
+          touch out/.nojekyll
+
+      - name: Auf gh-pages veröffentlichen
+        run: |
+          cd out
+          git init -q
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -qm "Deploy ${GITHUB_SHA}"
+          git branch -M gh-pages
+          git push -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

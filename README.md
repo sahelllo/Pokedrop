@@ -81,11 +81,11 @@ npm run dev        # Entwicklungsserver
 # → http://localhost:3000
 ```
 
-Produktions-Build lokal testen:
+Produktions-Build (statischer Export) lokal testen:
 
 ```bash
-npm run build
-npm run start
+npm run build          # erzeugt den Ordner out/
+npx serve out          # → http://localhost:3000
 ```
 
 ---
@@ -127,19 +127,42 @@ API-Key nötig.
 
 ---
 
-## Auf Vercel veröffentlichen (Schritt für Schritt, ohne Vorwissen)
+## Auf GitHub Pages veröffentlichen (der eingebaute Weg)
 
-1. Code zu **GitHub** pushen (dieses Repo).
-2. Auf [vercel.com](https://vercel.com) mit dem GitHub-Konto anmelden.
-3. **„Add New…" → „Project"** klicken und dieses Repository auswählen.
-4. Vercel erkennt **Next.js automatisch** – alle Einstellungen einfach so lassen
-   (Framework: Next.js, Build: `next build`). Keine Umgebungsvariablen nötig.
-5. **„Deploy"** klicken. Nach ~1–2 Minuten ist die App unter einer
-   `*.vercel.app`-Adresse live.
-6. Jeder weitere `git push` deployt automatisch neu.
+GitHub Pages kann Next.js nicht selbst bauen – es liefert nur fertige statische
+Dateien. Deshalb ist die App als **statischer Export** konfiguriert
+(`output: "export"` in `next.config.mjs`) und ein **GitHub-Actions-Workflow**
+(`.github/workflows/deploy-pages.yml`) baut sie automatisch und veröffentlicht
+das Ergebnis auf dem Branch **`gh-pages`**.
 
-> **Netlify-Alternative:** „Add new site" → Repo wählen → Build `npm run build`.
-> Das offizielle Next.js-Plugin wird automatisch verwendet.
+**Einmalig einzustellen (nur ein Klickpfad):**
+
+1. Nach dem ersten Push läuft der Workflow automatisch (Tab **„Actions"** im
+   Repo) und erstellt den Branch **`gh-pages`**.
+2. Repo → **Settings → Pages**.
+3. Unter **„Build and deployment" → „Source"**: **„Deploy from a branch"**.
+4. **Branch**: `gh-pages` wählen, Ordner **`/ (root)`**, dann **Save**.
+5. Nach ~1 Minute ist die App live unter
+   **`https://<dein-name>.github.io/Pokedrop/`**.
+
+Ab dann deployt jeder Push auf `main` oder den Entwicklungs-Branch automatisch neu.
+
+> Läuft die App unter einem **anderen Repo-Namen**? Dann `repoBase` in
+> `next.config.mjs` entsprechend anpassen (z. B. `/mein-repo`).
+
+> **Alte PWA im Cache?** Die frühere Version hatte einen Service Worker, der die
+> alte Seite zwischenspeichert. `public/sw.js` ist ein Kill-Switch, der ihn
+> abschaltet und die Caches leert. Falls trotzdem die alte Seite erscheint:
+> Seite einmal komplett schließen und neu öffnen (auf dem iPhone die zum
+> Home-Bildschirm gelegte App löschen und neu hinzufügen).
+
+## Alternative: Vercel
+
+1. Auf [vercel.com](https://vercel.com) mit dem GitHub-Konto anmelden.
+2. **„Add New…" → „Project"** → dieses Repository auswählen.
+3. Vercel erkennt **Next.js automatisch** – Einstellungen so lassen. Da die App
+   ein statischer Export ist, läuft sie dort an der Wurzel (kein `/Pokedrop`).
+4. **„Deploy"** klicken – nach ~1–2 Minuten unter einer `*.vercel.app`-Adresse live.
 
 ---
 

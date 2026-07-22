@@ -1,9 +1,21 @@
+/**
+ * Statischer Export für GitHub Pages.
+ *
+ * - `output: "export"` erzeugt beim Build einen komplett statischen `out/`-Ordner,
+ *   den GitHub Pages direkt ausliefern kann (Pages baut Next.js NICHT selbst).
+ * - Auf GitHub Pages läuft die App unter dem Unterpfad /Pokedrop/, daher wird
+ *   `basePath` gesetzt, wenn die Umgebungsvariable GITHUB_PAGES=true ist
+ *   (der Deploy-Workflow setzt sie). Lokal & auf Vercel bleibt sie an der Wurzel.
+ */
+const isGithubPages = process.env.GITHUB_PAGES === "true";
+const repoBase = "/Pokedrop";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "export",
+  trailingSlash: true,
+  basePath: isGithubPages ? repoBase : undefined,
   reactStrictMode: true,
-  // Bilder kommen von öffentlichen CDNs (PokéAPI-Artwork, Pokémon-TCG-API).
-  // `unoptimized` hält den Build ohne serverseitigen Image-Fetch lauffähig –
-  // ideal für einen reinen Static/Vercel-Deploy. Fallbacks siehe components/smart-image.tsx.
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -13,7 +25,6 @@ const nextConfig = {
     ],
   },
   eslint: {
-    // Der Produktions-Build soll auch dann durchlaufen, wenn Lint-Warnungen bestehen.
     ignoreDuringBuilds: true,
   },
 };
