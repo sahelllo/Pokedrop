@@ -4,11 +4,12 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { Sparkles } from "lucide-react";
+import { Heart, Sparkles } from "lucide-react";
 import { NAV_ITEMS } from "@/components/nav-items";
 import { ActivityTicker } from "@/components/activity-ticker";
 import { HoloBackground } from "@/components/holo-background";
 import { ThemeSwitch } from "@/components/theme-switch";
+import { ChatWidget } from "@/components/chat-widget";
 import { usePokeStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -79,6 +80,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 </Link>
               </Button>
             )}
+            <Link
+              href="/watchlist"
+              aria-label="Merkliste & Einstellungen"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface/60 text-muted-foreground transition hover:text-foreground lg:hidden"
+            >
+              <Heart className="h-4 w-4" />
+            </Link>
             <div className="lg:hidden">
               <ThemeSwitch />
             </div>
@@ -122,6 +130,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           })}
         </div>
       </nav>
+
+      {/* Support-Chat (global) */}
+      <ChatWidget />
     </div>
   );
 }

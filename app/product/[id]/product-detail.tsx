@@ -11,7 +11,10 @@ import {
   Info,
   Package,
   TrendingDown,
+  Wallet,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/toast";
 import { productsById } from "@/data/products";
 import { getOffersForProduct, getDealViewForOffer } from "@/lib/data";
 import { productAgeMonths } from "@/lib/deals";
@@ -23,6 +26,7 @@ import { SmartImage } from "@/components/smart-image";
 import { DealBadgePill } from "@/components/deal-badge";
 import { DealCard } from "@/components/deal-card";
 import { PriceChart } from "@/components/price-chart";
+import { PriceSources } from "@/components/price-sources";
 import { NotifyDialog } from "@/components/notify-dialog";
 import { SectionHeading, EmptyState } from "@/components/section";
 import { energyMeta } from "@/lib/energy";
@@ -42,6 +46,8 @@ function ProductDetail({ id }: { id: string }) {
   const radiusKm = usePokeStore((s) => s.radiusKm);
   const watched = usePokeStore((s) => s.watchlist.includes(id));
   const toggleWatch = usePokeStore((s) => s.toggleWatch);
+  const addToPortfolio = usePokeStore((s) => s.addToPortfolio);
+  const { push } = useToast();
 
   const product = productsById.get(id);
 
@@ -152,6 +158,15 @@ function ProductDetail({ id }: { id: string }) {
 
           <div className="mt-4 flex flex-wrap gap-2">
             <NotifyDialog product={product} />
+            <Button
+              variant="outline"
+              onClick={() => {
+                addToPortfolio(product.product_id);
+                push({ title: "Zur Sammlung hinzugefügt", description: product.product_name, kind: "success" });
+              }}
+            >
+              <Wallet className="h-4 w-4" /> Zur Sammlung
+            </Button>
             {evaluation && evaluation.savingsVsUvp > 0 && (
               <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-3 py-2 text-sm font-semibold text-emerald-400">
                 <TrendingDown className="h-4 w-4" /> {Math.round(evaluation.savingsPct)}% gespart
@@ -161,9 +176,18 @@ function ProductDetail({ id }: { id: string }) {
         </div>
       </div>
 
+      {/* Live-Preisaggregation über mehrere Quellen */}
+      <section>
+        <SectionHeading
+          title="Preise aus allen Quellen"
+          subtitle="Cardmarket · TCGplayer · Pokémon Center · lokal – Bestpreis markiert"
+        />
+        <PriceSources product={product} />
+      </section>
+
       {/* Preisverlauf */}
       <section className="rounded-3xl border border-border bg-card p-4 shadow-card sm:p-5">
-        <SectionHeading title="Preisverlauf" subtitle="UVP · Markt-Referenz · PokeDrop-Dealpreise (12 Monate)" />
+        <SectionHeading title="Preisverlauf" subtitle="UVP · Markt-Referenz · PokeDrop-Dealpreise" />
         <PriceChart product={product} />
       </section>
 

@@ -52,6 +52,42 @@ export function buildPriceHistory(product: Product, months = 12): PricePoint[] {
   return points;
 }
 
+/**
+ * Täglicher Preisverlauf der letzten N Tage (30-Tage-Trend, Recharts).
+ */
+export function buildPriceHistoryDaily(product: Product, days = 30): PricePoint[] {
+  const points: PricePoint[] = [];
+  const now = new Date("2026-07-22");
+  let seed = hash(product.product_id + ":d");
+  const rnd = () => {
+    seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+    return seed / 0x7fffffff;
+  };
+
+  const uvp = product.reference_uvp;
+  const market = product.market_reference_price;
+  const isOlder = product.availability_status !== "aktuell";
+  const low = product.pokedrop_lowest ?? uvp * 0.85;
+
+  // sanfter Random-Walk um den Referenzpreis
+  let cur = isOlder ? market : uvp;
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date(now);
+    d.setDate(d.getDate() - i);
+    cur += (rnd() - 0.5) * (isOlder ? market : uvp) * 0.03;
+    cur = Math.max(low * 0.98, Math.min(cur, (isOlder ? market : uvp) * 1.15));
+    const bestDeal = Math.max(low, cur * (0.82 + rnd() * 0.1));
+    points.push({
+      date: d.toISOString().slice(0, 10),
+      label: d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }),
+      uvp: round(uvp),
+      market: round(cur),
+      bestDeal: round(bestDeal),
+    });
+  }
+  return points;
+}
+
 function round(n: number): number {
   return Math.round(n * 100) / 100;
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import {
   Area,
   AreaChart,
@@ -11,16 +12,37 @@ import {
   YAxis,
 } from "recharts";
 import type { Product } from "@/types";
-import { buildPriceHistory } from "@/lib/price-history";
-import { formatEuro } from "@/lib/utils";
+import { buildPriceHistory, buildPriceHistoryDaily } from "@/lib/price-history";
+import { cn, formatEuro } from "@/lib/utils";
 
 export function PriceChart({ product }: { product: Product }) {
-  const data = buildPriceHistory(product);
+  const [range, setRange] = React.useState<"30d" | "12m">("30d");
+  const data = React.useMemo(
+    () => (range === "30d" ? buildPriceHistoryDaily(product, 30) : buildPriceHistory(product)),
+    [product, range],
+  );
   const low = Math.min(...data.map((d) => d.bestDeal)) * 0.92;
   const high = Math.max(...data.map((d) => d.market), product.reference_uvp) * 1.06;
 
   return (
-    <div className="h-64 w-full">
+    <div className="w-full">
+      <div className="mb-2 flex justify-end">
+        <div className="inline-flex rounded-full bg-surface-2 p-0.5 text-xs">
+          {(["30d", "12m"] as const).map((r) => (
+            <button
+              key={r}
+              onClick={() => setRange(r)}
+              className={cn(
+                "rounded-full px-3 py-1 font-medium transition",
+                range === r ? "bg-primary text-primary-foreground" : "text-muted-foreground",
+              )}
+            >
+              {r === "30d" ? "30 Tage" : "12 Monate"}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="h-64 w-full">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data} margin={{ top: 8, right: 8, left: -12, bottom: 0 }}>
           <defs>
@@ -75,6 +97,7 @@ export function PriceChart({ product }: { product: Product }) {
           />
         </AreaChart>
       </ResponsiveContainer>
+      </div>
       <div className="mt-2 flex flex-wrap justify-center gap-4 text-[11px] text-muted-foreground">
         <Legend color="#3aa0ff" label="UVP" dashed />
         <Legend color="#f0b429" label="Markt-Referenz" />

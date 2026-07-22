@@ -17,6 +17,11 @@ export interface AlertRule {
   scope: "lokal" | "deutschlandweit";
 }
 
+export interface PortfolioItem {
+  product_id: string;
+  qty: number;
+}
+
 interface PokeDropState {
   // Standort & Radius (Masterliste 6 / 17)
   location: UserLocation;
@@ -41,6 +46,13 @@ interface PokeDropState {
   alertRules: AlertRule[];
   setAlertRule: (rule: AlertRule) => void;
   removeAlertRule: (productId: string) => void;
+
+  // Portfolio / Sammlung (Collection-Tracking)
+  portfolio: PortfolioItem[];
+  addToPortfolio: (productId: string) => void;
+  removeFromPortfolio: (productId: string) => void;
+  setPortfolioQty: (productId: string, qty: number) => void;
+  isInPortfolio: (productId: string) => boolean;
 
   // Premium (nur Demo-Anzeige – echter Status käme serverseitig)
   premium: boolean;
@@ -109,6 +121,33 @@ export const usePokeStore = create<PokeDropState>()(
           alertRules: state.alertRules.filter((r) => r.product_id !== productId),
         })),
 
+      portfolio: [],
+      addToPortfolio: (productId) =>
+        set((state) =>
+          state.portfolio.find((p) => p.product_id === productId)
+            ? {
+                portfolio: state.portfolio.map((p) =>
+                  p.product_id === productId ? { ...p, qty: p.qty + 1 } : p,
+                ),
+              }
+            : { portfolio: [...state.portfolio, { product_id: productId, qty: 1 }] },
+        ),
+      removeFromPortfolio: (productId) =>
+        set((state) => ({
+          portfolio: state.portfolio.filter((p) => p.product_id !== productId),
+        })),
+      setPortfolioQty: (productId, qty) =>
+        set((state) =>
+          qty <= 0
+            ? { portfolio: state.portfolio.filter((p) => p.product_id !== productId) }
+            : {
+                portfolio: state.portfolio.map((p) =>
+                  p.product_id === productId ? { ...p, qty } : p,
+                ),
+              },
+        ),
+      isInPortfolio: (productId) => get().portfolio.some((p) => p.product_id === productId),
+
       premium: false,
       setPremium: (premium) => set({ premium }),
 
@@ -131,6 +170,7 @@ export const usePokeStore = create<PokeDropState>()(
         watchlist: s.watchlist,
         savedEvents: s.savedEvents,
         alertRules: s.alertRules,
+        portfolio: s.portfolio,
         premium: s.premium,
         theme: s.theme,
         onboarded: s.onboarded,
