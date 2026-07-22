@@ -43,9 +43,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0f24",
+  themeColor: "#08071a",
   width: "device-width",
   initialScale: 1,
+  // App-Gefühl: kein Pinch-Zoom / Rauszoomen auf dem Handy.
+  maximumScale: 1,
+  userScalable: false,
   viewportFit: "cover",
 };
 
