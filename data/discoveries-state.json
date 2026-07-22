@@ -55,10 +55,6 @@
     "status": "in_stock",
     "preis": 4.99
   },
-  "disc-kaufda-d5dd1c0aef11ab28": {
-    "status": "in_stock",
-    "preis": 4.99
-  },
   "disc-shopify-www-cardbuddys-de-15869488398667": {
     "status": "in_stock",
     "preis": 6.95
@@ -115,8 +111,12 @@
     "status": "in_stock",
     "preis": 26.9
   },
-  "disc-shopify-www-celestial-gameshop-de-11008598540555": {
+  "disc-shopify-www-celestial-gameshop-de-11008812056843": {
     "status": "in_stock",
-    "preis": 27.64
+    "preis": 30
+  },
+  "disc-shopify-www-cardstore-at-14781136240984": {
+    "status": "in_stock",
+    "preis": 39
   }
 }
