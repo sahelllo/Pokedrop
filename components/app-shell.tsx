@@ -4,21 +4,22 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { Moon, Sun, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { NAV_ITEMS } from "@/components/nav-items";
 import { ActivityTicker } from "@/components/activity-ticker";
+import { HoloBackground } from "@/components/holo-background";
+import { ThemeSwitch } from "@/components/theme-switch";
 import { usePokeStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const theme = usePokeStore((s) => s.theme);
-  const toggleTheme = usePokeStore((s) => s.toggleTheme);
   const premium = usePokeStore((s) => s.premium);
 
   return (
-    <div className="relative min-h-dvh app-aurora">
+    <div className="relative min-h-dvh">
+      <HoloBackground />
       {/* Desktop-Sidebar */}
       <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-border glass lg:flex">
         <div className="flex h-16 items-center gap-2 px-6">
@@ -57,7 +58,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           })}
         </nav>
         <div className="p-3">
-          <ThemeToggle theme={theme} onToggle={toggleTheme} full />
+          <ThemeSwitch full />
         </div>
       </aside>
 
@@ -79,7 +80,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </Button>
             )}
             <div className="lg:hidden">
-              <ThemeToggle theme={theme} onToggle={toggleTheme} />
+              <ThemeSwitch />
             </div>
           </div>
         </div>
@@ -142,30 +143,6 @@ function Logo({ compact }: { compact?: boolean }) {
         </span>
       )}
     </Link>
-  );
-}
-
-function ThemeToggle({
-  theme,
-  onToggle,
-  full,
-}: {
-  theme: "dark" | "light";
-  onToggle: () => void;
-  full?: boolean;
-}) {
-  return (
-    <button
-      onClick={onToggle}
-      className={cn(
-        "flex items-center gap-2 rounded-xl border border-border bg-surface/60 px-3 py-2 text-sm text-muted-foreground transition hover:text-foreground",
-        full ? "w-full justify-center" : "",
-      )}
-      aria-label="Theme umschalten"
-    >
-      {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-      {full && <span>{theme === "dark" ? "Light-Mode" : "Dark-Mode"}</span>}
-    </button>
   );
 }
 
