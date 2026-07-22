@@ -179,7 +179,7 @@ export default function EventsPage() {
       ) : events.length === 0 ? (
         <EmptyState emoji="📅" title="Keine Events im Radius" hint="Erweitere den Umkreis oder ändere die Filter." />
       ) : (
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {shown.map((e, i) => (
             <EventCard key={e.event_id} event={e} distanceKm={e.distanceKm} index={i} />
           ))}

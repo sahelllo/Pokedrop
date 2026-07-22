@@ -42,7 +42,7 @@ export default function PokemonCenterPage() {
       <section>
         <SectionHeading title="Aktuelle Restocks" subtitle="Wieder verfügbar" icon={<RefreshCw className="h-4 w-4" />} />
         {restocks.length ? (
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {restocks.map((d, i) => (
               <LiveDropCard key={d.drop_id} drop={d} index={i} />
             ))}
@@ -54,7 +54,7 @@ export default function PokemonCenterPage() {
 
       <section>
         <SectionHeading title="Neue Drops & Produkte" icon={<TrendingUp className="h-4 w-4" />} />
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {drops.map((d, i) => (
             <LiveDropCard key={d.drop_id} drop={d} index={i} />
           ))}

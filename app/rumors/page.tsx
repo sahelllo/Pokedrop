@@ -56,7 +56,7 @@ export default function RumorsPage() {
           const items = f.match ? sorted.filter((r) => f.match!.includes(r.status)) : sorted;
           return (
             <TabsContent key={f.value} value={f.value}>
-              <div className="grid gap-3 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {items.map((r, i) => (
                   <RumorCard key={r.rumor_id} rumor={r} index={i} />
                 ))}

@@ -61,7 +61,7 @@ export default function LivePage() {
           subtitle="Erhöhte Überwachungspriorität"
           icon={<Flame className="h-4 w-4" />}
         />
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {sorted
             .filter((d) => d.hot)
             .map((d, i) => (
@@ -75,7 +75,7 @@ export default function LivePage() {
 
 function DropList({ items }: { items: typeof liveDrops }) {
   return (
-    <div className="grid gap-3 sm:grid-cols-2">
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
       {items.map((d, i) => (
         <LiveDropCard key={d.drop_id} drop={d} index={i} />
       ))}

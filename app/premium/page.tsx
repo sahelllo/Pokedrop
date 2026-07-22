@@ -121,7 +121,7 @@ export default function PremiumPage() {
       {/* MVP-Bausteine */}
       <section>
         <h2 className="mb-3 font-display text-xl font-bold">Der Premium-Kern</h2>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {MVP.map((f, i) => {
             const Icon = f.icon;
             return (
@@ -172,7 +172,7 @@ export default function PremiumPage() {
       {/* Weitere Funktionen */}
       <section>
         <h2 className="mb-3 font-display text-xl font-bold">Und mehr</h2>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {MORE.map((f) => {
             const Icon = f.icon;
             return (

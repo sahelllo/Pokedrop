@@ -109,7 +109,7 @@ export default function HomePage() {
               Top Deals im Radius
             </h3>
           </div>
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {topDeals.map((v, i) => (
               <DealCard key={v.offer.offer_id} view={v} index={i} />
             ))}
@@ -120,7 +120,7 @@ export default function HomePage() {
       {/* Feed */}
       <section>
         {!mounted ? (
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {Array.from({ length: 6 }).map((_, i) => (
               <DealCardSkeleton key={i} />
             ))}
@@ -131,7 +131,7 @@ export default function HomePage() {
             hint="Erhöhe den Umkreis oder setze die Filter zurück – z. B. 300–500 km für seltene Deals."
           />
         ) : (
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {views.map((v, i) => (
               <DealCard key={v.offer.offer_id} view={v} index={i} />
             ))}
@@ -145,7 +145,7 @@ export default function HomePage() {
       {/* Social Proof */}
       <section>
         <SectionHeading title="Von Sammlern geliebt" icon={<Sparkles className="h-4 w-4" />} />
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {testimonials.slice(0, 3).map((t, i) => (
             <motion.div
               key={t.id}

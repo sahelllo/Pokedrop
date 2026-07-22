@@ -62,7 +62,7 @@ export function DealCard({ view, index = 0 }: { view: DealView; index?: number }
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
       style={{ rotateX: rx, rotateY: ry, transformPerspective: 900 }}
-      className="group relative"
+      className="group relative min-w-0"
     >
       <Link href={`/product/${product.product_id}?offer=${offer.offer_id}`}>
         <div

@@ -84,7 +84,7 @@ function ProductDetail({ id }: { id: string }) {
       </Link>
 
       {/* Hero */}
-      <div className="grid gap-5 lg:grid-cols-[320px_1fr]">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[320px_1fr]">
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -202,7 +202,7 @@ function ProductDetail({ id }: { id: string }) {
         ) : inRadius.length === 0 ? (
           <EmptyState emoji="📍" title="Keine Angebote im Radius" hint="Erhöhe den Umkreis für dieses Produkt." />
         ) : (
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {inRadius.map((v, i) => (
               <DealCard key={v.offer.offer_id} view={v} index={i} />
             ))}

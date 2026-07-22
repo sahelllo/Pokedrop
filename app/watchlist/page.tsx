@@ -67,7 +67,7 @@ export default function WatchlistPage() {
         {watchedDeals.length === 0 ? (
           <EmptyState emoji="💛" title="Noch nichts gemerkt" hint="Tippe bei einem Deal auf das Herz, um es hier zu sammeln." />
         ) : (
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {watchedDeals.map((v, i) => (
               <DealCard key={v.offer.offer_id} view={v} index={i} />
             ))}
@@ -116,7 +116,7 @@ export default function WatchlistPage() {
         {savedEventObjs.length === 0 ? (
           <EmptyState emoji="📅" title="Keine Events gespeichert" hint="Füge Tauschbörsen und Card Shows zum Kalender hinzu." />
         ) : (
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {savedEventObjs.map((e, i) => (
               <EventCard key={e.event_id} event={e} index={i} />
             ))}
