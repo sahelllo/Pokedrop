@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  PokeDrop Design-System.
+  Dark-Mode als Standard (Design-Vorgabe Abschnitt 4), Light optional.
+*/
+@layer base {
+  :root {
+    --background: 230 45% 6%;
+    --foreground: 220 25% 96%;
+    --surface: 230 34% 9%;
+    --surface-2: 229 30% 13%;
+    --card: 230 32% 10%;
+    --card-foreground: 220 25% 96%;
+    --muted: 229 22% 18%;
+    --muted-foreground: 222 14% 66%;
+    --border: 229 26% 18%;
+    --input: 229 26% 20%;
+    --ring: 210 90% 60%;
+    --primary: 210 90% 56%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 350 88% 55%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 48 100% 51%;
+    --accent-foreground: 230 45% 8%;
+    --radius: 1rem;
+  }
+
+  .light {
+    --background: 222 40% 97%;
+    --foreground: 230 40% 12%;
+    --surface: 0 0% 100%;
+    --surface-2: 220 30% 96%;
+    --card: 0 0% 100%;
+    --card-foreground: 230 40% 12%;
+    --muted: 220 20% 92%;
+    --muted-foreground: 224 12% 40%;
+    --border: 220 20% 88%;
+    --input: 220 20% 86%;
+    --ring: 210 90% 50%;
+    --primary: 210 90% 48%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 350 82% 50%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 45 96% 48%;
+    --accent-foreground: 230 45% 8%;
+  }
+
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+@layer utilities {
+  /* Hintergrund-Glow des App-Shells */
+  .app-aurora {
+    background:
+      radial-gradient(1100px 520px at 12% -8%, hsl(210 90% 56% / 0.16), transparent 60%),
+      radial-gradient(900px 500px at 92% 4%, hsl(350 88% 55% / 0.13), transparent 62%),
+      radial-gradient(800px 600px at 60% 108%, hsl(48 100% 51% / 0.08), transparent 60%);
+  }
+  .glass {
+    background: hsl(var(--surface) / 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  .card-tilt {
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease;
+    transform-style: preserve-3d;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .holo-sheen {
+    background: linear-gradient(
+      110deg,
+      transparent 20%,
+      hsl(var(--foreground) / 0.06) 40%,
+      hsl(var(--foreground) / 0.12) 50%,
+      hsl(var(--foreground) / 0.06) 60%,
+      transparent 80%
+    );
+    background-size: 200% 100%;
+  }
+}
+
+/* Leaflet-Anpassungen fürs Dark-Theme */
+.leaflet-container {
+  background: hsl(var(--surface-2)) !important;
+  font-family: inherit;
+}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+  border-radius: 0.75rem;
+}
+.leaflet-bar a {
+  background: hsl(var(--surface));
+  color: hsl(var(--foreground));
+  border-color: hsl(var(--border));
+}

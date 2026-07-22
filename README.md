@@ -1,270 +1,164 @@
-# PokéDrop
+# PokeDrop
 
-Live-Radar für Pokémon-Sammelkarten in Deutschland. Zeigt, **wo ein Produkt
-gerade auf Lager ist, zu welchem Preis und bei welchem Händler** – statt nur
-einen Countdown zu zählen.
+**Live-Radar für Pokémon-TCG-Deals, Drops & Events in Deutschland.**
+Zeigt standortbezogen, wo Pokémon-Sammelkarten gerade **zur UVP oder günstiger**
+verfügbar sind – mit echter UVP- vs. Marktpreis-Bewertung, Live-Drops,
+Pokémon-Center-Monitoring, Gerüchte-Radar und einem Event-Kalender für
+Tauschbörsen und Card Shows.
 
-Reine PWA: HTML, CSS, ES-Module. Kein Framework, kein Build-Schritt.
+Gebaut als vollständige, deploybare **Next.js-Web-App**. Läuft ab der ersten
+Sekunde mit realistischen Demodaten – kein leerer Screen.
+
+![Stack](https://img.shields.io/badge/Next.js-14-black) ![TS](https://img.shields.io/badge/TypeScript-5-blue) ![Tailwind](https://img.shields.io/badge/Tailwind-3-38bdf8)
 
 ---
 
 ## Was drin ist
 
+| Bereich | Umsetzung |
+|---|---|
+| **Home / Deal-Feed** | Standort + Radius (Slider 5–500 km), Filter-Chips, Deal-Ranking, Top-Deal-Highlight, Konfetti bei 🔥 TOP DEALS |
+| **Live Drops & Restocks** | Echtzeit-Optik, pulsierende LIVE-Badges, „vor 2 Min.", Alert-Simulation |
+| **Pokémon Center** | Eigener Monitoring-Bereich für Restocks & neue Produkte |
+| **Gerüchte & frühe Hinweise** | Klar getrennter Frühwarnkanal: RUMOR → MULTI_SOURCE_RUMOR → LIKELY → CONFIRMED mit Confidence-Balken |
+| **Events** | Liste / Kalender / Karte (Leaflet + OpenStreetMap), Radius, Filter (heute / Wochenende / 30 Tage / Tauschbörsen …) |
+| **Produktdetail** | Echtes Artwork, UVP vs. Markt-Referenz transparent, Preisverlauf-Chart (Recharts), „Benachrichtige mich"-Regeln |
+| **Premium** | Free-vs-Premium-Vergleich, 5 MVP-Bausteine, Upgrade-Flow, Alert-Demo |
+| **Watchlist & Einstellungen** | Gemerkte Produkte/Events, aktive Alerts, Standard-Standort/-Radius, Theme, Onboarding-Reset |
+| **Onboarding** | 4-Schritte-Flow (Standort → Radius → Lieblings-Sets) beim ersten Öffnen |
+
+Dazu: Aktivitäts-Ticker, Community-Statistiken mit Count-up, Social Proof,
+Skeleton-Loader, Toasts, Bottom-Nav (mobil) / Sidebar (Desktop), Dark-/Light-Mode.
+
+### Die Kern-Logik aus der Masterliste (1:1 umgesetzt)
+
+- **Deal-Bewertung** (`lib/deals.ts`): 0–12 Monate → UVP als Referenz;
+  >12 Monate → UVP + Markt-Referenzpreis + individuelle Good-/Great-Deal-Schwellen;
+  Out of Print → Marktpreis stärker gewichtet. Daraus abgeleitete Badges:
+  🔥 TOP DEAL · 🟢 UVP DEAL · ✅ GUTER DEAL · 🟡 MARKTPREIS · 🔴 ÜBER MARKT.
+- **Regionalitäts-/Geo-Logik** (`lib/geo.ts`): Haversine-Distanz +
+  `validity_type` NATIONAL / REGIONAL / STORE_GROUP / LOCAL / ONLINE. Ein Preis
+  gilt nie automatisch für alle Filialen – die effektive Entfernung ist die
+  kleinste Distanz zu einer *tatsächlich teilnehmenden* Filiale.
+- **Der Beispielfall** (Masterliste 17.7) funktioniert echt: Nutzer in
+  **Oberhausen** mit **500 km** Radius sieht ein **LOCAL**-Angebot in
+  **Ludwigsburg** (~340 km), obwohl der Oberhausener Markt derselben Kette die
+  Aktion nicht hat.
+- **Verifizierung**: VERIFIED / REGIONAL_CONFIRMED / PROBABLE / COMMUNITY_UNVERIFIED
+  fließt ins Ranking ein.
+
+---
+
+## Projektstruktur
+
 ```
-index.html                  App-Gerüst, SVG-Mockups als Fallback, Holo-Regen-Layer
-assets/styles.css           Mitternachtsblau/Elektro-Gelb, Holo-Foil, Statusfarben
-assets/app.js               Rendering, Countdowns, Merkliste, Preisalarm, echte Kartenbilder
-assets/icon-*.png           App-Icons (Radar-Blitz-Motiv, selbst erzeugt)
-sw.js                       Service Worker: App cache-first, Daten netz-first
-manifest.webmanifest        Installation auf dem Home-Bildschirm
-
-data/drops.json             Sets, Release-Daten, Produkte, Quellen (gepflegt)
-data/stock.json             Verfügbarkeit + Preise: kuratierte Watchlist + Live-Radar-Funde
-data/history.json           Preisverlauf pro SKU/Shop
-data/events.json            Statuswechsel – Grundlage für Push
-data/karten-cache.json       Echte Kartenbild-URLs, serverseitig geholt (siehe unten)
-data/discoveries-state.json Letzter bekannter Stand der Live-Radar-Funde (Dopplungs-/Flut-Schutz)
-data/_new-events.json       Ungetrackt, nur für den Telegram-Push eines Laufs (.gitignore)
-
-scraper/sources.json        Welche Produktseiten (kuratierte Watchlist) überwacht werden
-scraper/check-stock.mjs     Der Stock-Checker für die kuratierte Watchlist
-scraper/discover-shops.mjs  Live-Radar: durchsucht ganze Shops + kaufDA-Prospekte (siehe unten)
-scraper/karten-cache.mjs    Holt echte Kartenbild-URLs mit Retries
-scraper/telegram-push.mjs   Sofortmeldung neuer Ereignisse an Telegram
-.github/workflows/          Cron alle 5 Minuten + Live-Radar + Kartenbild-Cache + Telegram-Push + Auto-Commit
-```
-
-## Live-Radar (`scraper/discover-shops.mjs`)
-
-Der Stock-Checker oben prüft nur eine feste, manuell gepflegte Liste bekannter
-Produktseiten. `discover-shops.mjs` ergänzt das um eine **breite** Suche über
-zwei echte, verifizierte Quellen – findet also auch Angebote, die noch
-niemand manuell eingetragen hat:
-
-1. **5 verifizierte TCG-Online-Shops** (CardBuddys, Webbas Kartenecke,
-   Celestial Gameshop, CardStore.at, Lairos) über ihren öffentlichen
-   Shopify-Endpunkt `/products.json` – Standard-Feature jedes Shopify-Shops,
-   kein Login nötig. Jede Domain wurde vor der Aufnahme geprüft.
-2. **kaufDA-Prospekt-Aggregator** (`kaufda.de/Angebote/Pokemon`) liest das
-   schema.org-`Product`-JSON-LD aus, das kaufDA serverseitig für Google
-   einbettet – dieselbe Quelle, die Google für Rich Snippets liest. Das
-   erkennt automatisch, sobald eine der 19 hinterlegten großen Ketten
-   (Kaufland, Marktkauf, Edeka, REWE, Aldi, Lidl, MediaMarkt, Rossmann, dm,
-   Netto, Penny, GameStop, Smyths Toys, Galeria, …) einen
-   Pokémon-Wochenprospekt veröffentlicht. `kaufda.de/robots.txt` erlaubt das
-   (`crawl-delay: 2`, `/Angebote/` ist nicht gesperrt) – der Scanner hält
-   sich daran.
-
-Nur ein Händlername, den `discover-shops.mjs` nicht kennt, wird ignoriert und
-geloggt statt einen geratenen Link zu erzeugen – jeder "Jetzt ansehen"-Link
-führt garantiert zur echten, offiziellen Seite.
-
-Funde landen als zusätzliche `sku`-Einträge (Präfix `disc-`) in
-`data/stock.json`, direkt neben der kuratierten Watchlist – die bestehende
-Radar-Ansicht (`assets/app.js`, `alleAngebote()`) zeigt beides automatisch
-zusammen an, sortiert nach Verfügbarkeit/Preis. Es sind **keine
-Frontend-Änderungen** nötig. Pro Lauf werden maximal 30 Funde übernommen
-(max. 8 pro Shop), damit `stock.json` und die Git-Historie nicht unbegrenzt
-wachsen. Neue Funde lösen genau wie Watchlist-Treffer ein Ereignis in
-`data/events.json` aus – und damit automatisch auch die
-Telegram-Sofortmeldung, ganz ohne Änderung an `telegram-push.mjs`.
-
-**Ehrlicher Stand:** Große Elektronik-/Kaufhausketten (MediaMarkt, Saturn,
-GameStop, Galeria, …) laufen aktuell nur über die kaufDA-Prospekt-Schiene,
-nicht mit direkter Lagerbestandsabfrage ihrer eigenen Online-Shops (die haben
-kein offenes Produkt-Feed wie Shopify). Weitere TCG-Shopify-Shops lassen sich
-in `SHOPIFY_SHOPS` in `scraper/discover-shops.mjs` in Minuten ergänzen –
-vorher kurz prüfen, dass `https://DOMAIN/products.json` echte Produktdaten
-liefert.
-
-Lokal einzeln testbar:
-
-```bash
-node scraper/discover-shops.mjs
+app/                     Seiten (App Router)
+  page.tsx               Home / Deal-Feed
+  live/ pokemon-center/  Live-Bereiche
+  rumors/ events/        Gerüchte, Events
+  product/[id]/          Produktdetail
+  premium/ watchlist/    Premium, Merkliste & Einstellungen
+components/              UI (ui/ = shadcn-Stil), Karten, Map, Charts, Onboarding …
+lib/                     Logik: deals, geo, data (Zugriffsschicht), store (Zustand), images …
+data/                    Typisierte Seed-Daten (retailers, stores, products, offers, events, drops, rumors, community)
+types/                   Zentrale Typen (Feldnamen 1:1 aus der Masterliste)
+legacy/                  Frühere Vanilla-PWA-Version (unverändert archiviert)
 ```
 
-## Echte Kartenbilder & Holo-Hintergrund
+Die **Datenzugriffsschicht** (`lib/data.ts`) kapselt alle Seed-Daten hinter
+Query-Funktionen – so lässt sich später ein echtes Backend/DB anflanschen, ohne
+die UI umzubauen.
 
-Kartenbilder kommen von der **Pokémon TCG API** (`api.pokemontcg.io`) – aber
-**nicht** live aus jedem Besucher-Browser. Der kostenlose, schlüssellose
-Zugang dieser API ist unter Last unzuverlässig (im Test: gut die Hälfte der
-Anfragen HTTP 500). Stattdessen holt `scraper/karten-cache.mjs` die Bilder
-**serverseitig im GitHub-Workflow** (mit Wiederholversuchen, alle paar
-Stunden) und schreibt nur die Bild-URLs in `data/karten-cache.json`. Die App
-liest diese eigene, zuverlässige Datei – wie `drops.json`/`stock.json` auch.
-Es wird nichts heruntergeladen oder im Repo gespeichert, nur URLs; die Bilder
-selbst werden per `<img src>` weiterhin direkt vom Bild-CDN der API verlinkt.
-Ist der Cache leer oder veraltet, bleibt automatisch der eigene SVG-Mockup
-sichtbar – die Seite bricht nie deswegen.
-
-Optional: Mit einem kostenlosen Key von [dev.pokemontcg.io](https://dev.pokemontcg.io/)
-als Secret `POKEMONTCG_API_KEY` wird der Cache-Lauf im Workflow noch
-zuverlässiger (höheres Rate-Limit). Ohne Key funktioniert es dank Retries und
-dem 12-Stunden-Cache trotzdem meistens beim ersten oder zweiten Versuch.
-
-Pro Drop in `data/drops.json` steuerbar:
-
-```json
-"kartenset": "me5",        // Set-ID in der Pokémon TCG API (sobald das Set dort gelistet ist)
-"heldenkarte": "me5-116"   // Konkrete Karten-ID für das Bild auf der Drop-Karte
-```
-
-Bisher ist nur `dunkelnacht` (`me5`, engl. Setname "Pitch Black", Mega
-Evolution-Serie, Release 2026-07-17) in der Datenbank gelistet. First Partner
-Collection Serie 3, Mega Forces Tins und das Jubiläums-Set tauchen dort
-erfahrungsgemäß erst kurz vor bzw. mit ihrem Release auf – sobald das
-passiert, reicht das Eintragen der Felder, und echte Bilder erscheinen
-automatisch, ohne Codeänderung.
+---
 
 ## Lokal starten
 
-```bash
-python3 -m http.server 8100     # oder: npx serve .
-# → http://127.0.0.1:8100
-```
-
-Service Worker und Installation brauchen `localhost` oder HTTPS.
-
-## Stock-Checker
+Voraussetzung: **Node.js 18.18+** (empfohlen 20 oder 22).
 
 ```bash
-node scraper/check-stock.mjs
+npm install        # Abhängigkeiten installieren
+npm run dev        # Entwicklungsserver
+# → http://localhost:3000
 ```
 
-Er ruft jede Produktseite ab und liest bevorzugt die strukturierten
-Angebotsdaten (`schema.org/Offer` im JSON-LD oder Microdata). Das ist der
-entscheidende Punkt: Shopware-, Shopify- und Magento-Shops liefern dort
-`availability` und `price` maschinenlesbar. Erst wenn nichts Strukturiertes
-vorhanden ist, greift eine konservative Textheuristik – und markiert im Zweifel
-`unknown` statt zu raten.
-
-**Neue Produkte aufnehmen:** Eintrag in `scraper/sources.json` ergänzen.
-Gleiche `sku` bei mehreren Shops heißt: dasselbe Produkt, Preisvergleich
-passiert automatisch.
-
-Prüfen, ob ein Shop verwertbare Daten liefert:
+Produktions-Build lokal testen:
 
 ```bash
-curl -s "URL" | grep -o 'application/ld+json' | head -1
+npm run build
+npm run start
 ```
 
-### Betrieb
+---
 
-GitHub Actions läuft alle 5 Minuten (`.github/workflows/stock-check.yml`) und
-committet die Datendateien zurück. Reicht für den Start, ist aber unter Last
-manchmal einige Minuten verzögert.
+## Demodaten anpassen
 
-Für echte Sekunden brauchst du später **Cloudflare Workers** mit Cron-Trigger
-und KV-Speicher – dieselbe Logik, nur ohne Git-Commit-Umweg. Das ist der Schritt,
-an dem aus dem Projekt ein Produkt wird.
+Alle Inhalte liegen typisiert in **`/data`** und sind leicht erweiterbar:
 
-## Benachrichtigungen
-
-In der App ist die lokale Variante fertig: Sobald ein gemerktes Produkt in einem
-Feed-Update auf Lager erscheint, kommt eine Meldung. Voraussetzung auf dem
-iPhone: die App muss über „Zum Home-Bildschirm“ installiert sein (Web Push
-funktioniert dort seit iOS 16.4 nur in installierten PWAs).
-
-Für echte Server-Pushs (auch bei geschlossener App) brauchst du VAPID-Schlüssel
-und einen kleinen Dienst:
-
-```bash
-npx web-push generate-vapid-keys
-```
-
-Ablauf: App abonniert per `pushManager.subscribe()` → Abo-Objekt an deinen
-Server → der Checker legt bei jedem Statuswechsel ein Ereignis in
-`data/events.json` an → dein Dienst schickt an alle Abos, die diese `sku`
-gemerkt haben. Der `push`-Handler im Service Worker ist schon implementiert.
-
-**Preisalarm (clientseitig, schon fertig):** Im Merkliste-Tab lässt sich pro
-gemerktem Produkt ein Zielpreis eintragen. Sobald der Radar einen Treffer
-darunter meldet, kommt zusätzlich zur „auf Lager“-Meldung eine
-Preisalarm-Benachrichtigung. Läuft komplett im Browser, kein Server nötig.
-
-### Telegram-Sofortmeldung (fertig, ohne eigenen Server)
-
-Der schnellstmögliche Weg zu einer echten Push-Benachrichtigung, ganz ohne
-VAPID/eigenen Dienst: `scraper/telegram-push.mjs` läuft im selben
-Workflow-Schritt wie der Stock-Checker und meldet neue Ereignisse sofort an
-einen Telegram-Chat – noch bevor die Daten committet werden.
-
-Einrichten:
-
-1. Bot bei [@BotFather](https://t.me/BotFather) anlegen → Token kopieren.
-2. Chat-ID holen: Bot in einem Chat/Kanal anschreiben, dann
-   `https://api.telegram.org/bot<TOKEN>/getUpdates` aufrufen und `chat.id`
-   ablesen.
-3. In GitHub: Repo → Settings → Secrets and variables → Actions →
-   `TELEGRAM_BOT_TOKEN` und `TELEGRAM_CHAT_ID` anlegen.
-
-Ohne diese Secrets überspringt der Workflow den Schritt automatisch – nichts
-bricht.
-
-## Bezahlung
-
-Der Pro-Knopf schaltet im Auslieferungszustand nur einen lokalen Testschalter um.
-Für echte Abos: **Stripe Checkout** im Abo-Modus, Rückleitung auf `?pro=ok`,
-Freischaltung serverseitig über den Webhook `checkout.session.completed`.
-Wichtig: Den Pro-Status nicht dauerhaft im `localStorage` entscheiden lassen –
-der ist manipulierbar. Client-seitig nur die Anzeige, die Push-Geschwindigkeit
-regelt der Server.
-
-Vorgeschlagene Grenze:
-
-| Gratis | Pro (4,99 €/Monat) |
+| Datei | Inhalt |
 |---|---|
-| Kalender, Shops, Prospekte | alles aus Gratis |
-| 3 Produkte auf der Merkliste | unbegrenzt |
-| Hinweise mit 15 Min. Verzögerung | sofort |
-| — | Preisverlauf, Alarm unter UVP |
-| Werbung | werbefrei |
+| `data/retailers.ts` | Händler-Watchlist (Status A/B/C, Priorität, Markenfarbe) |
+| `data/stores.ts` | Filialen mit Geo-Koordinaten + bekannte Städte fürs Onboarding |
+| `data/products.ts` | Produkt-/UVP-Referenz (UVP, Marktpreis, Deal-Schwellen, Artwork-ID) |
+| `data/offers.ts` | Angebote (Hero-Angebote + deterministischer Generator) |
+| `data/events.ts` | Events (Tauschbörsen, Card Shows, Messen …) |
+| `data/drops.ts` · `data/rumors.ts` | Live-Drops · Gerüchte |
+| `data/community.ts` | Ticker, Statistiken, Testimonials |
 
-Die Verzögerung ist der eigentliche Hebel. Bei einem Produkt, das in Minuten
-ausverkauft ist, ist „15 Minuten später“ wertlos – genau das verkauft das Abo.
+**Neues Produkt:** Eintrag in `data/products.ts` ergänzen (`pokemonArtworkId` =
+National-Dex-Nummer für das Bild). **Neues Angebot:** Eintrag in
+`data/offers.ts` mit `product_id`, `retailer_brand`, `validity_type` und
+`participating_store_ids`.
 
-## Recht
+Farben/Design: `tailwind.config.ts` und `app/globals.css` (CSS-Variablen).
 
-**Wichtig, bewusste Entscheidung, hier dokumentiert:** Die App zeigt inzwischen
-echte offizielle Pokémon-Kartenbilder (Holo-Hintergrund + teils Produktkarte),
-live verlinkt über `api.pokemontcg.io`. Das ist **keine Lizenz von Nintendo,
-Creatures Inc., GAME FREAK oder The Pokémon Company** – die API selbst hat
-auch keine. Es ist gängige, weit verbreitete Praxis in der Fan-Community,
-aber rechtlich nicht wasserdicht. Konkret heißt das:
+---
 
-- Kein eigenes Hosting: Bilder werden nur per `<img src>` vom API-CDN
-  verlinkt, nie heruntergeladen oder ins Repo kopiert. Das reduziert das
-  Risiko, ersetzt aber keine Lizenz.
-- Realistisches Szenario bei Erfolg der App: eine Unterlassungsaufforderung
-  oder Cease-and-Desist, kein Straf- oder Bußgeldverfahren. Trotzdem:
-  einplanen, nicht ignorieren – besonders sobald **Stripe/Pro** live ist
-  (siehe unten), weil ein zahlungspflichtiges Angebot ein lohnenderes Ziel ist.
-- Fallback bleibt im Code: Ohne API-Antwort läuft alles automatisch mit den
-  eigenen SVG-Mockups weiter. Bei einer Abmahnung ist der schnellste Ausweg,
-  `holoRegen()` und `echteBilderEinsetzen()` in `assets/app.js` zu
-  deaktivieren (ein Kommentar an der Aufrufstelle in `aktualisieren()` genügt)
-  – die App bleibt danach voll funktionsfähig, nur wieder ohne echte Bilder.
-- Für echte **Produktfotos** (Verpackungen, Boxen) bleibt die sicherere Route
-  weiterhin: Partnerprogramme (Amazon PA-API, Awin, Tradedoubler) oder eigene
-  Fotos gekaufter Produkte. Bilder von Herstellerseiten direkt zu kopieren und
-  selbst zu hosten ist die riskantere Variante und wurde hier nicht gemacht.
-- Der Disclaimer steht im Footer und muss dort bleiben.
-- Der Checker liest nur öffentlich sichtbare Preis- und Verfügbarkeitsangaben,
-  wartet zwischen Anfragen und identifiziert sich per User-Agent. Halte dich an
-  `robots.txt` der jeweiligen Shops und dreh das Intervall nicht ohne Grund hoch.
-- Partnerlinks sind kennzeichnungspflichtig – der Hinweis steht im Footer.
-- Ab dem ersten zahlenden Nutzer: Impressum und Datenschutzerklärung sind Pflicht.
+## Bilder & Assets
 
-## Nächste Schritte
+Echte Bilder kommen aus **frei nutzbaren Quellen** mit sauberem Fallback
+(`components/smart-image.tsx`) – nie graue Kästen:
 
-1. Echte Produkt-URLs in `scraper/sources.json` eintragen (die enthaltenen sind
-   Platzhalter im richtigen Format) – erst dann liefert der Radar echte Treffer.
-2. `data/stock.json` einmal echt erzeugen lassen und prüfen, welche Shops
-   JSON-LD liefern – die kommen zuerst in den Radar.
-3. Auf GitHub Pages veröffentlichen, Workflow aktivieren, `TELEGRAM_BOT_TOKEN`
-   / `TELEGRAM_CHAT_ID` als Secrets setzen (siehe oben) – Telegram-Push ist
-   bereits fertig eingebaut.
-4. Sobald First Partner Collection Serie 3 / Mega Forces Tins / das
-   Jubiläums-Set in der Pokémon TCG API auftauchen: `kartenset`/`heldenkarte`
-   in `data/drops.json` ergänzen, echte Bilder erscheinen automatisch.
-5. Erst danach Stripe. Vorher gibt es nichts zu verkaufen.
+- **PokéAPI Official Artwork** (`lib/images.ts`) für echte Pokémon-Renderbilder.
+- Optionales Feld `tcgImage` je Produkt für echte **Pokémon-TCG-Kartenbilder**.
+- Fällt eine Quelle aus, erscheint automatisch ein stimmiger Energie-Typ-Gradient.
+
+Karten laufen über **react-leaflet + OpenStreetMap** (Carto-Dark-Tiles) – kein
+API-Key nötig.
+
+---
+
+## Auf Vercel veröffentlichen (Schritt für Schritt, ohne Vorwissen)
+
+1. Code zu **GitHub** pushen (dieses Repo).
+2. Auf [vercel.com](https://vercel.com) mit dem GitHub-Konto anmelden.
+3. **„Add New…" → „Project"** klicken und dieses Repository auswählen.
+4. Vercel erkennt **Next.js automatisch** – alle Einstellungen einfach so lassen
+   (Framework: Next.js, Build: `next build`). Keine Umgebungsvariablen nötig.
+5. **„Deploy"** klicken. Nach ~1–2 Minuten ist die App unter einer
+   `*.vercel.app`-Adresse live.
+6. Jeder weitere `git push` deployt automatisch neu.
+
+> **Netlify-Alternative:** „Add new site" → Repo wählen → Build `npm run build`.
+> Das offizielle Next.js-Plugin wird automatisch verwendet.
+
+---
+
+## Rechtlicher Hinweis (wichtig für den echten Betrieb)
+
+Diese App läuft auf **legalen Seed-/API-Daten** und ist ein **inoffizielles
+Fan-Projekt** ohne Verbindung zu Nintendo, Creatures Inc., GAME FREAK oder The
+Pokémon Company.
+
+Für einen echten Live-Betrieb (öffentliche Veröffentlichung, kommerzielle
+Nutzung) gilt: Marken- und Bildrechte von **The Pokémon Company** sind zu
+beachten; Retailer-/Prospekt-/Social-Media-Daten dürfen nur im Rahmen der
+jeweiligen **Nutzungsbedingungen, `robots.txt` und Rate-Limits** erhoben werden.
+Das ist ein Backend-/Rechtsthema und bewusst von der App getrennt. Ein
+zahlungspflichtiges Premium-Angebot (Stripe) sollte erst nach Klärung dieser
+Punkte live gehen; der Pro-Status wird dann serverseitig freigeschaltet (im
+aktuellen Stand ist Premium nur ein lokaler Demo-Schalter).
+
+---
+
+Gebaut mit Next.js 14, TypeScript, Tailwind CSS, Framer Motion, lucide-react,
+Radix UI, react-leaflet, Recharts und Zustand.
