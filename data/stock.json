@@ -1,5 +1,5 @@
 {
-  "stand": "2026-07-22T23:37:10.549Z",
+  "stand": "2026-07-23T08:05:00.911Z",
   "intervall_minuten": 5,
   "produkte": [
     {
@@ -14,7 +14,7 @@
           "shop": "CardBuddys",
           "typ": "TCG-Fachhandel",
           "url": "https://www.cardbuddys.de/products/mega-entwicklungen-dunkelnacht-booster-de",
-          "geprueft": "2026-07-22T23:36:28.157Z",
+          "geprueft": "2026-07-23T08:04:19.984Z",
           "status": "in_stock",
           "preis": 5.95,
           "waehrung": "EUR",
@@ -25,7 +25,7 @@
           "shop": "Webbas Kartenecke",
           "typ": "TCG-Fachhandel",
           "url": "https://webbas-kartenecke.de/products/pokemon-tcg-mega-entwicklung-dunkelnacht-booster-deutsch",
-          "geprueft": "2026-07-22T23:36:29.865Z",
+          "geprueft": "2026-07-23T08:04:22.243Z",
           "status": "in_stock",
           "preis": 4.99,
           "waehrung": "EUR",
@@ -46,7 +46,7 @@
           "shop": "Webbas Kartenecke",
           "typ": "TCG-Fachhandel",
           "url": "https://webbas-kartenecke.de/products/pokemon-tcg-mega-entwicklungen-dunkelnacht-top-trainer-box-ttb-deutsch",
-          "geprueft": "2026-07-22T23:36:31.548Z",
+          "geprueft": "2026-07-23T08:04:24.392Z",
           "status": "in_stock",
           "preis": 63.99,
           "waehrung": "EUR",
@@ -57,7 +57,7 @@
           "shop": "Card-Corner",
           "typ": "TCG-Fachhandel",
           "url": "https://www.card-corner.de/Pokemon-Mega-Entwicklung-Dunkelnacht-Top-Trainer-Box",
-          "geprueft": "2026-07-22T23:36:34.239Z",
+          "geprueft": "2026-07-23T08:04:26.855Z",
           "status": "unknown",
           "preis": null,
           "quelle": "fehler",
@@ -68,7 +68,7 @@
           "shop": "Gate to the Games",
           "typ": "TCG-Fachhandel",
           "url": "https://www.gate-to-the-games.de/pokemon-dunkelnacht-top-trainer-box",
-          "geprueft": "2026-07-22T23:36:37.884Z",
+          "geprueft": "2026-07-23T08:04:29.910Z",
           "status": "unknown",
           "preis": null,
           "quelle": "fehler",
@@ -79,7 +79,7 @@
           "shop": "Elbenwald",
           "typ": "Fanshop",
           "url": "https://www.elbenwald.de/pokemon-dunkelnacht-top-trainer-box",
-          "geprueft": "2026-07-22T23:36:39.970Z",
+          "geprueft": "2026-07-23T08:04:31.789Z",
           "status": "unknown",
           "preis": null,
           "waehrung": "EUR",
@@ -90,7 +90,7 @@
           "shop": "Müller",
           "typ": "Filialhandel",
           "url": "https://www.mueller.de/suche/?q=Dunkelnacht%20Top-Trainer-Box",
-          "geprueft": "2026-07-22T23:36:41.599Z",
+          "geprueft": "2026-07-23T08:04:33.500Z",
           "status": "unknown",
           "preis": null,
           "quelle": "fehler",
@@ -111,7 +111,7 @@
           "shop": "CardBuddys",
           "typ": "TCG-Fachhandel",
           "url": "https://www.cardbuddys.de/products/mega-entwicklungen-wachsendes-chaos-booster-display-de-kopie",
-          "geprueft": "2026-07-22T23:36:43.813Z",
+          "geprueft": "2026-07-23T08:04:36.664Z",
           "status": "in_stock",
           "preis": 189.95,
           "waehrung": "EUR",
@@ -122,7 +122,7 @@
           "shop": "Webbas Kartenecke",
           "typ": "TCG-Fachhandel",
           "url": "https://webbas-kartenecke.de/products/pokemon-tcg-mega-entwicklung-dunkelnacht-display-36-booster-deutsch",
-          "geprueft": "2026-07-22T23:36:45.514Z",
+          "geprueft": "2026-07-23T08:04:38.817Z",
           "status": "out_of_stock",
           "preis": 169.99,
           "waehrung": "EUR",
@@ -133,7 +133,7 @@
           "shop": "Card-Corner",
           "typ": "TCG-Fachhandel",
           "url": "https://www.card-corner.de/Pokemon-Mega-Entwicklung-Dunkelnacht-Display",
-          "geprueft": "2026-07-22T23:36:48.013Z",
+          "geprueft": "2026-07-23T08:04:41.245Z",
           "status": "unknown",
           "preis": null,
           "quelle": "fehler",
@@ -144,7 +144,7 @@
           "shop": "Gate to the Games",
           "typ": "TCG-Fachhandel",
           "url": "https://www.gate-to-the-games.de/pokemon-dunkelnacht-display",
-          "geprueft": "2026-07-22T23:36:57.800Z",
+          "geprueft": "2026-07-23T08:04:45.512Z",
           "status": "unknown",
           "preis": null,
           "quelle": "fehler",
@@ -165,18 +165,18 @@
           "shop": "Card-Corner",
           "typ": "TCG-Fachhandel",
           "url": "https://www.card-corner.de/Pokemon-First-Partner-Collection-Serie-3",
-          "geprueft": "2026-07-22T23:36:59.253Z",
+          "geprueft": "2026-07-23T08:04:47.877Z",
           "status": "unknown",
           "preis": null,
           "quelle": "fehler",
-          "http": 0,
-          "hinweis": "TypeError"
+          "http": 404,
+          "hinweis": "HTTP 404"
         },
         {
           "shop": "Elbenwald",
           "typ": "Fanshop",
           "url": "https://www.elbenwald.de/pokemon-first-partner-collection-3",
-          "geprueft": "2026-07-22T23:37:01.338Z",
+          "geprueft": "2026-07-23T08:04:49.686Z",
           "status": "unknown",
           "preis": null,
           "waehrung": "EUR",
@@ -197,18 +197,18 @@
           "shop": "Card-Corner",
           "typ": "TCG-Fachhandel",
           "url": "https://www.card-corner.de/Pokemon-Mega-Forces-Tin",
-          "geprueft": "2026-07-22T23:37:02.791Z",
+          "geprueft": "2026-07-23T08:04:51.737Z",
           "status": "unknown",
           "preis": null,
           "quelle": "fehler",
-          "http": 0,
-          "hinweis": "TypeError"
+          "http": 404,
+          "hinweis": "HTTP 404"
         },
         {
           "shop": "GameStop",
           "typ": "Filialhandel",
           "url": "https://www.gamestop.de/Search/?q=Pokemon%20Mega%20Forces%20Tin",
-          "geprueft": "2026-07-22T23:37:04.115Z",
+          "geprueft": "2026-07-23T08:04:53.199Z",
           "status": "unknown",
           "preis": null,
           "waehrung": "EUR",
@@ -229,7 +229,7 @@
           "shop": "Card-Corner",
           "typ": "TCG-Fachhandel",
           "url": "https://www.card-corner.de/Pokemon-30-Jahre-Jubilaeum",
-          "geprueft": "2026-07-22T23:37:06.696Z",
+          "geprueft": "2026-07-23T08:04:55.226Z",
           "status": "unknown",
           "preis": null,
           "quelle": "fehler",
@@ -240,642 +240,12 @@
           "shop": "Gate to the Games",
           "typ": "TCG-Fachhandel",
           "url": "https://www.gate-to-the-games.de/pokemon-30-jahre",
-          "geprueft": "2026-07-22T23:37:09.349Z",
+          "geprueft": "2026-07-23T08:04:59.711Z",
           "status": "unknown",
           "preis": null,
           "quelle": "fehler",
           "http": 404,
           "hinweis": "HTTP 404"
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-lairos-shop-7241283829960",
-      "produkt": "Ultra Pro UP Pokemon Mew Card Sleeves - Schutz für Karten 65 Stück Pack",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 2.9,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "Lairos",
-          "typ": "TCG-Fachhandel",
-          "url": "https://lairos.shop/products/ultra-pro-up-pokemon-mew-card-sleeves-schutz-fur-karten-65-stuck-pack",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 2.9,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-www-cardbuddys-de-15843754279243",
-      "produkt": "S-CH Stellar Crystal Slim Booster",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 2.95,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "CardBuddys",
-          "typ": "TCG-Fachhandel",
-          "url": "https://www.cardbuddys.de/products/s-ch-stellar-crystal-slim-booster",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 2.95,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-www-cardbuddys-de-15822932246859",
-      "produkt": "Mega Brave M1L Booster KOR",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 2.95,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "CardBuddys",
-          "typ": "TCG-Fachhandel",
-          "url": "https://www.cardbuddys.de/products/mega-brave-m1l-booster-kor",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 2.95,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-webbas-kartenecke-de-10719248089352",
-      "produkt": "Pokemon TCG Brilliant Counterattack Booster CS2.5 (chinesisch)",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 2.99,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "Webbas Kartenecke",
-          "typ": "TCG-Fachhandel",
-          "url": "https://webbas-kartenecke.de/products/pokemon-tcg-brilliant-counterattack-booster-cs2-5-chinesisch",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 2.99,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-webbas-kartenecke-de-10719242518792",
-      "produkt": "Pokemon TCG Shadow of Glory Booster CS5.5 (chinesisch)",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 2.99,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "Webbas Kartenecke",
-          "typ": "TCG-Fachhandel",
-          "url": "https://webbas-kartenecke.de/products/pokemon-tcg-shadow-of-glory-booster-cs5-5-chinesisch",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 2.99,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-webbas-kartenecke-de-10719235703048",
-      "produkt": "Pokemon TCG Scorching Skies Booster CS3.5 (chinesisch)",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 2.99,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "Webbas Kartenecke",
-          "typ": "TCG-Fachhandel",
-          "url": "https://webbas-kartenecke.de/products/pokemon-tcg-scorching-skies-booster-cs3-5-chinesisch",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 2.99,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-www-cardstore-at-14746634092888",
-      "produkt": "058/078 Slaking V Englisch Pokémon GO",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 3,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "CardStore.at",
-          "typ": "TCG-Fachhandel",
-          "url": "https://www.cardstore.at/products/058-078-slaking-v-englisch-pokemon-go",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 3,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-www-cardstore-at-14746632257880",
-      "produkt": "047/078 Melmetal V Englisch Pokémon GO",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 3,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "CardStore.at",
-          "typ": "TCG-Fachhandel",
-          "url": "https://www.cardstore.at/products/047-078-melmetal-v-englisch-pokemon-go",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 3,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-webbas-kartenecke-de-10719251005704",
-      "produkt": "Pokemon TCG Victory Stars Booster CS6.5 (chinesisch)",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 3.49,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "Webbas Kartenecke",
-          "typ": "TCG-Fachhandel",
-          "url": "https://webbas-kartenecke.de/products/pokemon-tcg-victory-stars-booster-cs6-5-chinesisch",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 3.49,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-www-cardbuddys-de-15846004490571",
-      "produkt": "Abyss Eye M5 Booster JP",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 3.95,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "CardBuddys",
-          "typ": "TCG-Fachhandel",
-          "url": "https://www.cardbuddys.de/products/abyss-eye-m5-booster-jp",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 3.95,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-webbas-kartenecke-de-12110102987016",
-      "produkt": "Pokemon TCG Mega Entwicklung Dunkelnacht Booster (deutsch)",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 4.99,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "Webbas Kartenecke",
-          "typ": "TCG-Fachhandel",
-          "url": "https://webbas-kartenecke.de/products/pokemon-tcg-mega-entwicklung-dunkelnacht-booster-deutsch",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 4.99,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-webbas-kartenecke-de-11986163302664",
-      "produkt": "Pokemon TCG Mega Entwicklung Wachsendes Chaos Booster (deutsch)",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 4.99,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "Webbas Kartenecke",
-          "typ": "TCG-Fachhandel",
-          "url": "https://webbas-kartenecke.de/products/pokemon-tcg-mega-entwicklung-wachsendes-chaos-booster-deutsch",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 4.99,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-webbas-kartenecke-de-11260908634376",
-      "produkt": "Pokemon TCG Mega Entwicklung Optimale Ordnung Booster (deutsch)",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 4.99,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "Webbas Kartenecke",
-          "typ": "TCG-Fachhandel",
-          "url": "https://webbas-kartenecke.de/products/pokemon-tcg-mega-entwicklung-optimale-ordnung-booster-deutsch",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 4.99,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-webbas-kartenecke-de-10739503661320",
-      "produkt": "Pokemon TCG Karmesin & Purpur Reisegefährten Booster (deutsch)",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 4.99,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "Webbas Kartenecke",
-          "typ": "TCG-Fachhandel",
-          "url": "https://webbas-kartenecke.de/products/pokemon-tcg-karmesin-purpur-reisegefahrten-booster-deutsch",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 4.99,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-www-cardbuddys-de-15869488398667",
-      "produkt": "Mega Evolution Pitch Black Booster EN",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 6.95,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "CardBuddys",
-          "typ": "TCG-Fachhandel",
-          "url": "https://www.cardbuddys.de/products/mega-evolution-chaos-rising-booster-en-kopie",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 6.95,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-www-cardstore-at-15257336283480",
-      "produkt": "Pokémon - Mega-Entwicklung Booster (DE)",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 8,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "CardStore.at",
-          "typ": "TCG-Fachhandel",
-          "url": "https://www.cardstore.at/products/pokemon-mega-entwicklung-booster-de",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 8,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-www-cardbuddys-de-15822924546379",
-      "produkt": "Acryl Case für Pokemon Booster",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 9.95,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "CardBuddys",
-          "typ": "TCG-Fachhandel",
-          "url": "https://www.cardbuddys.de/products/acryl-case-f-r-pokemon-booster",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 9.95,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-www-cardbuddys-de-15866731692363",
-      "produkt": "S-CH Pokémon Terastal Gathering CSV9.5C Booster",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 11.95,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "CardBuddys",
-          "typ": "TCG-Fachhandel",
-          "url": "https://www.cardbuddys.de/products/s-ch-pokemon-terastal-gathering-csv9-5c-booster",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 11.95,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-www-cardbuddys-de-15843705487691",
-      "produkt": "S-CH Stellar Crystal Jumbo Booster",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 12.95,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "CardBuddys",
-          "typ": "TCG-Fachhandel",
-          "url": "https://www.cardbuddys.de/products/s-ch-stellar-crystal-jumbo-booster",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 12.95,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-lairos-shop-8709733384527",
-      "produkt": "Pokemon - Mein Erstes Spiel Decks Deutsch",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 14.9,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "Lairos",
-          "typ": "TCG-Fachhandel",
-          "url": "https://lairos.shop/products/pokemon-mein-erstes-spiel-decks-deutsch",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 14.9,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-www-cardbuddys-de-15822911537483",
-      "produkt": "Pokémon Mystery Booster Bag",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 15.95,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "CardBuddys",
-          "typ": "TCG-Fachhandel",
-          "url": "https://www.cardbuddys.de/products/pok-mon-mystery-booster-bag",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 15.95,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-lairos-shop-7442029183176",
-      "produkt": "Pokemon - Pokemon GO V Battle Deck Mewtwo Melmetal Deutsch",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 17.9,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "Lairos",
-          "typ": "TCG-Fachhandel",
-          "url": "https://lairos.shop/products/pokemon-pokemon-go-v-battle-deck-mewtwo-melmetal-deutsch",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 17.9,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-lairos-shop-7522575286472",
-      "produkt": "Pokemon - 2022 Pokémon TCG World Championships Decks Englisch/Deutsch",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 19.9,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "Lairos",
-          "typ": "TCG-Fachhandel",
-          "url": "https://lairos.shop/products/pokemon-2022-pokemon-tcg-world-championships-decks-englisch",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 19.9,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-www-cardstore-at-14816699941208",
-      "produkt": "Pokémon Lucario Playmat / Spielmatte",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 20,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "CardStore.at",
-          "typ": "TCG-Fachhandel",
-          "url": "https://www.cardstore.at/products/pokemon-lucario-playmat-spielmatte",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 20,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-lairos-shop-7095885365448",
-      "produkt": "Pokemon - hochwertiger Ultra Pro Binder Mew 9 Pocket für 360 Karten offiziell lizenziert",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 24.9,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "Lairos",
-          "typ": "TCG-Fachhandel",
-          "url": "https://lairos.shop/products/pokemon-hochwertiger-ultra-pro-mew-binder-9-pocket-fur-360-karten-offiziell-lizenziert",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 24.9,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-lairos-shop-7172266623176",
-      "produkt": "Pokemon - Überraschungsboxen mit 25 / 50 / 100 Euro - nur OVP Ware",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 25,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "Lairos",
-          "typ": "TCG-Fachhandel",
-          "url": "https://lairos.shop/products/pokemon-uberraschungsboxen-mit-25-50-100-euro-nur-booster",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 25,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-lairos-shop-9286692798799",
-      "produkt": "Pokemon - Shrouded Fable Nebel der Sagen Gladimperio Illustration Kollektion Englisch/Deutsch (Start 02.08.24)",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 25.9,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "Lairos",
-          "typ": "TCG-Fachhandel",
-          "url": "https://lairos.shop/products/pokemon-shrouded-fable-nebel-der-sagen-gladimperio-illustration-kollektion-englisch-deutsch-start-02-08-24",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 25.9,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-lairos-shop-15860106887503",
-      "produkt": "Pokemon - Tour & Packs Mini Tin CHI",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 26.9,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "Lairos",
-          "typ": "TCG-Fachhandel",
-          "url": "https://lairos.shop/products/pokemon-tour-packs-mini-tin-chi",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 26.9,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-www-celestial-gameshop-de-11008812056843",
-      "produkt": "Pokemon Gelb - gebraucht",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 30,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "Celestial Gameshop",
-          "typ": "TCG-Fachhandel",
-          "url": "https://www.celestial-gameshop.de/products/pokemon-gelb-gebraucht",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 30,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
-        }
-      ]
-    },
-    {
-      "sku": "disc-shopify-www-cardstore-at-14781136240984",
-      "produkt": "Pokémon Rayquaza Playmat / Spielmatte",
-      "uvp": null,
-      "status": "in_stock",
-      "bester_preis": 39,
-      "shops_verfuegbar": 1,
-      "shops": [
-        {
-          "shop": "CardStore.at",
-          "typ": "TCG-Fachhandel",
-          "url": "https://www.cardstore.at/products/pokemon-rayquaza-playmat-spielmatte",
-          "geprueft": "2026-07-22T23:37:24.820Z",
-          "status": "in_stock",
-          "preis": 39,
-          "waehrung": "EUR",
-          "quelle": "shopify-json",
-          "http": 200
         }
       ]
     }
