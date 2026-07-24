@@ -1,3 +1,14 @@
 {
-  "events": []
+  "events": [
+    {
+      "art": "preis_gefallen",
+      "sku": "disc-shopify-www-cardstore-at-14781136240984",
+      "produkt": "Pokémon Rayquaza Playmat / Spielmatte",
+      "shop": "CardStore.at",
+      "preis": 38,
+      "vorher": 39,
+      "url": "https://www.cardstore.at/products/pokemon-rayquaza-playmat-spielmatte",
+      "zeit": "2026-07-24T13:08:11.732Z"
+    }
+  ]
 }
