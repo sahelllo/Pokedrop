@@ -31,3 +31,11 @@ yarn-error.log*
 
 # legacy PWA hilfsdatei
 legacy/data/_new-events.json
+
+# Design-/KI-Tooling (impeccable, skills, Emil Kowalski) – lokal nutzbar,
+# aber bewusst NICHT im öffentlichen Produkt-Repo (Ballast + Auto-Hooks).
+# Der Deploy-Workflow unter .github/workflows/ bleibt committet.
+.claude/
+.agents/
+.github/skills/
+.github/hooks/
