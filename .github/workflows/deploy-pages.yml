@@ -36,6 +36,12 @@ jobs:
       - name: Statischen Export bauen
         env:
           GITHUB_PAGES: "true"
+          # Optional: sind diese Repository-Secrets gesetzt, spricht die
+          # veroeffentlichte App direkt mit Supabase. Fehlen sie, laeuft sie
+          # unveraendert auf den Demo-Daten weiter – der Build bricht nie ab.
+          # Anlegen unter: Settings -> Secrets and variables -> Actions
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
         run: npm run build
 
       - name: Pages-Dateien vorbereiten

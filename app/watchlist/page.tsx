@@ -12,6 +12,7 @@ import { DealCard } from "@/components/deal-card";
 import { EventCard } from "@/components/event-card";
 import { LocationRadius } from "@/components/location-radius";
 import { SectionHeading, EmptyState } from "@/components/section";
+import { DbStatus } from "@/components/db-status";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { formatEuro } from "@/lib/utils";
@@ -128,6 +129,8 @@ export default function WatchlistPage() {
       <section>
         <SectionHeading title="Einstellungen" icon={<Settings className="h-4 w-4" />} />
         <div className="space-y-3">
+          <DbStatus />
+
           <div>
             <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Standard-Standort & -Radius</p>
             <LocationRadius />

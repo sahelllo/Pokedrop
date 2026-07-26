@@ -115,17 +115,44 @@ Enthält: Foreign Keys mit passenden `ON DELETE`-Regeln, `CHECK`-Constraints
 Great-Deal ≤ Good-Deal), Geld als `numeric(10,2)`, Zeiten als `timestamptz`,
 GIST-Geo-Indizes.
 
-**Aktiv wird die Datenbank, sobald die App auf einem Host mit Server-Code
-läuft** (siehe unten) – GitHub Pages liefert nur statische Dateien und kann
-keine Datenbank ausführen. Bis dahin läuft die App auf den typisierten
-Seed-Daten in `/data` hinter der Zugriffsschicht `lib/data.ts`.
+### Datenbank verbinden – funktioniert auch auf GitHub Pages
 
-Einspielen (z. B. Supabase):
+Die App spricht über den **öffentlichen anon-Key direkt aus dem Browser** mit
+Supabase. Dafür wird **kein Server gebraucht** – der statische Export auf
+GitHub Pages genügt. Geschützt wird der Zugriff durch die Row Level Security
+aus `0002_views_rls.sql`.
+
+**Schritt für Schritt:**
+
+1. Auf [supabase.com](https://supabase.com) ein Projekt anlegen.
+2. Im **SQL Editor** nacheinander ausführen:
+   `db/migrations/0001_init.sql` → `db/migrations/0002_views_rls.sql` → `db/seed.sql`
+3. In Supabase unter **Project Settings → API** kopieren:
+   *Project URL* und *anon public key*.
+4. Auf GitHub: **Settings → Secrets and variables → Actions → New repository secret**
+   ```
+   NEXT_PUBLIC_SUPABASE_URL        = https://dein-projekt.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY   = eyJ...
+   ```
+5. Fertig – der nächste Push baut mit Datenbank. Unter *Merkliste →
+   Einstellungen* zeigt „Datenquelle" den Status und erlaubt einen
+   Verbindungstest.
+
+Sind die Secrets **nicht** gesetzt, läuft die App unverändert auf den
+Seed-Daten in `/data` weiter. Der Build bricht nie deswegen ab.
+
+> **Sicherheit:** Nur der öffentliche `anon`-Key gehört in diese Variablen.
+> Der `service_role`-Key, das Datenbank-Passwort und Stripe-Secrets dürfen
+> **niemals** ins Frontend oder ins Repository.
+
+`db/seed.sql` wird aus den Dateien in `/data` erzeugt – so bleiben Demo- und
+Datenbankinhalte identisch:
 
 ```bash
-psql "$DATABASE_URL" -f db/migrations/0001_init.sql
-psql "$DATABASE_URL" -f db/migrations/0002_views_rls.sql
+node scripts/generate-seed-sql.mjs
 ```
+
+Lokal statt über GitHub Secrets: `cp .env.example .env.local` und dort eintragen.
 
 ## Lokal starten
 
