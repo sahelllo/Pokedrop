@@ -98,8 +98,8 @@ export function HoloBackground() {
       <div className="holo-blob holo-blob--3" />
       <div className="holo-blob holo-blob--4" />
 
-      {/* feines Raster für Tiefe */}
-      <div className="holo-bg__grid" />
+      {/* weiche Lichtstreuung für Tiefe */}
+      <div className="holo-bg__grain" />
 
       {mounted && (
         <div className="holo-bg__cards" style={{ perspective: 1200 }}>

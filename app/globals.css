@@ -256,16 +256,17 @@
   70% { transform: translate3d(-6vw, -3vh, 0) scale(0.92); }
 }
 
-.holo-bg__grid {
+/* Sanfte Lichtstreuung statt dekorativem Raster: gibt Tiefe, ohne dem
+   Hintergrund eine zweite, konkurrierende Struktur aufzuzwingen. */
+.holo-bg__grain {
   position: absolute;
   inset: 0;
-  background-image:
-    linear-gradient(hsl(var(--foreground) / 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, hsl(var(--foreground) / 0.05) 1px, transparent 1px);
-  background-size: 46px 46px;
-  mask-image: radial-gradient(circle at 50% 40%, #000 0%, transparent 78%);
-  -webkit-mask-image: radial-gradient(circle at 50% 40%, #000 0%, transparent 78%);
-  opacity: 0.5;
+  background: radial-gradient(
+    120% 90% at 50% 0%,
+    hsl(var(--foreground) / 0.05),
+    transparent 62%
+  );
+  opacity: 0.7;
 }
 
 /* ---- Fliegende Holo-Karten ---- */
