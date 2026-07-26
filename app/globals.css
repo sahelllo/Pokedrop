@@ -71,7 +71,41 @@
   }
 }
 
+@layer base {
+  /* Typo-Hierarchie: klare Größen-/Gewichtsstufen, engeres Tracking je größer */
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-grotesk), var(--font-inter), sans-serif;
+    text-wrap: balance;
+  }
+  h1 {
+    letter-spacing: -0.045em;
+  }
+  h2 {
+    letter-spacing: -0.035em;
+  }
+  h3 {
+    letter-spacing: -0.02em;
+  }
+  /* Lesbare Zeilenlänge für Fließtext */
+  p {
+    text-wrap: pretty;
+  }
+  /* Sichtbarer Tastatur-Fokus (Zugänglichkeit) */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
 @layer utilities {
+  /* Fließtext auf angenehme Zeilenlänge begrenzen */
+  .measure {
+    max-width: 68ch;
+  }
+
   /* Hintergrund-Glow des App-Shells */
   .app-aurora {
     background:

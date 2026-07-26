@@ -67,8 +67,12 @@ export function DealCard({ view, index = 0 }: { view: DealView; index?: number }
       <Link href={`/product/${product.product_id}?offer=${offer.offer_id}`}>
         <div
           className={cn(
-            "relative overflow-hidden rounded-2xl border bg-card shadow-card transition-all duration-300 group-hover:shadow-glow",
-            isTop ? "border-deal-top/40" : "border-border",
+            "relative overflow-hidden rounded-2xl border bg-card shadow-card",
+            "transition-[box-shadow,border-color,transform] duration-300 ease-out",
+            "group-hover:shadow-card-hover group-active:scale-[0.995]",
+            isTop
+              ? "border-deal-top/40 group-hover:border-deal-top/70"
+              : "border-border group-hover:border-primary/40",
           )}
         >
           {isTop && (

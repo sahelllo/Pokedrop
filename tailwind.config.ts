@@ -75,11 +75,21 @@ const config: Config = {
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       boxShadow: {
-        glow: "0 0 0 1px hsl(var(--border)), 0 8px 40px -12px hsl(var(--primary) / 0.45)",
-        "glow-red": "0 0 30px -6px rgba(255,77,109,0.55)",
-        "glow-blue": "0 0 30px -6px rgba(42,117,187,0.55)",
-        "glow-yellow": "0 0 30px -6px rgba(255,203,5,0.5)",
-        card: "0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -16px rgba(0,0,0,0.7)",
+        // Echte Tiefe: jeder Schatten hat Versatz + weiche Streuung.
+        glow: "0 0 0 1px hsl(var(--border)), 0 12px 32px -12px hsl(var(--primary) / 0.5)",
+        "glow-red": "0 8px 24px -8px rgba(236,72,153,0.55)",
+        "glow-blue": "0 8px 24px -8px rgba(59,130,246,0.55)",
+        "glow-yellow": "0 8px 24px -8px rgba(255,203,5,0.5)",
+        card: "0 1px 2px rgba(0,0,0,0.28), 0 10px 28px -18px rgba(0,0,0,0.75)",
+        "card-hover": "0 2px 4px rgba(0,0,0,0.3), 0 18px 44px -22px rgba(0,0,0,0.85)",
+      },
+      transitionTimingFunction: {
+        // Exponentielles Ease-out: sofortiges Feedback, weiches Auslaufen.
+        out: "cubic-bezier(0.16, 1, 0.3, 1)",
+        "out-soft": "cubic-bezier(0.22, 1, 0.36, 1)",
+      },
+      letterSpacing: {
+        tightest: "-0.045em",
       },
       keyframes: {
         "accordion-down": {

@@ -192,7 +192,7 @@ export default function PremiumPage() {
           <h2 className="font-display text-2xl font-bold">Bereit für den Vorsprung?</h2>
           <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">
             Jederzeit kündbar. Der eigentliche Hebel: Bei Produkten, die in Minuten ausverkauft
-            sind, ist „15 Minuten später" wertlos.
+            sind, ist &bdquo;15 Minuten später&ldquo; wertlos.
           </p>
           <Button variant="premium" size="lg" onClick={upgrade} className="mt-4">
             <Crown className="h-4 w-4" /> Premium für 4,99 € / Monat

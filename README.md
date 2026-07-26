@@ -71,6 +71,49 @@ die UI umzubauen.
 
 ---
 
+## Qualität & Tests
+
+```bash
+npm run verify      # Typecheck + Lint + Tests + Build (alles auf einmal)
+
+npm run typecheck   # tsc --noEmit
+npm run lint        # ESLint
+npm test            # Vitest (Unit-Tests der Kernlogik)
+npm run test:coverage
+```
+
+**Aktueller Stand:** 64 Tests grün (Deal-Bewertung, Geo-/Radius-Logik,
+Alert-Matching – inkl. Edge-Cases wie Preis 0, UVP 0, Radius-Grenzen und dem
+Oberhausen→Ludwigsburg-Fall). Typecheck und Lint sauber, Production-Build
+erzeugt 29 statische Seiten. CI (`.github/workflows/ci.yml`) prüft das bei
+jedem Push und Pull Request.
+
+## Datenbank (vorbereitet)
+
+Das vollständige Postgres-Schema liegt versioniert in `db/migrations/`:
+
+| Datei | Inhalt |
+|---|---|
+| `0001_init.sql` | Alle Tabellen (Profile, Händler, Filialen, Produkte, Angebote, Drops, Gerüchte, Events, Watchlist, Portfolio, Alerts, Notifications, Subscriptions, Sightings, Audit-Log), Enums, Constraints, Indizes, `updated_at`-Trigger |
+| `0002_views_rls.sql` | Deal-Bewertung als SQL-View (spiegelt `lib/deals.ts`), PostGIS-Radius-Funktionen `offers_within_radius()` / `events_within_radius()`, Row Level Security |
+
+Enthält: Foreign Keys mit passenden `ON DELETE`-Regeln, `CHECK`-Constraints
+(Preise ≥ 0, Confidence 0–1, Wunschpreis-Pflicht bei Preisalarmen,
+Great-Deal ≤ Good-Deal), Geld als `numeric(10,2)`, Zeiten als `timestamptz`,
+GIST-Geo-Indizes.
+
+**Aktiv wird die Datenbank, sobald die App auf einem Host mit Server-Code
+läuft** (siehe unten) – GitHub Pages liefert nur statische Dateien und kann
+keine Datenbank ausführen. Bis dahin läuft die App auf den typisierten
+Seed-Daten in `/data` hinter der Zugriffsschicht `lib/data.ts`.
+
+Einspielen (z. B. Supabase):
+
+```bash
+psql "$DATABASE_URL" -f db/migrations/0001_init.sql
+psql "$DATABASE_URL" -f db/migrations/0002_views_rls.sql
+```
+
 ## Lokal starten
 
 Voraussetzung: **Node.js 18.18+** (empfohlen 20 oder 22).
