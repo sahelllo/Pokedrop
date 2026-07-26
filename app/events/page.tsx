@@ -87,6 +87,10 @@ export default function EventsPage() {
               <button
                 key={o.v}
                 onClick={() => setView(o.v as typeof view)}
+                // Auf schmalen Viewports ist nur das Icon sichtbar – der
+                // Button braucht trotzdem einen Namen für Screenreader.
+                aria-label={o.label}
+                aria-pressed={view === o.v}
                 className={cn(
                   "inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium transition",
                   view === o.v ? "bg-primary text-primary-foreground" : "text-muted-foreground",

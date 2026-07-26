@@ -74,19 +74,32 @@ die UI umzubauen.
 ## Qualität & Tests
 
 ```bash
-npm run verify      # Typecheck + Lint + Tests + Build (alles auf einmal)
+npm run verify      # Typecheck + Lint + Unit-Tests + Build
 
 npm run typecheck   # tsc --noEmit
 npm run lint        # ESLint
 npm test            # Vitest (Unit-Tests der Kernlogik)
 npm run test:coverage
+
+npm run build && npm run test:e2e   # Playwright (E2E, Desktop + Mobile)
 ```
 
-**Aktueller Stand:** 64 Tests grün (Deal-Bewertung, Geo-/Radius-Logik,
-Alert-Matching – inkl. Edge-Cases wie Preis 0, UVP 0, Radius-Grenzen und dem
-Oberhausen→Ludwigsburg-Fall). Typecheck und Lint sauber, Production-Build
-erzeugt 29 statische Seiten. CI (`.github/workflows/ci.yml`) prüft das bei
-jedem Push und Pull Request.
+**Aktueller Stand: 122 Tests grün.**
+
+| Ebene | Anzahl | Inhalt |
+|---|---|---|
+| Unit (Vitest) | 64 | Deal-Bewertung (alle 5 Badges, 12-Monats-Regel, Edge-Cases wie Preis 0 / UVP 0), Geo & Haversine mit bekannten Erwartungswerten, Alert-Matching (UVP / Wunschpreis / Restock, lokal vs. deutschlandweit) |
+| E2E (Playwright) | 58 | Kritische Flows auf **Desktop und Mobile**: Onboarding, Standort + Radius, Filter, Produktdetail mit Preisquellen & Chart, Alerts, Portfolio, Events (Liste/Kalender/Karte), Premium-Upgrade, Support-Chat, Theme-Wechsel |
+
+Die E2E-Tests laufen gegen den **echten statischen Export** (`out/`) – also
+exakt gegen das, was auf GitHub Pages ausgeliefert wird. Sie enthalten
+Regressionstests für zwei real aufgetretene Fehler: **abgeschnittene Karten auf
+dem Handy** (jede Seite wird auf horizontalen Überlauf geprüft) und den
+**gesperrten Zoom**.
+
+Typecheck und Lint sind sauber, der Production-Build erzeugt 29 statische
+Seiten. CI (`.github/workflows/ci.yml`) prüft alles bei jedem Push und Pull
+Request.
 
 ## Datenbank (vorbereitet)
 

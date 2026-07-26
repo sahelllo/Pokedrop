@@ -32,10 +32,27 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Tests
+      - name: Unit-Tests
         run: npm test
 
-      - name: Production-Build
+      - name: Production-Build (statischer Export)
+        run: npm run build
+
+      - name: Playwright-Browser installieren
+        run: npx playwright install --with-deps chromium
+
+      - name: E2E-Tests (Desktop + Mobile)
+        run: npm run test:e2e
+
+      - name: E2E-Report bei Fehlern sichern
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+      - name: Pages-Build verifizieren (mit basePath)
         env:
           GITHUB_PAGES: "true"
         run: npm run build
