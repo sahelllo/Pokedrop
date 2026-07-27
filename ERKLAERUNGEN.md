@@ -108,3 +108,66 @@ Produktnamen einmal änderst, stimmt er automatisch überall.
   oder eigene Aufnahmen. Betroffen sind alle Produktbilder in der App.
 - **Bezahlung:** Der Premium-Schalter ist eine Vorschau, noch keine echte
   Abrechnung.
+
+---
+
+## Teil 4: Das Design-Leitbild „RADAR"
+
+Die Website ist bewusst wie ein **Ortungsgerät** gestaltet – nicht wie ein
+Standard-Dashboard. Alles folgt einer Idee: *Was ist in meiner Reichweite,
+und wie gut ist es?*
+
+### Die Signature-Elemente
+
+Das sind wiedererkennbare Bausteine, die es so nur bei PokéDrop gibt.
+
+**1. Distanz-Ring** (`components/signature/distance-ring.tsx`)
+Der farbige Ring um jedes Produktbild zeigt, wie nah ein Angebot ist –
+**ohne dass man eine Zahl lesen muss**.
+
+| Ring | Bedeutung |
+|---|---|
+| fast geschlossen, hellgrün | ganz in der Nähe |
+| halb voll, mittelgrün | mittlere Entfernung |
+| schmaler Bogen, dunkelgrün | am Rand deines Umkreises |
+| voller Ring, blau | Online-Angebot (überall gleich nah) |
+
+**2. Deal-Heat-Balken** (`components/signature/heat-bar.tsx`)
+Der dünne Balken unter jedem Angebot zeigt die Preisqualität als
+**Temperatur**: Je weiter der Preis unter dem Referenzwert liegt, desto
+heißer glüht er.
+
+| Farbe | Bedeutung |
+|---|---|
+| grau-blau | kein Preisvorteil |
+| gelb | leicht günstiger |
+| orange | deutlich günstiger |
+| rot | Top-Deal |
+
+**3. Radar-Hintergrund** (`components/radar-background.tsx`)
+Entfernungsringe, ein umlaufender Suchstrahl und einzelne Ping-Punkte.
+Er erzählt dasselbe wie die App, bleibt aber im Hintergrund.
+
+**4. Statuszeilen in Monospace**
+Entfernungen, Preise und Zustände stehen in einer Schreibmaschinen-Schrift.
+Grund: Die Zahlen stehen dadurch exakt untereinander und lassen sich
+schneller vergleichen – wie auf einer Geräteanzeige.
+
+### Bewegungs-Regeln (Motion-Signature)
+
+- Nur **eine** Beschleunigungs-Kurve im ganzen Projekt
+- Drei feste Zeiten: 150 ms (schnell), 240 ms (Standard), 400 ms (langsam)
+- Nur `transform` und `opacity` werden animiert → flüssig auch auf älteren Handys
+- Der Radar-Strahl pausiert, wenn der Tab im Hintergrund ist (schont Akku)
+- Bei Systemeinstellung „Bewegung reduzieren" stehen alle Animationen still
+
+### Bilder – rechtlicher Hinweis
+
+Es werden **keine offiziellen Pokémon-Logos oder Produktfotos** fest im Code
+verwendet. Aktuell werden frei nutzbare Pokémon-Renderbilder per Verweis
+geladen; fällt die Quelle aus, erscheint automatisch ein farbiger Platzhalter
+passend zum Energie-Typ.
+
+**Stellen, an denen später lizenzierte oder händlereigene Bilder nötig sind:**
+- Produktbilder auf Deal-Karten, Produktdetailseite, Portfolio und Scanner
+- Händler-Logos (aktuell nur farbige Markierungen, keine echten Logos)

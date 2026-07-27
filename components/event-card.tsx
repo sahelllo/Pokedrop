@@ -18,18 +18,18 @@ import { Button } from "@/components/ui/button";
 
 const TYPE_META: Record<EventType, { emoji: string; color: string }> = {
   Tauschbörse: { emoji: "🔄", color: "text-primary" },
-  "Card Show": { emoji: "⭐", color: "text-poke-yellow" },
+  "Card Show": { emoji: "⭐", color: "text-accent" },
   Sammelkartenmesse: { emoji: "🏟️", color: "text-secondary" },
-  "Community-Treffen": { emoji: "👥", color: "text-emerald-400" },
-  Turnier: { emoji: "🏆", color: "text-amber-400" },
+  "Community-Treffen": { emoji: "👥", color: "text-primary" },
+  Turnier: { emoji: "🏆", color: "text-[var(--heat-1)]" },
   Sammlerbörse: { emoji: "📦", color: "text-muted-foreground" },
 };
 
 const VERIF: Record<EventVerification, { label: string; cls: string }> = {
-  bestaetigt: { label: "bestätigt", cls: "text-emerald-400" },
-  wahrscheinlich: { label: "wahrscheinlich", cls: "text-amber-400" },
+  bestaetigt: { label: "bestätigt", cls: "text-primary" },
+  wahrscheinlich: { label: "wahrscheinlich", cls: "text-[var(--heat-1)]" },
   unbestaetigt: { label: "unbestätigt", cls: "text-muted-foreground" },
-  abgesagt: { label: "abgesagt", cls: "text-red-400 line-through" },
+  abgesagt: { label: "abgesagt", cls: "text-[var(--heat-4)] line-through" },
 };
 
 export function EventCard({

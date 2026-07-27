@@ -33,7 +33,7 @@ export function DbStatus() {
           <span
             className={cn(
               "mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-xl",
-              status.connected ? "bg-emerald-500/15 text-emerald-400" : "bg-surface-2 text-muted-foreground",
+              status.connected ? "bg-primary/15 text-primary" : "bg-surface-2 text-muted-foreground",
             )}
           >
             <Database className="h-4 w-4" />
@@ -66,7 +66,7 @@ export function DbStatus() {
         <p
           className={cn(
             "mt-3 flex items-start gap-1.5 rounded-xl px-3 py-2 text-xs",
-            result.ok ? "bg-emerald-500/10 text-emerald-400" : "bg-red-500/10 text-red-400",
+            result.ok ? "bg-primary/10 text-primary" : "bg-[color-mix(in_srgb,var(--heat-4)_10%,transparent)] text-[var(--heat-4)]",
           )}
         >
           {result.ok ? (

@@ -101,7 +101,7 @@ export default function WatchlistPage() {
                       {rule.scope === "lokal" ? "lokal" : "deutschlandweit"}
                     </p>
                   </div>
-                  <button onClick={() => removeAlertRule(rule.product_id)} className="rounded-full p-2 text-muted-foreground transition hover:bg-surface-2 hover:text-red-400" aria-label="Alert entfernen">
+                  <button onClick={() => removeAlertRule(rule.product_id)} className="rounded-full p-2 text-muted-foreground transition hover:bg-surface-2 hover:text-[var(--heat-4)]" aria-label="Alert entfernen">
                     <Trash2 className="h-4 w-4" />
                   </button>
                 </div>
@@ -147,7 +147,7 @@ export default function WatchlistPage() {
           <div className="flex items-center justify-between rounded-2xl border border-border bg-card p-4 shadow-card">
             <div>
               <p className="flex items-center gap-1.5 text-sm font-semibold">
-                <Crown className="h-4 w-4 text-poke-yellow" /> Premium (Demo)
+                <Crown className="h-4 w-4 text-accent" /> Premium (Demo)
               </p>
               <p className="text-xs text-muted-foreground">Schaltet Premium-UI frei. Echt via Stripe.</p>
             </div>

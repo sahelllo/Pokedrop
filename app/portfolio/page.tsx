@@ -72,9 +72,7 @@ export default function PortfolioPage() {
   return (
     <div className="space-y-6">
       {/* Wert-Hero (Fintech-Optik) */}
-      <section className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-card">
-        <div className="pointer-events-none absolute -right-10 -top-16 h-56 w-56 rounded-full bg-primary/20 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-16 left-10 h-48 w-48 rounded-full bg-emerald-500/15 blur-3xl" />
+      <section className="relative overflow-hidden rounded-[var(--radius)] border border-border bg-card p-6 shadow-card">
         <div className="relative">
           <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/15 px-2.5 py-0.5 text-xs font-bold text-primary">
             <Wallet className="h-3.5 w-3.5" /> Mein Portfolio
@@ -87,7 +85,7 @@ export default function PortfolioPage() {
             <span
               className={cn(
                 "inline-flex items-center gap-1 rounded-full px-2.5 py-1 font-semibold",
-                gain >= 0 ? "bg-emerald-500/15 text-emerald-400" : "bg-red-500/15 text-red-400",
+                gain >= 0 ? "bg-primary/15 text-primary" : "bg-[color-mix(in_srgb,var(--heat-4)_15%,transparent)] text-[var(--heat-4)]",
               )}
             >
               {gain >= 0 ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />}
@@ -149,7 +147,7 @@ export default function PortfolioPage() {
                     </Link>
                     <p className="text-[11px] text-muted-foreground">
                       {formatEuro(h.unit)}/Stk ·{" "}
-                      <span className={perGain >= 0 ? "text-emerald-400" : "text-red-400"}>
+                      <span className={perGain >= 0 ? "text-primary" : "text-[var(--heat-4)]"}>
                         {perGain >= 0 ? "+" : ""}
                         {formatEuro(perGain)}
                       </span>
@@ -179,7 +177,7 @@ export default function PortfolioPage() {
                     <p className="font-display text-base font-bold">{formatEuro(h.value)}</p>
                     <button
                       onClick={() => removeFromPortfolio(h.product.product_id)}
-                      className="mt-1 rounded-full p-1.5 text-muted-foreground transition hover:bg-surface-2 hover:text-red-400"
+                      className="mt-1 rounded-full p-1.5 text-muted-foreground transition hover:bg-surface-2 hover:text-[var(--heat-4)]"
                       aria-label="Entfernen"
                     >
                       <Trash2 className="h-4 w-4" />

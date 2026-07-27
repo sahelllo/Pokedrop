@@ -5,6 +5,7 @@ import { Radar, AlertTriangle } from "lucide-react";
 import { allRumors } from "@/lib/data";
 import { useDatasetVersion } from "@/lib/dataset";
 import { RumorCard } from "@/components/rumor-card";
+import { PageHeader } from "@/components/page-header";
 import { SectionHeading } from "@/components/section";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import type { RumorStatus } from "@/types";
@@ -25,26 +26,20 @@ export default function RumorsPage() {
 
   return (
     <div className="space-y-5">
-      <div className="relative overflow-hidden rounded-3xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 via-card to-card p-5 shadow-card">
-        <div className="relative">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/20 px-2.5 py-0.5 text-xs font-bold text-amber-400">
-            <Radar className="h-3.5 w-3.5" /> Frühwarn-Radar
-          </div>
-          <h1 className="mt-2 font-display text-2xl font-bold">Gerüchte & frühe Hinweise</h1>
-          <p className="mt-1 max-w-xl text-sm text-muted-foreground">
-            Mögliche kommende Drops aus Social Media und Community – klar getrennt vom
-            verifizierten Deal-Feed.
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        accent="var(--heat-1)"
+        status="Frühwarn-Kanal"
+        title="Gerüchte & frühe Hinweise"
+        subtitle="Mögliche kommende Drops aus Social Media und Community – strikt getrennt vom geprüften Feed."
+      />
 
       {/* Wichtiger Trennungs-Hinweis */}
-      <div className="flex items-start gap-2.5 rounded-2xl border border-dashed border-amber-500/30 bg-amber-500/5 p-3.5">
-        <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-400" />
+      <div className="flex items-start gap-2.5 rounded-2xl border border-dashed border-[color-mix(in_srgb,var(--heat-1)_35%,transparent)] bg-[color-mix(in_srgb,var(--heat-1)_6%,transparent)] p-3.5">
+        <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[var(--heat-1)]" />
         <p className="text-xs text-muted-foreground">
           <span className="font-semibold text-foreground">Nicht bestätigt.</span> Diese Hinweise
           sind ein zusätzlicher Frühwarnkanal – keine Tatsachen. Erst mit Status{" "}
-          <span className="font-semibold text-emerald-400">CONFIRMED</span> wandert ein Hinweis in
+          <span className="font-semibold text-primary">CONFIRMED</span> wandert ein Hinweis in
           den regulären Deal-/Drop-Bereich.
         </p>
       </div>

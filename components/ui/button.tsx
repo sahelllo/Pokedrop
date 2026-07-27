@@ -21,7 +21,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-surface-2 text-foreground",
         subtle: "bg-surface-2 text-foreground hover:brightness-110",
         premium:
-          "bg-gradient-to-r from-poke-yellow via-amber-400 to-poke-yellow text-[#241a02] font-bold shadow-glow-yellow hover:brightness-105",
+          "bg-gradient-to-r from-accent via-amber-400 to-accent text-[#241a02] font-bold shadow-glow-yellow hover:brightness-105",
       },
       size: {
         default: "h-10 px-5 py-2",

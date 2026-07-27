@@ -103,7 +103,7 @@ export function NotifyDialog({ product }: { product: Product }) {
         </div>
 
         {!premium && (
-          <p className="rounded-xl bg-poke-yellow/10 px-3 py-2 text-xs text-poke-yellow">
+          <p className="rounded-xl bg-accent/10 px-3 py-2 text-xs text-accent">
             ⚡ Mit Premium kommt der Alert sofort per Push – Free-Alerts sind bis zu 15 Min. verzögert.
           </p>
         )}

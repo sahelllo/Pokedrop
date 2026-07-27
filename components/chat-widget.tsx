@@ -86,8 +86,8 @@ export function ChatWidget() {
         </AnimatePresence>
         {!open && (
           <span className="absolute -right-0.5 -top-0.5 flex h-3.5 w-3.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />
-            <span className="relative inline-flex h-3.5 w-3.5 rounded-full bg-emerald-400" />
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-70" />
+            <span className="relative inline-flex h-3.5 w-3.5 rounded-full bg-primary" />
           </span>
         )}
       </button>
@@ -109,8 +109,8 @@ export function ChatWidget() {
               </span>
               <div className="flex-1">
                 <p className="text-sm font-semibold leading-tight">PokeDrop-Support</p>
-                <p className="flex items-center gap-1 text-[11px] text-emerald-400">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> Meist in Minuten hier
+                <p className="flex items-center gap-1 text-[11px] text-primary">
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary" /> Meist in Minuten hier
                 </p>
               </div>
             </div>

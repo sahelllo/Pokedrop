@@ -20,6 +20,7 @@ import { useToast } from "@/components/toast";
 import { formatEuro } from "@/lib/utils";
 import { SmartImage } from "@/components/smart-image";
 import { DealBadgePill } from "@/components/deal-badge";
+import { PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import { getOffersForProduct, getDealViewForOffer } from "@/lib/data";
 import { energyMeta } from "@/lib/energy";
@@ -91,22 +92,15 @@ export default function ScannerPage() {
 
   return (
     <div className="space-y-5">
-      <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-5 shadow-card">
-        <div className="pointer-events-none absolute -right-10 -top-12 h-44 w-44 rounded-full bg-secondary/20 blur-3xl" />
-        <div className="relative">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-secondary/15 px-2.5 py-0.5 text-xs font-bold text-secondary">
-            <ScanLine className="h-3.5 w-3.5" /> Karten-Scanner
-          </div>
-          <h1 className="mt-2 font-display text-2xl font-bold">Karte scannen & sofort erkennen</h1>
-          <p className="mt-1 max-w-lg text-sm text-muted-foreground">
-            Halte eine Pokémon-Karte vor die Kamera – PokeDrop erkennt sie und zeigt dir Preis,
-            Deal-Bewertung und Angebote in deiner Nähe.
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        accent="var(--radar-online)"
+        status="Bilderkennung"
+        title="Karte scannen"
+        subtitle="Halte eine Karte vor die Kamera – PokéDrop erkennt sie und zeigt Preis, Bewertung und Angebote in der Nähe."
+      />
 
       {/* Kamera-Viewport */}
-      <div className="relative mx-auto aspect-[3/4] w-full max-w-sm overflow-hidden rounded-3xl border border-border bg-black shadow-glow">
+      <div className="relative mx-auto aspect-[3/4] w-full max-w-sm overflow-hidden rounded-[var(--radius)] border border-border bg-black">
         <video
           ref={videoRef}
           playsInline
@@ -118,7 +112,7 @@ export default function ScannerPage() {
         {/* Idle */}
         {phase === "idle" && (
           <CenterOverlay>
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-secondary text-white shadow-glow-blue">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-primary/50 bg-primary/10 text-primary">
               <Camera className="h-8 w-8" />
             </div>
             <p className="mt-4 max-w-[16rem] text-sm text-white/80">
@@ -160,7 +154,7 @@ export default function ScannerPage() {
               <span key={pos} className={`absolute ${pos} h-6 w-6 rounded border-primary`} />
             ))}
             <motion.div
-              className="absolute inset-x-8 h-0.5 rounded-full bg-gradient-to-r from-transparent via-primary to-transparent shadow-[0_0_12px_2px_rgba(58,160,255,0.7)]"
+              className="absolute inset-x-8 h-0.5 rounded-full bg-primary shadow-[0_0_14px_3px_var(--radar-near)]"
               initial={{ top: "12%" }}
               animate={{ top: ["12%", "84%", "12%"] }}
               transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
@@ -185,7 +179,7 @@ export default function ScannerPage() {
               className="absolute inset-0 flex flex-col bg-gradient-to-b from-black/40 to-black/85 p-4"
             >
               <div className="mb-2 flex items-center gap-2">
-                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/20 px-2 py-0.5 text-[11px] font-bold text-emerald-300">
+                <span className="inline-flex items-center gap-1 rounded bg-primary/20 px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-wide text-primary">
                   <Sparkles className="h-3 w-3" /> erkannt · {confidence}%
                 </span>
                 {bestView && <DealBadgePill badge={bestView.evaluation.badge} size="sm" />}
@@ -208,7 +202,7 @@ export default function ScannerPage() {
                     Marktwert {formatEuro(product.market_reference_price || product.reference_uvp)}
                   </p>
                   {bestView && (
-                    <p className="text-sm font-semibold text-emerald-300">
+                    <p className="text-sm font-semibold text-primary">
                       Bester Deal: {formatEuro(bestView.offer.price)}
                     </p>
                   )}

@@ -50,7 +50,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 <Icon className="h-[18px] w-[18px]" />
                 {item.label}
                 {item.href === "/premium" && !premium && (
-                  <span className="ml-auto rounded-full bg-poke-yellow/20 px-1.5 py-0.5 text-[10px] font-bold text-poke-yellow">
+                  <span className="ml-auto rounded-full bg-accent/20 px-1.5 py-0.5 text-[10px] font-bold text-accent">
                     PRO
                   </span>
                 )}

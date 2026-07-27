@@ -37,7 +37,7 @@ export function PriceSources({ product }: { product: Product }) {
             <p className="flex items-center gap-1.5 text-sm font-semibold">
               {s.name}
               {s.isLowest && (
-                <span className="inline-flex items-center gap-0.5 rounded-full bg-emerald-500/15 px-1.5 py-0.5 text-[10px] font-bold text-emerald-400">
+                <span className="inline-flex items-center gap-0.5 rounded-full bg-primary/15 px-1.5 py-0.5 text-[10px] font-bold text-primary">
                   <TrendingDown className="h-3 w-3" /> Bestpreis
                 </span>
               )}
@@ -46,14 +46,14 @@ export function PriceSources({ product }: { product: Product }) {
               {s.note}
               {" · "}
               {s.inStock ? (
-                <span className="text-emerald-400">verfügbar</span>
+                <span className="text-primary">verfügbar</span>
               ) : (
                 <span className="text-muted-foreground">nicht verfügbar</span>
               )}
             </p>
           </div>
           <div className="shrink-0 text-right">
-            <p className={cn("font-display text-base font-bold", s.isLowest && "text-emerald-400")}>
+            <p className={cn("font-display text-base font-bold", s.isLowest && "text-primary")}>
               {formatEuro(s.price)}
             </p>
             <span className="inline-flex items-center gap-0.5 text-[11px] text-primary">

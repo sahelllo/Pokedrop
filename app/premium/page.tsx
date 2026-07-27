@@ -73,11 +73,9 @@ export default function PremiumPage() {
   return (
     <div className="space-y-8">
       {/* Hero */}
-      <section className="relative overflow-hidden rounded-3xl border border-poke-yellow/30 bg-gradient-to-br from-amber-500/15 via-card to-card p-6 shadow-card sm:p-9">
-        <div className="pointer-events-none absolute -right-10 -top-16 h-56 w-56 rounded-full bg-poke-yellow/25 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-16 left-10 h-48 w-48 rounded-full bg-secondary/15 blur-3xl" />
+      <section className="relative overflow-hidden rounded-[var(--radius)] border border-accent/30 bg-card/80 p-6 shadow-card sm:p-9">
         <div className="relative max-w-2xl">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-poke-yellow/20 px-3 py-1 text-xs font-bold text-poke-yellow">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-accent/20 px-3 py-1 text-xs font-bold text-accent">
             <Sparkles className="h-3.5 w-3.5" /> PokeDrop Premium
           </div>
           <h1 className="mt-3 font-display text-3xl font-bold leading-tight sm:text-4xl">
@@ -102,7 +100,7 @@ export default function PremiumPage() {
           </div>
           <div className="mt-5 flex flex-wrap gap-2">
             {mounted && premium ? (
-              <span className="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 px-4 py-2.5 text-sm font-semibold text-emerald-400">
+              <span className="inline-flex items-center gap-2 rounded-full bg-primary/15 px-4 py-2.5 text-sm font-semibold text-primary">
                 <Check className="h-4 w-4" /> Premium aktiv
               </span>
             ) : (
@@ -133,7 +131,7 @@ export default function PremiumPage() {
                 transition={{ delay: i * 0.05 }}
                 className="rounded-2xl border border-border bg-card p-4 shadow-card"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-poke-yellow/15 text-poke-yellow">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent/15 text-accent">
                   <Icon className="h-5 w-5" />
                 </div>
                 <h3 className="mt-3 font-display font-semibold">{f.title}</h3>
@@ -151,7 +149,7 @@ export default function PremiumPage() {
           <div className="grid grid-cols-[1fr_auto_auto] items-center gap-4 border-b border-border bg-surface-2 px-4 py-3 text-sm font-semibold">
             <span>Funktion</span>
             <span className="w-20 text-center text-muted-foreground">Free</span>
-            <span className="w-24 text-center text-poke-yellow">Premium</span>
+            <span className="w-24 text-center text-accent">Premium</span>
           </div>
           {COMPARE.map((row, i) => (
             <div
@@ -188,7 +186,7 @@ export default function PremiumPage() {
 
       {/* Abschluss-CTA */}
       {mounted && !premium && (
-        <section className="rounded-3xl border border-poke-yellow/30 bg-gradient-to-br from-amber-500/10 to-card p-6 text-center shadow-card">
+        <section className="rounded-[var(--radius)] border border-accent/30 bg-card/80 p-6 text-center shadow-card">
           <h2 className="font-display text-2xl font-bold">Bereit für den Vorsprung?</h2>
           <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">
             Jederzeit kündbar. Der eigentliche Hebel: Bei Produkten, die in Minuten ausverkauft
@@ -204,7 +202,7 @@ export default function PremiumPage() {
 }
 
 function renderCell(value: boolean | string, pro?: boolean) {
-  if (value === true) return <Check className={cn("h-4 w-4", pro ? "text-poke-yellow" : "text-emerald-400")} />;
+  if (value === true) return <Check className={cn("h-4 w-4", pro ? "text-accent" : "text-primary")} />;
   if (value === false) return <X className="h-4 w-4 text-muted-foreground/50" />;
-  return <span className={cn("text-xs", pro ? "text-poke-yellow" : "text-muted-foreground")}>{value}</span>;
+  return <span className={cn("text-xs", pro ? "text-accent" : "text-muted-foreground")}>{value}</span>;
 }

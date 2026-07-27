@@ -9,6 +9,7 @@ import { getEventsInRadius, allEventTypes, type EventFilters } from "@/lib/data"
 import { EventCard } from "@/components/event-card";
 import { EventCalendar } from "@/components/event-calendar";
 import { LocationRadius } from "@/components/location-radius";
+import { PageHeader } from "@/components/page-header";
 import { SectionHeading, EmptyState } from "@/components/section";
 import { DynamicMap, type MapMarker } from "@/components/map/dynamic-map";
 import { cn } from "@/lib/utils";
@@ -56,7 +57,7 @@ export default function EventsPage() {
     lng: e.longitude,
     title: e.event_name,
     subtitle: `${e.city} · ${e.event_type}`,
-    color: "#7b2ff7",
+    color: "#00ff8c",
     emoji: "📅",
   }));
 
@@ -66,19 +67,11 @@ export default function EventsPage() {
 
   return (
     <div className="space-y-5">
-      <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-5 shadow-card">
-        <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/15 blur-3xl" />
-        <div className="relative">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/15 px-2.5 py-0.5 text-xs font-bold text-primary">
-            <Calendar className="h-3.5 w-3.5" /> Event-Radar
-          </div>
-          <h1 className="mt-2 font-display text-2xl font-bold">Tauschbörsen, Card Shows & Events</h1>
-          <p className="mt-1 max-w-xl text-sm text-muted-foreground">
-            Alle relevanten Pokémon-TCG-Veranstaltungen in deinem Umkreis – als Liste, Kalender
-            oder Karte.
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        status="Event-Ortung"
+        title="Tauschbörsen & Card Shows"
+        subtitle="Alle Pokémon-TCG-Veranstaltungen in deinem Umkreis – als Liste, Kalender oder Karte."
+      />
 
       <LocationRadius />
 
@@ -152,7 +145,7 @@ export default function EventsPage() {
               className={cn(
                 "rounded-full border px-2.5 py-1 text-xs transition",
                 types.includes(t)
-                  ? "border-secondary/40 bg-secondary/15 text-secondary"
+                  ? "border-primary/40 bg-primary/15 text-primary"
                   : "border-border bg-surface/60 text-muted-foreground",
               )}
             >

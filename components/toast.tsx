@@ -29,9 +29,9 @@ export function useToast() {
 
 const KIND_ICON: Record<ToastKind, React.ReactNode> = {
   info: <Bell className="h-5 w-5 text-primary" />,
-  success: <CheckCircle2 className="h-5 w-5 text-emerald-400" />,
-  alert: <Zap className="h-5 w-5 text-poke-yellow" />,
-  premium: <Sparkles className="h-5 w-5 text-poke-yellow" />,
+  success: <CheckCircle2 className="h-5 w-5 text-primary" />,
+  alert: <Zap className="h-5 w-5 text-accent" />,
+  premium: <Sparkles className="h-5 w-5 text-accent" />,
 };
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
@@ -62,8 +62,8 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               transition={{ type: "spring", stiffness: 380, damping: 30 }}
               className={cn(
                 "pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-2xl border border-border bg-card/95 p-3.5 shadow-glow backdrop-blur",
-                t.kind === "premium" && "border-poke-yellow/40",
-                t.kind === "alert" && "border-poke-yellow/30",
+                t.kind === "premium" && "border-accent/40",
+                t.kind === "alert" && "border-accent/30",
               )}
             >
               {t.imageUrl ? (

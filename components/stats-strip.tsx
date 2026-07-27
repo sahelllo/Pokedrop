@@ -8,8 +8,8 @@ import { CountUp } from "@/components/count-up";
 const STATS = [
   { icon: Users, label: "Aktive Sammler", value: communityStats.activeUsers, color: "text-primary" },
   { icon: Package, label: "Deals heute", value: communityStats.dealsToday, color: "text-secondary" },
-  { icon: Coins, label: "Gespart (gesamt)", value: communityStats.savedEuroTotal, prefix: "", suffix: " €", color: "text-poke-yellow" },
-  { icon: TrendingUp, label: "Beobachtete Filialen", value: communityStats.watchedStores, color: "text-emerald-400" },
+  { icon: Coins, label: "Gespart (gesamt)", value: communityStats.savedEuroTotal, prefix: "", suffix: " €", color: "text-accent" },
+  { icon: TrendingUp, label: "Beobachtete Filialen", value: communityStats.watchedStores, color: "text-primary" },
 ];
 
 export function StatsStrip() {

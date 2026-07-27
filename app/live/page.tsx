@@ -5,6 +5,7 @@ import { Zap, Flame } from "lucide-react";
 import { allDrops } from "@/lib/data";
 import { useDatasetVersion } from "@/lib/dataset";
 import { LiveDropCard } from "@/components/live-drop-card";
+import { PageHeader } from "@/components/page-header";
 import { SectionHeading } from "@/components/section";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { AlertDemoButton } from "@/components/alert-demo";
@@ -21,22 +22,14 @@ export default function LivePage() {
 
   return (
     <div className="space-y-5">
-      <div className="relative overflow-hidden rounded-3xl border border-secondary/30 bg-gradient-to-br from-secondary/10 via-card to-card p-5 shadow-card">
-        <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-secondary/20 blur-3xl" />
-        <div className="relative flex items-center justify-between gap-3">
-          <div>
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-secondary/20 px-2.5 py-0.5 text-xs font-bold text-secondary">
-              <span className="h-2 w-2 animate-pulse-live rounded-full bg-secondary" /> LIVE
-            </div>
-            <h1 className="mt-2 font-display text-2xl font-bold">Live Drops & Restocks</h1>
-            <p className="mt-1 max-w-lg text-sm text-muted-foreground">
-              Neue Verfügbarkeiten in Echtzeit – Pokémon Center und große Online-Händler.
-              Free: Live-Bereich sehen. Premium: sofortige Push-Alerts.
-            </p>
-          </div>
-          <AlertDemoButton />
-        </div>
-      </div>
+      <PageHeader
+        live
+        accent="var(--heat-3)"
+        status="Live-Ortung"
+        title="Drops & Restocks"
+        subtitle="Neue Verfügbarkeiten, sobald sie auftauchen – Pokémon Center und große Online-Händler."
+        action={<AlertDemoButton />}
+      />
 
       <Tabs defaultValue="all">
         <TabsList className="w-full justify-start overflow-x-auto no-scrollbar sm:w-auto">

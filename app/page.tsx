@@ -188,11 +188,11 @@ function PremiumTeaser() {
   const premium = usePokeStore((s) => s.premium);
   if (premium) return null;
   return (
-    <section className="relative overflow-hidden rounded-3xl border border-poke-yellow/30 bg-gradient-to-br from-amber-500/10 via-card to-card p-5 shadow-card sm:p-6">
-      <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-poke-yellow/20 blur-3xl" />
+    <section className="relative overflow-hidden rounded-3xl border border-accent/30 bg-gradient-to-br from-amber-500/10 via-card to-card p-5 shadow-card sm:p-6">
+      <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accent/20 blur-3xl" />
       <div className="relative flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-poke-yellow/20 px-2.5 py-0.5 text-xs font-bold text-poke-yellow">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-accent/20 px-2.5 py-0.5 text-xs font-bold text-accent">
             <Sparkles className="h-3.5 w-3.5" /> PokeDrop Premium
           </div>
           <h3 className="mt-2 font-display text-xl font-bold">

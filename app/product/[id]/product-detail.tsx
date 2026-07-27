@@ -149,7 +149,7 @@ function ProductDetail({ id }: { id: string }) {
                   Aktuelles Produkt ({ageMonths} Monate seit Release). Primäre Referenz ist die{" "}
                   <span className="font-semibold text-foreground">UVP</span> von {formatEuro(product.reference_uvp)}.
                   {evaluation && evaluation.savingsVsUvp > 0 && (
-                    <> Aktuell <span className="text-emerald-400">{formatEuro(evaluation.savingsVsUvp)} unter UVP</span>.</>
+                    <> Aktuell <span className="text-primary">{formatEuro(evaluation.savingsVsUvp)} unter UVP</span>.</>
                   )}
                 </>
               )}
@@ -168,7 +168,7 @@ function ProductDetail({ id }: { id: string }) {
               <Wallet className="h-4 w-4" /> Zur Sammlung
             </Button>
             {evaluation && evaluation.savingsVsUvp > 0 && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 px-3 py-2 text-sm font-semibold text-emerald-400">
+              <span className="inline-flex items-center gap-1 rounded-full bg-primary/15 px-3 py-2 text-sm font-semibold text-primary">
                 <TrendingDown className="h-4 w-4" /> {Math.round(evaluation.savingsPct)}% gespart
               </span>
             )}
