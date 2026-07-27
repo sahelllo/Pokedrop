@@ -26,8 +26,8 @@ export function ThemeSwitch({ full = false }: { full?: boolean }) {
       className={cn(
         "relative flex h-8 w-[58px] shrink-0 items-center rounded-full border p-1 transition-colors duration-500",
         isDark
-          ? "border-white/10 bg-gradient-to-r from-[#0b1030] to-[#1b1240]"
-          : "border-black/5 bg-gradient-to-r from-[#8ec5ff] to-[#cfe6ff]",
+          ? "border-primary/25 bg-surface-2"
+          : "border-black/10 bg-[#d7ead9]",
       )}
     >
       {/* Sterne (dark) */}
@@ -56,8 +56,8 @@ export function ThemeSwitch({ full = false }: { full?: boolean }) {
         className={cn(
           "relative z-10 flex h-6 w-6 items-center justify-center rounded-full shadow-md",
           isDark
-            ? "ml-0 bg-gradient-to-br from-slate-200 to-slate-400"
-            : "ml-auto bg-gradient-to-br from-amber-300 to-amber-500",
+            ? "ml-0 bg-primary text-primary-foreground"
+            : "ml-auto bg-[var(--radar-near)]",
         )}
       >
         <AnimatePresence mode="wait" initial={false}>
@@ -69,9 +69,9 @@ export function ThemeSwitch({ full = false }: { full?: boolean }) {
             transition={{ duration: 0.2 }}
           >
             {isDark ? (
-              <Moon className="h-3.5 w-3.5 text-slate-700" />
+              <Moon className="h-3.5 w-3.5 text-[hsl(var(--primary-foreground))]" />
             ) : (
-              <Sun className="h-3.5 w-3.5 text-amber-900" />
+              <Sun className="h-3.5 w-3.5 text-[#0b3a24]" />
             )}
           </motion.span>
         </AnimatePresence>

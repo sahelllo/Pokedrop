@@ -2,114 +2,94 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { Clock, Heart, MapPin, Store as StoreIcon, TrendingDown } from "lucide-react";
+import { motion } from "framer-motion";
+import { Clock, Heart, ShieldCheck } from "lucide-react";
 import type { DealView } from "@/types";
 import { productImageUrl } from "@/lib/images";
 import { VALIDITY_LABEL } from "@/lib/geo";
-import { cn, formatEuro, formatKm, relativeTime } from "@/lib/utils";
-import { DealBadgePill, VerificationPill } from "@/components/deal-badge";
+import { cn, formatEuro } from "@/lib/utils";
 import { SmartImage } from "@/components/smart-image";
+import { DistanceRing, distanceLabel } from "@/components/signature/distance-ring";
+import { HeatBar, heatColor } from "@/components/signature/heat-bar";
 import { usePokeStore } from "@/lib/store";
-import { fireTopDealConfetti } from "@/lib/confetti";
+import { BADGE_META } from "@/lib/deals";
 
-const SIGNAL_META = {
-  verfuegbar: { label: "auf Lager", cls: "text-emerald-400", dot: "bg-emerald-400" },
-  wenig_bestand: { label: "wenig Bestand", cls: "text-amber-400", dot: "bg-amber-400" },
-  ausverkauft: { label: "ausverkauft", cls: "text-red-400", dot: "bg-red-400" },
+const SIGNAL = {
+  verfuegbar: { label: "auf Lager", cls: "text-[var(--radar-near)]" },
+  wenig_bestand: { label: "wenig Bestand", cls: "text-[var(--heat-1)]" },
+  ausverkauft: { label: "ausverkauft", cls: "text-muted-foreground" },
 } as const;
 
+/**
+ * Deal-Karte im Leitbild "RADAR".
+ *
+ * Signature-Elemente: Distanz-Ring (links) und Deal-Heat-Balken (unten).
+ * Entfernungen und Preise in Monospace, damit Zahlen untereinander
+ * ausgerichtet und scanbar bleiben.
+ */
 export function DealCard({ view, index = 0 }: { view: DealView; index?: number }) {
   const { offer, product, evaluation, distanceKm, nearestStore, daysLeft } = view;
+  const radiusKm = usePokeStore((s) => s.radiusKm);
   const watched = usePokeStore((s) => s.watchlist.includes(product.product_id));
   const toggleWatch = usePokeStore((s) => s.toggleWatch);
 
-  // Hover-Tilt (Desktop)
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const rx = useSpring(useTransform(my, [-0.5, 0.5], [6, -6]), { stiffness: 200, damping: 18 });
-  const ry = useSpring(useTransform(mx, [-0.5, 0.5], [-6, 6]), { stiffness: 200, damping: 18 });
-
-  const isTop = evaluation.badge === "TOP_DEAL";
-  const signal = offer.stock_signal ? SIGNAL_META[offer.stock_signal] : undefined;
-
-  function handleMove(e: React.MouseEvent<HTMLDivElement>) {
-    const rect = e.currentTarget.getBoundingClientRect();
-    mx.set((e.clientX - rect.left) / rect.width - 0.5);
-    my.set((e.clientY - rect.top) / rect.height - 0.5);
-  }
-  function handleLeave() {
-    mx.set(0);
-    my.set(0);
-  }
+  const online = offer.validity_type === "ONLINE";
+  const pctBelow = Math.max(0, evaluation.savingsPct);
+  const signal = offer.stock_signal ? SIGNAL[offer.stock_signal] : undefined;
+  const soldOut = offer.stock_signal === "ausverkauft";
+  const badge = BADGE_META[evaluation.badge];
 
   function handleWatch(e: React.MouseEvent) {
     e.preventDefault();
-    if (!watched && isTop) {
-      fireTopDealConfetti({
-        x: e.clientX / window.innerWidth,
-        y: e.clientY / window.innerHeight,
-      });
-    }
+    e.stopPropagation();
     toggleWatch(product.product_id);
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 18 }}
+    <motion.article
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: Math.min(index * 0.03, 0.3) }}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
-      style={{ rotateX: rx, rotateY: ry, transformPerspective: 900 }}
+      transition={{
+        duration: 0.24,
+        delay: Math.min(index * 0.035, 0.28),
+        ease: [0.16, 1, 0.3, 1],
+      }}
       className="group relative min-w-0"
     >
-      <Link href={`/product/${product.product_id}?offer=${offer.offer_id}`}>
+      <Link
+        href={`/product/${product.product_id}?offer=${offer.offer_id}`}
+        className="block rounded-[var(--radius)] focus-visible:outline-none"
+      >
         <div
           className={cn(
-            "relative overflow-hidden rounded-2xl border bg-card shadow-card",
-            "transition-[box-shadow,border-color,transform] duration-300 ease-out",
-            "group-hover:shadow-card-hover group-active:scale-[0.995]",
-            isTop
-              ? "border-deal-top/40 group-hover:border-deal-top/70"
-              : "border-border group-hover:border-primary/40",
+            "relative overflow-hidden rounded-[var(--radius)] border bg-card/90 p-3",
+            "transition-[border-color,background] duration-200 ease-out",
+            "border-border group-hover:border-primary/40 group-active:bg-surface-2",
+            soldOut && "opacity-55",
           )}
         >
-          {isTop && (
-            <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-              style={{ boxShadow: "inset 0 0 40px -10px rgba(255,77,109,0.6)" }} />
-          )}
-
-          <div className="flex gap-3 p-3">
-            {/* Bild */}
-            <div className="relative shrink-0">
+          <div className="flex items-start gap-3">
+            {/* Distanz-Ring mit Produktbild */}
+            <DistanceRing distanceKm={distanceKm} radiusKm={radiusKm} online={online} size={58}>
               <SmartImage
                 src={productImageUrl(product)}
-                alt={product.product_name}
+                alt=""
                 energyType={product.energyType}
-                className="h-28 w-24 rounded-xl"
-                label={product.set_name}
+                className="h-full w-full rounded-full"
+                imgClassName="scale-[0.82]"
               />
-              <div className="absolute -left-1 -top-1">
-                <DealBadgePill badge={evaluation.badge} size="sm" />
-              </div>
-            </div>
+            </DistanceRing>
 
             {/* Inhalt */}
             <div className="min-w-0 flex-1">
               <div className="flex items-start justify-between gap-2">
-                <div className="min-w-0">
-                  <h3 className="truncate font-display text-sm font-semibold leading-tight">
-                    {product.product_name}
-                  </h3>
-                  <p className="truncate text-xs text-muted-foreground">
-                    {product.set_name} · {product.product_type} · {product.language}
-                  </p>
-                </div>
+                <h3 className="truncate text-[13px] font-semibold leading-snug">
+                  {product.product_name}
+                </h3>
                 <button
                   onClick={handleWatch}
                   aria-label={watched ? "Von Merkliste entfernen" : "Merken"}
-                  className="shrink-0 rounded-full p-1.5 transition hover:bg-surface-2"
+                  className="-m-2 shrink-0 rounded-full p-2 transition active:scale-90"
                 >
                   <Heart
                     className={cn(
@@ -120,79 +100,61 @@ export function DealCard({ view, index = 0 }: { view: DealView; index?: number }
                 </button>
               </div>
 
+              {/* Ortung: Entfernung + Händler, monospace */}
+              <p className="mt-0.5 truncate font-mono text-[11px] font-semibold tracking-wide text-primary">
+                {distanceLabel(distanceKm, online)}
+                <span className="text-muted-foreground"> · </span>
+                {offer.retailer_brand.toUpperCase()}
+                {nearestStore && !online && (
+                  <span className="font-sans font-normal text-muted-foreground">
+                    {" "}· {nearestStore.city}
+                  </span>
+                )}
+              </p>
+
               {/* Preis */}
-              <div className="mt-1.5 flex items-end gap-2">
-                <span className="font-display text-xl font-bold">
+              <div className="mt-1.5 flex items-baseline gap-2">
+                <span className="font-mono text-lg font-bold tabular-nums">
                   {formatEuro(offer.price)}
                 </span>
                 {offer.regular_price && offer.regular_price > offer.price && (
-                  <span className="text-xs text-muted-foreground line-through">
+                  <span className="font-mono text-[11px] text-muted-foreground line-through">
                     {formatEuro(offer.regular_price)}
                   </span>
                 )}
-                {evaluation.savingsVsUvp > 0 && (
-                  <span className="mb-0.5 inline-flex items-center gap-0.5 text-xs font-semibold text-emerald-400">
-                    <TrendingDown className="h-3 w-3" />
-                    {Math.round(evaluation.savingsPct)}%
-                  </span>
-                )}
-              </div>
-              <p className="text-[11px] text-muted-foreground">
-                {evaluation.referenceLabel}: {formatEuro(evaluation.referencePrice)}
-              </p>
-
-              {/* Meta-Zeile */}
-              <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-muted-foreground">
-                <span className="inline-flex items-center gap-1">
-                  <StoreIcon className="h-3 w-3" />
-                  {offer.retailer_brand}
-                </span>
-                {offer.validity_type === "ONLINE" ? (
-                  <span className="inline-flex items-center gap-1">
-                    <MapPin className="h-3 w-3" /> Online
-                  </span>
-                ) : (
-                  nearestStore && (
-                    <span className="inline-flex items-center gap-1">
-                      <MapPin className="h-3 w-3" />
-                      {nearestStore.city}
-                      {distanceKm !== undefined && ` · ${formatKm(distanceKm)}`}
-                    </span>
-                  )
-                )}
                 <span
-                  className={cn(
-                    "inline-flex items-center gap-1",
-                    daysLeft <= 2 ? "text-amber-400" : "",
-                  )}
+                  className="ml-auto rounded px-1.5 py-0.5 font-mono text-[10px] font-bold"
+                  style={{
+                    color: pctBelow > 0 ? "hsl(var(--primary-foreground))" : badge.color,
+                    background: pctBelow > 0 ? heatColor(pctBelow) : "transparent",
+                    border: pctBelow > 0 ? "none" : `1px solid ${badge.ring}`,
+                  }}
                 >
-                  <Clock className="h-3 w-3" />
-                  {daysLeft <= 0 ? "läuft ab" : `noch ${daysLeft} Tg.`}
+                  {pctBelow > 0 ? `−${Math.round(pctBelow)}%` : badge.label}
                 </span>
-              </div>
-
-              {/* Footer: Gültigkeit, Verifizierung, Crowd-Signal */}
-              <div className="mt-2 flex flex-wrap items-center gap-1.5">
-                <span className="rounded-full bg-surface-2 px-2 py-0.5 text-[10px] text-muted-foreground">
-                  {VALIDITY_LABEL[offer.validity_type]}
-                </span>
-                <VerificationPill status={offer.verification_status} />
-                {signal && (
-                  <span className={cn("inline-flex items-center gap-1 text-[10px]", signal.cls)}>
-                    <span className={cn("h-1.5 w-1.5 rounded-full", signal.dot)} />
-                    {signal.label}
-                  </span>
-                )}
-                {offer.found_minutes_ago !== undefined && offer.found_minutes_ago < 60 && (
-                  <span className="text-[10px] text-muted-foreground">
-                    · {relativeTime(offer.found_minutes_ago)}
-                  </span>
-                )}
               </div>
             </div>
           </div>
+
+          {/* Heat-Balken: Preisqualität als Temperatur */}
+          <HeatBar percentBelow={pctBelow} className="mt-2.5" />
+
+          {/* Fußzeile */}
+          <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-wide text-muted-foreground">
+            <span>{VALIDITY_LABEL[offer.validity_type]}</span>
+            {offer.verification_status === "VERIFIED" && (
+              <span className="inline-flex items-center gap-1 text-[var(--radar-mid)]">
+                <ShieldCheck className="h-3 w-3" /> geprüft
+              </span>
+            )}
+            {signal && <span className={signal.cls}>{signal.label}</span>}
+            <span className={cn("ml-auto inline-flex items-center gap-1", daysLeft <= 2 && "text-[var(--heat-2)]")}>
+              <Clock className="h-3 w-3" />
+              {daysLeft <= 0 ? "endet" : `${daysLeft}T`}
+            </span>
+          </div>
         </div>
       </Link>
-    </motion.div>
+    </motion.article>
   );
 }

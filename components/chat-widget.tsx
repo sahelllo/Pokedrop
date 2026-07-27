@@ -70,7 +70,7 @@ export function ChatWidget() {
         aria-label="Support-Chat"
         className={cn(
           "fixed bottom-24 right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full shadow-glow-blue transition-transform hover:scale-105 active:scale-95 lg:bottom-6",
-          "bg-gradient-to-br from-primary to-secondary text-white",
+          "border border-primary/40 bg-surface text-primary shadow-[0_0_20px_-4px_var(--radar-near)]",
         )}
       >
         <AnimatePresence mode="wait" initial={false}>
@@ -104,7 +104,7 @@ export function ChatWidget() {
           >
             {/* Header */}
             <div className="flex items-center gap-2.5 border-b border-border bg-surface/70 p-3.5">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-primary to-secondary text-white">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full border border-primary/40 bg-primary/10 text-primary">
                 <Sparkles className="h-4 w-4" />
               </span>
               <div className="flex-1">

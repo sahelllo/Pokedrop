@@ -16,7 +16,7 @@ export function DealBadgePill({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-full border font-bold uppercase tracking-wide",
+        "inline-flex items-center gap-1 rounded border font-mono font-bold uppercase tracking-wider",
         size === "sm" ? "px-2 py-0.5 text-[10px]" : "px-2.5 py-1 text-xs",
         className,
       )}
@@ -27,7 +27,6 @@ export function DealBadgePill({
         boxShadow: badge === "TOP_DEAL" ? `0 0 18px -4px ${meta.ring}` : undefined,
       }}
     >
-      <span aria-hidden>{meta.emoji}</span>
       {meta.label}
     </span>
   );

@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { Heart, Sparkles } from "lucide-react";
 import { NAV_ITEMS } from "@/components/nav-items";
 import { ActivityTicker } from "@/components/activity-ticker";
-import { HoloBackground } from "@/components/holo-background";
+import { RadarBackground } from "@/components/radar-background";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { ChatWidget } from "@/components/chat-widget";
 import { usePokeStore } from "@/lib/store";
@@ -20,7 +20,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="relative min-h-dvh">
-      <HoloBackground />
+      <RadarBackground />
       {/* Desktop-Sidebar */}
       <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-border glass lg:flex">
         <div className="flex h-16 items-center gap-2 px-6">
@@ -140,9 +140,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 function Logo({ compact }: { compact?: boolean }) {
   return (
     <Link href="/" className="flex items-center gap-2">
-      <span className="relative flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-secondary to-primary text-lg shadow-glow-red">
-        <span className="absolute inset-0 rounded-xl ring-1 ring-white/20" />
-        ⚡
+      <span className="relative flex h-8 w-8 items-center justify-center rounded-full border border-primary/40 bg-primary/10">
+        <span className="absolute inset-1.5 rounded-full border border-primary/30" />
+        <span className="h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_8px_var(--radar-near)]" />
       </span>
       {!compact ? (
         <span className="font-display text-xl font-bold tracking-tight">

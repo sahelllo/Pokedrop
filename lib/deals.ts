@@ -165,41 +165,12 @@ export const BADGE_META: Record<
   DealBadge,
   { label: string; emoji: string; color: string; bg: string; ring: string }
 > = {
-  TOP_DEAL: {
-    label: "TOP DEAL",
-    emoji: "🔥",
-    color: "#ff4d6d",
-    bg: "rgba(255,77,109,0.14)",
-    ring: "rgba(255,77,109,0.5)",
-  },
-  UVP_DEAL: {
-    label: "UVP DEAL",
-    emoji: "🟢",
-    color: "#31d158",
-    bg: "rgba(49,209,88,0.14)",
-    ring: "rgba(49,209,88,0.45)",
-  },
-  GUTER_DEAL: {
-    label: "GUTER DEAL",
-    emoji: "✅",
-    color: "#3fb950",
-    bg: "rgba(63,185,80,0.13)",
-    ring: "rgba(63,185,80,0.4)",
-  },
-  MARKTPREIS: {
-    label: "MARKTPREIS",
-    emoji: "🟡",
-    color: "#f0b429",
-    bg: "rgba(240,180,41,0.13)",
-    ring: "rgba(240,180,41,0.4)",
-  },
-  UEBER_MARKT: {
-    label: "ÜBER MARKT",
-    emoji: "🔴",
-    color: "#f2555a",
-    bg: "rgba(242,85,90,0.12)",
-    ring: "rgba(242,85,90,0.35)",
-  },
+  // Leitbild RADAR: keine Emojis, Farbe kommt aus der Hitze-Skala.
+  TOP_DEAL:    { label: "TOP",    emoji: "", color: "var(--heat-4)",  bg: "color-mix(in srgb, var(--heat-4) 14%, transparent)",  ring: "color-mix(in srgb, var(--heat-4) 45%, transparent)" },
+  UVP_DEAL:    { label: "UVP",    emoji: "", color: "var(--radar-near)", bg: "color-mix(in srgb, var(--radar-near) 12%, transparent)", ring: "color-mix(in srgb, var(--radar-near) 40%, transparent)" },
+  GUTER_DEAL:  { label: "GUT",    emoji: "", color: "var(--radar-mid)",  bg: "color-mix(in srgb, var(--radar-mid) 12%, transparent)",  ring: "color-mix(in srgb, var(--radar-mid) 40%, transparent)" },
+  MARKTPREIS:  { label: "MARKT",  emoji: "", color: "var(--heat-1)",  bg: "color-mix(in srgb, var(--heat-1) 12%, transparent)",  ring: "color-mix(in srgb, var(--heat-1) 38%, transparent)" },
+  UEBER_MARKT: { label: "TEUER",  emoji: "", color: "var(--heat-0)",  bg: "color-mix(in srgb, var(--heat-0) 12%, transparent)",  ring: "color-mix(in srgb, var(--heat-0) 35%, transparent)" },
 };
 
 export const VERIFICATION_META: Record<

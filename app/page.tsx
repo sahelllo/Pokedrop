@@ -44,28 +44,23 @@ export default function HomePage() {
 
   return (
     <div className="space-y-6">
-      {/* Hero */}
-      <section className="relative overflow-hidden rounded-3xl border border-border bg-card p-5 shadow-card sm:p-7">
-        <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-primary/20 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-20 -left-10 h-56 w-56 rounded-full bg-secondary/15 blur-3xl" />
+      {/* Hero – Radar-Statuskopf */}
+      <section className="relative overflow-hidden rounded-[var(--radius)] border border-border bg-card/80 p-5 sm:p-6">
         <div className="relative">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-3 py-1 text-xs text-muted-foreground">
-            <span className="flex h-2 w-2 items-center justify-center">
-              <span className="absolute h-2 w-2 animate-ping rounded-full bg-emerald-400/70" />
-              <span className="h-2 w-2 rounded-full bg-emerald-400" />
+          <p className="inline-flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-2 w-2 animate-ping rounded-full bg-primary/70" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
             </span>
-            Live-Radar aktiv ·{" "}
-            <span className="font-semibold text-foreground">
-              <CountUp to={communityStats.dealsToday} /> Deals
-            </span>{" "}
-            heute gefunden
-          </div>
-          <h1 className="max-w-2xl font-display text-2xl font-bold leading-tight tracking-tight text-balance sm:text-4xl">
-            Pokémon-Karten zur <span className="text-primary">UVP oder günstiger</span> – in deiner Nähe.
+            Radar aktiv
+          </p>
+          <h1 className="mt-3 max-w-xl font-display text-[26px] font-bold leading-[1.1] sm:text-4xl">
+            Karten zur UVP oder günstiger,
+            <span className="text-primary"> in deiner Reichweite.</span>
           </h1>
-          <p className="mt-2 max-w-xl text-sm text-muted-foreground sm:text-base">
-            PokeDrop scannt Prospekte, Händler, Pokémon-Center-Restocks und Social Media. Deals,
-            Drops und Events – standortbezogen, mit echter UVP- vs. Marktpreis-Bewertung.
+          <p className="measure mt-2 text-sm text-muted-foreground">
+            PokéDrop ortet Angebote in Prospekten, Läden und Online-Shops – und sagt dir,
+            wie weit sie weg sind und wie gut der Preis wirklich ist.
           </p>
         </div>
       </section>
@@ -113,8 +108,8 @@ export default function HomePage() {
       {mounted && topDeals.length > 0 && (
         <section>
           <div className="mb-2 flex items-center gap-2">
-            <Flame className="h-4 w-4 text-secondary" />
-            <h3 className="font-display text-sm font-bold uppercase tracking-wide text-secondary">
+            <Flame className="h-4 w-4" style={{ color: "var(--heat-4)" }} />
+            <h3 className="font-mono text-xs font-bold uppercase tracking-[0.18em]" style={{ color: "var(--heat-4)" }}>
               Top Deals im Radius
             </h3>
           </div>

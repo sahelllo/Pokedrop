@@ -103,12 +103,12 @@ export function FilterBar({
               key={b}
               onClick={() => toggleArray("badges", b)}
               className={cn(
-                "inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-medium transition",
+                "inline-flex items-center gap-1 rounded-full border px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wide transition",
                 active ? "text-foreground" : "border-border bg-surface/60 text-muted-foreground",
               )}
               style={active ? { background: meta.bg, borderColor: meta.ring, color: meta.color } : undefined}
             >
-              {meta.emoji} {meta.label}
+              {meta.label}
             </button>
           );
         })}
