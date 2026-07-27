@@ -156,6 +156,13 @@ push("");
 
 // ----------------------------------------------------------- Events ------
 push("-- Events");
+push(`-- Duplikate aus frueheren Laeufen entfernen (es gab keinen Schluessel)
+DELETE FROM events a USING events b
+WHERE a.ctid > b.ctid
+  AND a.event_name = b.event_name AND a.date_start = b.date_start AND a.city = b.city;
+-- ab jetzt verhindert ein Schluessel Doppelungen
+ALTER TABLE events DROP CONSTRAINT IF EXISTS events_natural_key;
+ALTER TABLE events ADD CONSTRAINT events_natural_key UNIQUE (event_name, date_start, city);`);
 for (const e of events) {
   push(`INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
@@ -165,7 +172,7 @@ VALUES (${q(e.event_name)}, ${q(e.event_type)}, ${q(e.date_start)}, ${q(e.date_e
   ST_SetSRID(ST_MakePoint(${n(e.longitude)}, ${n(e.latitude)}), 4326)::geography,
   ${q(e.organizer)}, ${q(e.official_source)}, ${n(e.ticket_price)}, ${q(e.ticket_url)},
   ${q(e.pokemon_focus)}, ${b(e.trading_available)}, ${q(e.verification_status)}, ${q(e.last_checked)})
-ON CONFLICT DO NOTHING;`);
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;`);
 }
 
 push("");

@@ -3154,6 +3154,13 @@ VALUES (NULL,
 ON CONFLICT DO NOTHING;
 
 -- Events
+-- Duplikate aus frueheren Laeufen entfernen (es gab keinen Schluessel)
+DELETE FROM events a USING events b
+WHERE a.ctid > b.ctid
+  AND a.event_name = b.event_name AND a.date_start = b.date_start AND a.city = b.city;
+-- ab jetzt verhindert ein Schluessel Doppelungen
+ALTER TABLE events DROP CONSTRAINT IF EXISTS events_natural_key;
+ALTER TABLE events ADD CONSTRAINT events_natural_key UNIQUE (event_name, date_start, city);
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3162,7 +3169,7 @@ VALUES ('PokéTausch Ruhrgebiet – Sommerbörse', 'Tauschbörse', '2026-07-25',
   ST_SetSRID(ST_MakePoint(6.873, 51.487), 4326)::geography,
   'PokéTausch NRW e. V.', 'https://example.org/poketausch-nrw', 3, NULL,
   'pokemon_only', true, 'bestaetigt', '2026-07-21')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3171,7 +3178,7 @@ VALUES ('Card Show Rheinland', 'Card Show', '2026-07-26', NULL, '09:00 – 17:00
   ST_SetSRID(ST_MakePoint(6.945, 50.949), 4326)::geography,
   'Rheinland Card Events', 'https://example.org/cardshow-rheinland', 8, 'https://example.org/tickets',
   'starker_anteil', true, 'bestaetigt', '2026-07-20')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3180,7 +3187,7 @@ VALUES ('Pokémon TCG Community-Treff München', 'Community-Treffen', '2026-07-2
   ST_SetSRID(ST_MakePoint(11.556, 48.137), 4326)::geography,
   'Games Island', NULL, NULL, NULL,
   'pokemon_only', true, 'bestaetigt', '2026-07-22')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3189,7 +3196,7 @@ VALUES ('Sammlerbörse Hamburg Nord', 'Sammlerbörse', '2026-08-02', NULL, '11:0
   ST_SetSRID(ST_MakePoint(10.013, 53.499), 4326)::geography,
   'Sammlerbörse Nord', NULL, 4, NULL,
   'multi_tcg', true, 'wahrscheinlich', '2026-07-19')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3198,7 +3205,7 @@ VALUES ('TCG Grand Tournament + Trading Day', 'Turnier', '2026-08-08', '2026-08-
   ST_SetSRID(ST_MakePoint(9.193, 48.69), 4326)::geography,
   'Southside TCG', 'https://example.org/grand-tournament', 25, 'https://example.org/tickets-gt',
   'pokemon_only', true, 'bestaetigt', '2026-07-18')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3207,7 +3214,7 @@ VALUES ('Pokémon Tauschbörse Berlin-Mitte', 'Tauschbörse', '2026-08-01', NULL
   ST_SetSRID(ST_MakePoint(13.413, 52.515), 4326)::geography,
   'Berlin Poké Society', NULL, 5, NULL,
   'pokemon_only', true, 'bestaetigt', '2026-07-21')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3216,7 +3223,7 @@ VALUES ('Sammelkartenmesse RheinMain', 'Sammelkartenmesse', '2026-09-05', '2026-
   ST_SetSRID(ST_MakePoint(8.643, 50.112), 4326)::geography,
   'CardExpo GmbH', 'https://example.org/cardexpo', 12, 'https://example.org/cardexpo-tickets',
   'starker_anteil', true, 'bestaetigt', '2026-07-15')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3225,7 +3232,7 @@ VALUES ('Dortmunder Kartentausch', 'Tauschbörse', '2026-08-15', NULL, '13:00 �
   ST_SetSRID(ST_MakePoint(7.46, 51.523), 4326)::geography,
   'TCG Dortmund', NULL, 2, NULL,
   'pokemon_only', true, 'wahrscheinlich', '2026-07-17')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3234,7 +3241,7 @@ VALUES ('Nürnberg Toy & Card Fair', 'Card Show', '2026-09-19', NULL, '10:00 –
   ST_SetSRID(ST_MakePoint(11.1, 49.436), 4326)::geography,
   'Franken Cards', NULL, 7, NULL,
   'multi_tcg', true, 'bestaetigt', '2026-07-16')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3243,7 +3250,7 @@ VALUES ('Leipzig TCG Community Meetup', 'Community-Treffen', '2026-07-29', NULL,
   ST_SetSRID(ST_MakePoint(12.372, 51.323), 4326)::geography,
   'Leipzig TCG', NULL, NULL, NULL,
   'pokemon_only', true, 'bestaetigt', '2026-07-20')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3252,7 +3259,7 @@ VALUES ('Hannover Sammlertag', 'Sammlerbörse', '2026-08-23', NULL, '10:00 – 1
   ST_SetSRID(ST_MakePoint(9.762, 52.379), 4326)::geography,
   'Sammlertag Nord', NULL, 5, NULL,
   'multi_tcg', true, 'wahrscheinlich', '2026-07-14')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3261,7 +3268,7 @@ VALUES ('Dresden Pokémon Trade Night', 'Tauschbörse', '2026-08-06', NULL, '18:
   ST_SetSRID(ST_MakePoint(13.754, 51.068), 4326)::geography,
   'Elbe TCG', NULL, NULL, NULL,
   'pokemon_only', true, 'bestaetigt', '2026-07-18')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3270,7 +3277,7 @@ VALUES ('Card Show West – Düsseldorf', 'Card Show', '2026-09-12', NULL, '09:3
   ST_SetSRID(ST_MakePoint(6.73, 51.256), 4326)::geography,
   'West Card Events', 'https://example.org/cardshow-west', 9, NULL,
   'starker_anteil', true, 'bestaetigt', '2026-07-19')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3279,7 +3286,7 @@ VALUES ('Bremen Kartenflohmarkt', 'Sammlerbörse', '2026-08-30', NULL, '11:00 �
   ST_SetSRID(ST_MakePoint(8.828, 53.07), 4326)::geography,
   'Nordbörse', NULL, 3, NULL,
   'multi_tcg', true, 'unbestaetigt', '2026-07-12')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3288,7 +3295,7 @@ VALUES ('Kiel Trainer Trading Meetup', 'Community-Treffen', '2026-08-13', NULL, 
   ST_SetSRID(ST_MakePoint(10.135, 54.323), 4326)::geography,
   'Kiel Poké Crew', NULL, NULL, NULL,
   'pokemon_only', true, 'wahrscheinlich', '2026-07-16')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3297,7 +3304,7 @@ VALUES ('Ludwigsburg TCG-Tauschtag', 'Tauschbörse', '2026-07-25', NULL, '10:00 
   ST_SetSRID(ST_MakePoint(9.187, 48.894), 4326)::geography,
   'Barock TCG', NULL, 2, NULL,
   'pokemon_only', true, 'bestaetigt', '2026-07-21')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3306,7 +3313,7 @@ VALUES ('Card Show Süd – Augsburg', 'Card Show', '2026-10-03', '2026-10-04', 
   ST_SetSRID(ST_MakePoint(10.86, 48.352), 4326)::geography,
   'Süd Card Events', NULL, 10, NULL,
   'starker_anteil', true, 'bestaetigt', '2026-07-10')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3315,7 +3322,7 @@ VALUES ('Essen Trade & Play', 'Turnier', '2026-08-16', NULL, '11:00 – 19:00 Uh
   ST_SetSRID(ST_MakePoint(7.009, 51.488), 4326)::geography,
   'Ruhr TCG League', NULL, 15, NULL,
   'pokemon_only', true, 'bestaetigt', '2026-07-17')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3324,7 +3331,7 @@ VALUES ('Mannheim Sammelkartentag', 'Sammlerbörse', '2026-09-27', NULL, '10:00 
   ST_SetSRID(ST_MakePoint(8.476, 49.485), 4326)::geography,
   'Kurpfalz Cards', NULL, 6, NULL,
   'multi_tcg', true, 'wahrscheinlich', '2026-07-13')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3333,7 +3340,7 @@ VALUES ('Bonn Poké Trade Sunday', 'Tauschbörse', '2026-08-09', NULL, '12:00 �
   ST_SetSRID(ST_MakePoint(7.0994, 50.736), 4326)::geography,
   'FantasyWelt', NULL, NULL, NULL,
   'pokemon_only', true, 'bestaetigt', '2026-07-20')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3342,7 +3349,7 @@ VALUES ('Karlsruhe TCG Convention', 'Sammelkartenmesse', '2026-10-17', '2026-10-
   ST_SetSRID(ST_MakePoint(8.33, 48.97), 4326)::geography,
   'Baden Card Convention', 'https://example.org/karlsruhe-tcg', 14, NULL,
   'starker_anteil', true, 'bestaetigt', '2026-07-11')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3351,7 +3358,7 @@ VALUES ('Münster Kartenrunde', 'Community-Treffen', '2026-07-31', NULL, '18:00 
   ST_SetSRID(ST_MakePoint(7.622, 51.945), 4326)::geography,
   'Münster TCG', NULL, NULL, NULL,
   'pokemon_only', true, 'wahrscheinlich', '2026-07-19')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3360,7 +3367,7 @@ VALUES ('Bochum Retro & TCG Börse', 'Sammlerbörse', '2026-08-22', NULL, '10:00
   ST_SetSRID(ST_MakePoint(7.24, 51.49), 4326)::geography,
   'Retro Ruhr', NULL, 4, NULL,
   'multi_tcg', true, 'bestaetigt', '2026-07-18')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3369,7 +3376,7 @@ VALUES ('Freiburg Trainer Trade Night', 'Tauschbörse', '2026-08-07', NULL, '18:
   ST_SetSRID(ST_MakePoint(7.848, 47.997), 4326)::geography,
   'Breisgau TCG', NULL, NULL, NULL,
   'pokemon_only', true, 'wahrscheinlich', '2026-07-15')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3378,7 +3385,7 @@ VALUES ('Card Show Nord – Hamburg', 'Card Show', '2026-09-26', '2026-09-27', '
   ST_SetSRID(ST_MakePoint(9.975, 53.562), 4326)::geography,
   'Nord Card Events', 'https://example.org/cardshow-nord', 11, NULL,
   'starker_anteil', true, 'bestaetigt', '2026-07-12')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3387,7 +3394,7 @@ VALUES ('Wiesbaden Community Cup', 'Turnier', '2026-09-13', NULL, '10:00 – 17:
   ST_SetSRID(ST_MakePoint(8.251, 50.068), 4326)::geography,
   'Rheingau TCG', NULL, 18, NULL,
   'pokemon_only', true, 'wahrscheinlich', '2026-07-16')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3396,7 +3403,7 @@ VALUES ('Duisburg Tausch am Hafen', 'Tauschbörse', '2026-08-29', NULL, '11:00 �
   ST_SetSRID(ST_MakePoint(6.771, 51.438), 4326)::geography,
   'Hafen TCG', NULL, 2, NULL,
   'pokemon_only', true, 'bestaetigt', '2026-07-20')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3405,7 +3412,7 @@ VALUES ('Bielefeld Card Meetup', 'Community-Treffen', '2026-08-05', NULL, '18:00
   ST_SetSRID(ST_MakePoint(8.532, 52.021), 4326)::geography,
   'OWL TCG', NULL, NULL, NULL,
   'pokemon_only', true, 'unbestaetigt', '2026-07-14')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3414,7 +3421,7 @@ VALUES ('Kassel Mitte-Deutschland Börse', 'Sammlerbörse', '2026-09-20', NULL, 
   ST_SetSRID(ST_MakePoint(9.488, 51.316), 4326)::geography,
   'Mitte Cards', NULL, 5, NULL,
   'multi_tcg', true, 'wahrscheinlich', '2026-07-13')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3423,7 +3430,7 @@ VALUES ('PokéDrop Release-Party: Dunkelnacht', 'Community-Treffen', '2026-07-26
   ST_SetSRID(ST_MakePoint(7.4585, 51.5142), 4326)::geography,
   'Gate to the Games', NULL, NULL, NULL,
   'pokemon_only', true, 'bestaetigt', '2026-07-22')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3432,7 +3439,7 @@ VALUES ('Stuttgart Sunday Trade', 'Tauschbörse', '2026-08-16', NULL, '12:00 –
   ST_SetSRID(ST_MakePoint(9.178, 48.771), 4326)::geography,
   'Gate to the Games', NULL, NULL, NULL,
   'pokemon_only', true, 'bestaetigt', '2026-07-21')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
   pokemon_focus, trading_available, verification_status, last_checked)
@@ -3441,6 +3448,6 @@ VALUES ('Nürnberg Spielwarenmesse Sonderfläche TCG', 'Sammelkartenmesse', '202
   ST_SetSRID(ST_MakePoint(11.123, 49.427), 4326)::geography,
   'Toy & Card Fair', 'https://example.org/nuernberg-messe', 16, NULL,
   'starker_anteil', true, 'bestaetigt', '2026-07-10')
-ON CONFLICT DO NOTHING;
+ON CONFLICT ON CONSTRAINT events_natural_key DO NOTHING;
 
 COMMIT;
