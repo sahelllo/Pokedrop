@@ -19,7 +19,21 @@ import { cn } from "@/lib/utils";
 
 const RADIUS_PRESETS = [10, 50, 100, 300, 500];
 
-export function LocationRadius({ compact = false }: { compact?: boolean }) {
+/**
+ * Standort + Umkreis.
+ *
+ * `variant="card"` – volle Karte mit Schieberegler (Detailseiten).
+ * `variant="bar"`  – schlanke Leiste ohne Schieberegler, nur die fünf
+ *   üblichen Umkreise als Knöpfe. Auf dem Handy ist das schneller zu
+ *   bedienen als ein Regler, den man millimetergenau treffen muss.
+ */
+export function LocationRadius({
+  compact = false,
+  variant = "card",
+}: {
+  compact?: boolean;
+  variant?: "card" | "bar";
+}) {
   const location = usePokeStore((s) => s.location);
   const radiusKm = usePokeStore((s) => s.radiusKm);
   const setLocation = usePokeStore((s) => s.setLocation);
@@ -64,11 +78,14 @@ export function LocationRadius({ compact = false }: { compact?: boolean }) {
     );
   }
 
+  const bar = variant === "bar";
+
   return (
     <div
       className={cn(
-        "flex flex-col gap-3 rounded-2xl border border-border bg-card p-4 shadow-card",
+        "flex flex-col gap-3 rounded-[var(--radius)] border border-border bg-card p-4 shadow-card",
         compact && "p-3",
+        bar && "gap-2.5 p-3",
       )}
     >
       <div className="flex items-center justify-between gap-3">
@@ -133,29 +150,35 @@ export function LocationRadius({ compact = false }: { compact?: boolean }) {
           </DialogContent>
         </Dialog>
 
-        <div className="text-right">
-          <span className="block text-[11px] uppercase tracking-wide text-muted-foreground">
+        <div className="shrink-0 text-right">
+          <span className="block font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
             Umkreis
           </span>
-          <span className="font-display text-lg font-bold text-primary">{radiusKm} km</span>
+          <span className="font-mono text-lg font-bold tabular-nums text-primary">
+            {radiusKm} km
+          </span>
         </div>
       </div>
 
-      <Slider
-        value={[radiusKm]}
-        min={5}
-        max={500}
-        step={5}
-        onValueChange={(v) => setRadius(v[0])}
-        aria-label="Suchradius"
-      />
+      {!bar && (
+        <Slider
+          value={[radiusKm]}
+          min={5}
+          max={500}
+          step={5}
+          onValueChange={(v) => setRadius(v[0])}
+          aria-label="Suchradius"
+        />
+      )}
       <div className="flex flex-wrap gap-1.5">
         {RADIUS_PRESETS.map((r) => (
           <button
             key={r}
             onClick={() => setRadius(r)}
+            aria-pressed={radiusKm === r}
             className={cn(
-              "rounded-full px-3 py-1 text-xs font-medium transition",
+              "rounded-full font-mono text-xs font-semibold tabular-nums transition",
+              bar ? "min-w-0 flex-1 px-2 py-2" : "px-3 py-1",
               radiusKm === r
                 ? "bg-primary text-primary-foreground"
                 : "bg-surface-2 text-muted-foreground hover:text-foreground",

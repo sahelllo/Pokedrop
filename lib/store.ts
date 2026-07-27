@@ -2,6 +2,7 @@
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import type { DealCategoryId } from "@/lib/categories";
 
 export interface UserLocation {
   name: string;
@@ -57,6 +58,12 @@ interface PokeDropState {
   // Premium (nur Demo-Anzeige – echter Status käme serverseitig)
   premium: boolean;
   setPremium: (v: boolean) => void;
+
+  // Gewählte Angebots-Kategorie (Startseite -> Angebotsseite).
+  // Bewusst NICHT gespeichert: Beim nächsten Besuch soll wieder "Alle"
+  // stehen, sonst wundert man sich, warum die Liste kurz ist.
+  dealCategory: DealCategoryId;
+  setDealCategory: (id: DealCategoryId) => void;
 
   // Theme
   theme: "dark" | "light";
@@ -150,6 +157,9 @@ export const usePokeStore = create<PokeDropState>()(
 
       premium: false,
       setPremium: (premium) => set({ premium }),
+
+      dealCategory: "alle",
+      setDealCategory: (dealCategory) => set({ dealCategory }),
 
       theme: "dark",
       toggleTheme: () =>

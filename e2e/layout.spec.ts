@@ -9,6 +9,7 @@ import { seedStore, collectErrors, horizontalOverflow } from "./helpers";
 
 const ROUTES = [
   { path: "/", name: "Home" },
+  { path: "/deals/", name: "Angebote" },
   { path: "/live/", name: "Live Drops" },
   { path: "/pokemon-center/", name: "Pokémon Center" },
   { path: "/rumors/", name: "Gerüchte" },

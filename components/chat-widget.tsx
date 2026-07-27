@@ -69,8 +69,11 @@ export function ChatWidget() {
         onClick={() => setOpen((v) => !v)}
         aria-label="Support-Chat"
         className={cn(
-          "fixed bottom-24 right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full shadow-glow-blue transition-transform hover:scale-105 active:scale-95 lg:bottom-6",
-          "border border-primary/40 bg-surface text-primary shadow-[0_0_20px_-4px_var(--radar-near)]",
+          // Auf dem Handy bewusst kleiner: der Knopf schwebt über dem Inhalt
+          // und hat vorher Kachel-Zahlen verdeckt.
+          "fixed bottom-24 right-3 z-50 flex h-11 w-11 items-center justify-center rounded-full transition-transform hover:scale-105 active:scale-95",
+          "sm:h-14 sm:w-14 sm:right-4 lg:bottom-6",
+          "border border-primary/40 bg-surface text-primary shadow-[0_0_16px_-6px_var(--radar-near)]",
         )}
       >
         <AnimatePresence mode="wait" initial={false}>
@@ -81,7 +84,7 @@ export function ChatWidget() {
             exit={{ rotate: 90, opacity: 0 }}
             transition={{ duration: 0.18 }}
           >
-            {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
+            {open ? <X className="h-5 w-5 sm:h-6 sm:w-6" /> : <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6" />}
           </motion.span>
         </AnimatePresence>
         {!open && (

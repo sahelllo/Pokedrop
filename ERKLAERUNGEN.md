@@ -171,3 +171,61 @@ passend zum Energie-Typ.
 **Stellen, an denen später lizenzierte oder händlereigene Bilder nötig sind:**
 - Produktbilder auf Deal-Karten, Produktdetailseite, Portfolio und Scanner
 - Händler-Logos (aktuell nur farbige Markierungen, keine echten Logos)
+
+---
+
+## Teil 5: Die Startseite als Übersicht
+
+### Das Problem
+
+Die Startseite war eine einzige lange Liste. Man scrollte auf dem Handy an
+78 Angeboten vorbei – und erfuhr dabei nie, dass es auch Events, Gerüchte,
+einen Karten-Scanner und eine Sammlung gibt.
+
+### Die Lösung: Kacheln mit Zahlen
+
+Die Startseite zeigt jetzt **zwölf Kacheln in drei Gruppen**. Jede Kachel ist
+eine Kategorie und trägt eine Zahl: wie viel es dort gerade gibt.
+
+| Gruppe | Kacheln | Bedeutung |
+|---|---|---|
+| **Angebote** | Top-Deals · Unter UVP · Im Laden · Online | Die vier Arten, ein Angebot zu suchen |
+| **Entdecken** | Live Drops · Events · Gerüchte · Pokémon Center | Alles, was kein Preisangebot ist |
+| **Meine Sachen** | Merkliste · Sammlung · Scanner · Premium | Was dir gehört |
+
+Darunter stehen noch **drei** Angebote als Kostprobe – nicht achtzig. Wer alle
+sehen will, tippt auf „Alle 78 Angebote ansehen" und landet auf der neuen
+Angebotsseite.
+
+### Warum die Zahlen immer stimmen
+
+Es wäre ärgerlich, auf „22" zu tippen und dann 19 Karten zu sehen. Deshalb
+gibt es im Programm **genau eine Regel pro Kategorie**. Dieselbe Regel wird
+zum Zählen auf der Kachel *und* zum Filtern der Liste benutzt – ein
+Auseinanderlaufen ist damit technisch ausgeschlossen. Sechs automatische
+Tests prüfen das bei jeder Änderung nach.
+
+### Was sich sonst geändert hat
+
+- **Neue Seite „Angebote"** (`/deals`): die vollständige Liste mit den
+  Kategorien als Knopfreihe oben.
+- **Untere Leiste am Handy:** Start · Angebote · Live · Events · Sammlung.
+  Alles andere ist von der Startseite aus einen Tipp entfernt.
+- **Umkreis:** Der Schieberegler ist auf der Startseite durch fünf große
+  Knöpfe ersetzt (10 / 50 / 100 / 300 / 500 km). Mit dem Daumen deutlich
+  leichter zu treffen.
+- **Filter:** Die Feineinstellungen (Set, Händler, Preisspanne) sitzen jetzt
+  hinter dem Filter-Knopf, statt dauerhaft Platz zu belegen.
+
+### Der Oma-Test
+
+> *Kann jemand, der die App noch nie gesehen hat, in drei Tipps ein Angebot
+> in seiner Nähe finden?*
+
+1. App öffnen → man sieht sofort „Oberhausen · 500 km" und zwölf beschriftete
+   Kacheln mit Zahlen.
+2. Auf „Im Laden 76" tippen → die Liste zeigt ausschließlich Angebote zum
+   Abholen, das Beste oben.
+3. Auf ein Angebot tippen → Preis, Entfernung, Filiale und Gültigkeit.
+
+Drei Tipps, kein Fachwort, kein Scrollen ins Leere.

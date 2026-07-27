@@ -72,3 +72,45 @@ unter UVP „glüht" heißer als eines mit 5 %.
 | Zoom auf dem Handy | gesperrt | Ausdrücklicher Wunsch: Das Layout soll fest sitzen wie in einer App. Bewusst in Kauf genommener Nachteil bei der Barrierefreiheit. |
 | Design-Werkzeuge im Repo | ausgeschlossen | Die Hilfsprogramme (rund 60 Dateien) gehören nicht in ein öffentliches Produkt-Repository. Sie bleiben lokal nutzbar. |
 | Karten-Raster auf dem Handy | eine Spalte, ausdrücklich gesetzt | Ohne diese Angabe liefen die Karten rechts aus dem Bild – der gemeldete Fehler „man sieht die Sachen nur halb". |
+
+---
+
+## 5. Startseite: Übersicht statt Angebotsstrom
+
+**Ausgangslage:** Rückmeldung nach dem RADAR-Umbau – *„Die Website ist auf dem
+Handy immer noch schwer im Überblick zu haben, es soll einfach sein und
+vielleicht kategorisch."*
+
+Die Startseite war ein einziger langer Strom: Kopfbereich, Standort,
+Statistiken, Live-Drops-Karussell, Filterleiste, Top-Deals **und danach alle
+78 Angebote untereinander**. Auf einem 412 Pixel breiten Handy bedeutete das
+rund zwölf Bildschirme Scrollen. Wer die App zum ersten Mal öffnete, sah nur
+Angebote – und nicht, dass es auch Events, Gerüchte, einen Scanner und eine
+Sammlung gibt.
+
+### Verglichene Möglichkeiten
+
+| | A · Strom kürzen | B · Kategorie-Übersicht | C · Tabs oben |
+|---|---|---|---|
+| Was es ist | wie bisher, aber nur 10 Angebote und „mehr laden" | Startseite = Kacheln pro Bereich, Angebote auf eigener Seite | Angebote in Reitern (Top / UVP / Laden / Online) |
+| Überblick über die ganze App | schlecht – man sieht weiter nur Angebote | **sehr gut** – alle zwölf Bereiche auf zwei Bildschirmen | mittel |
+| Wie viele Tipps bis zum Angebot | 0 | 2 | 1 |
+| Aufwand | klein | mittel | klein |
+
+**Gewählt: B.** Die Rückmeldung nennt zwei Dinge – *einfach* und
+*kategorisch*. Nur B liefert beides: Jede Kachel ist eine Kategorie, trägt
+eine Zahl und sagt in einem Satz, was dahintersteckt. Der eine zusätzliche
+Tipp bis zum Angebot ist der Preis dafür, dass man überhaupt erst sieht, was
+es alles gibt.
+
+### Folgeentscheidungen
+
+| Thema | Gewählt | Warum |
+|---|---|---|
+| Wohin mit der Angebotsliste | eigene Seite `/deals` | Sie bleibt vollständig erhalten, verstopft aber nicht mehr den Einstieg. |
+| Wie die Kategorie mitwandert | im Arbeitsspeicher, **nicht** dauerhaft gespeichert | Beim nächsten Besuch soll wieder „Alle" stehen. Sonst wundert man sich, warum plötzlich nur noch zwei Angebote da sind. |
+| Kachelzahl und Liste synchron halten | eine einzige Regel je Kategorie (`matchesCategory`) | Wird zum Zählen **und** zum Filtern benutzt. Sechs Tests halten fest, dass „22" auch 22 Karten bedeutet. |
+| Schnellfilter (unter UVP, verifiziert, Badges) | hinter den Filter-Knopf verschoben | Sie doppelten die neuen Kategorien und kosteten auf dem Handy einen halben Bildschirm. |
+| Umkreis-Schieberegler auf der Startseite | entfernt, nur noch fünf Knöpfe | Einen Regler trifft man mit dem Daumen schlecht; fünf große Knöpfe sind schneller und eindeutiger. |
+| Untere Leiste am Handy | Start · Angebote · Live · Events · Sammlung | Scanner, Merkliste, Gerüchte und Pokémon Center sind über die Kacheln mit einem Tipp erreichbar – die Leiste bleibt bei fünf Einträgen lesbar. |
+| Chat-Knopf | auf dem Handy kleiner | In der alten Größe verdeckte er die Zahl auf der Events-Kachel. |

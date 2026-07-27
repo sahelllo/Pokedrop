@@ -81,7 +81,11 @@ export function FilterBar({
         </button>
       </div>
 
-      {/* Schnell-Chips */}
+      {/* Erweiterte Filter – bewusst eingeklappt.
+          Die groben Kategorien (Top-Deals, unter UVP, Laden, Online) stehen
+          schon als Knopfreihe darüber. Alles hier ist Feinjustierung und
+          würde die Seite sonst zumüllen. */}
+      {expanded && (
       <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
         <QuickToggle
           active={!!filters.onlyUnderUvp}
@@ -113,8 +117,8 @@ export function FilterBar({
           );
         })}
       </div>
+      )}
 
-      {/* Erweiterte Filter */}
       {expanded && (
         <motion.div
           initial={{ opacity: 0, height: 0 }}
@@ -170,20 +174,23 @@ export function FilterBar({
         </motion.div>
       )}
 
-      {/* Ergebniszeile */}
-      <div className="mt-2.5 flex items-center justify-between">
-        <p className="text-xs text-muted-foreground">
-          <span className="font-semibold text-foreground">{resultCount}</span> Angebote im Radius
-        </p>
-        {activeCount > 0 && (
-          <button
-            onClick={() => onChange({ query: filters.query })}
-            className="inline-flex items-center gap-1 text-xs text-muted-foreground transition hover:text-foreground"
-          >
-            <X className="h-3 w-3" /> Filter zurücksetzen
-          </button>
-        )}
-      </div>
+      {/* Ergebniszeile – nur wenn wirklich gefiltert wird. Ohne Filter steht
+          die Zahl schon auf dem Kategorie-Knopf darüber. */}
+      {(activeCount > 0 || (filters.query ?? "").length > 0) && (
+        <div className="mt-2.5 flex items-center justify-between gap-2">
+          <p className="text-xs text-muted-foreground">
+            <span className="font-semibold text-foreground">{resultCount}</span> Angebote im Radius
+          </p>
+          {activeCount > 0 && (
+            <button
+              onClick={() => onChange({ query: filters.query })}
+              className="inline-flex items-center gap-1 text-xs text-muted-foreground transition hover:text-foreground"
+            >
+              <X className="h-3 w-3" /> Filter zurücksetzen
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 }
