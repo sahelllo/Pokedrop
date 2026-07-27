@@ -14,7 +14,9 @@
     "test:coverage": "vitest run --coverage",
     "verify": "npm run typecheck && npm run lint && npm run test && npm run build",
     "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui"
+    "test:e2e:ui": "playwright test --ui",
+    "db:seed": "node scripts/generate-seed-sql.mjs",
+    "db:check": "node scripts/db-check.mjs"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.4",
