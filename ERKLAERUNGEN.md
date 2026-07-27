@@ -229,3 +229,87 @@ Tests prüfen das bei jeder Änderung nach.
 3. Auf ein Angebot tippen → Preis, Entfernung, Filiale und Gültigkeit.
 
 Drei Tipps, kein Fachwort, kein Scrollen ins Leere.
+
+---
+
+## Teil 6: Der Scanner und die Sammlung
+
+### Warum Strichcode und nicht Foto-Erkennung
+
+Der alte Scanner tat nur so: Er wartete zwei Sekunden und würfelte dann ein
+Produkt aus dem Katalog. Das war eine Attrappe.
+
+Für echtes Erkennen gibt es zwei Wege:
+
+| Weg | Wie es geht | Warum (nicht) |
+|---|---|---|
+| **Foto der Packung erkennen** | Ein Bilderkennungs-Dienst vergleicht dein Foto mit Millionen Bildern | Braucht einen kostenpflichtigen fremden Dienst, das Bild müsste hochgeladen werden, und bei ähnlichen Verpackungen rät er trotzdem |
+| **Strichcode lesen** ✅ | Die Kamera liest die Nummer unter den schwarzen Strichen | Eindeutig, kostenlos, läuft komplett auf deinem Handy – und **jede** versiegelte Packung hat einen |
+
+Gewählt wurde der Strichcode. PokéDrop handelt mit versiegelten Produkten –
+Displays, Top-Trainer-Boxen, Blistern. Auf jedem klebt einer.
+
+### Was passiert beim Scannen
+
+1. Du tippst auf „Kamera starten" und hältst den Strichcode in den Rahmen.
+2. Die App liest die Nummer – **automatisch**, du musst nichts drücken.
+3. Sie prüft die **Prüfziffer**: Die letzte Ziffer eines Strichcodes ist eine
+   Quersumme der anderen. Stimmt sie nicht, war das Bild verwackelt und die
+   App liest weiter. Zusätzlich muss dieselbe Nummer **zweimal hintereinander**
+   gelesen werden. So kann kein Zufallstreffer durchrutschen.
+4. Preis, UVP, Seltenheit und das günstigste Angebot in deiner Nähe erscheinen.
+5. Das Produkt wandert in deine Sammlung (abschaltbar, einzeln rückgängig).
+
+### Wenn der Code unbekannt ist
+
+Dann fragt die App einmal: *„Was ist das?"* Du suchst das Produkt aus der
+Liste – und **ab da kennt der Scanner diesen Code**. Beim nächsten Mal wird
+er sofort erkannt. Die Zuordnung liegt nur auf deinem Gerät.
+
+Das ist der Grund, warum der Scanner auch mit echten Packungen funktioniert,
+deren Nummer noch nicht im Katalog steht.
+
+### Wie die Seltenheit berechnet wird
+
+Seltenheit ist keine Meinung, sondern das, was der Markt verlangt:
+
+```
+Aufschlag = Marktpreis ÷ UVP − 1
+```
+
+| Aufschlag | Stufe |
+|---|---|
+| unter 5 % | Standard |
+| ab 5 % | Gesucht |
+| ab 20 % | Selten |
+| ab 50 % | Sehr selten |
+| ab 100 % | Sammlerstück |
+
+Produkte, die **nicht mehr gedruckt werden**, rücken eine Stufe hoch – der
+Nachschub ist versiegt. Die oberste Stufe muss ein Produkt sich aber am Markt
+verdienen (echter Verdoppler), sonst wäre „Sammlerstück" wertlos.
+
+Beispiel aus dem Katalog: *Celebrations Top-Trainer-Box*, UVP 49,99 €,
+Marktpreis 154,99 € → **209 % Aufschlag → Sammlerstück**.
+
+### Die Sammlung
+
+Unter „Sammlung" steht:
+
+- der **Gesamtwert** und der Gewinn gegenüber dem UVP-Einstand
+- wie viele Stück, davon wie viele **gescannt**
+- **Wert nach Seltenheit** – ein Balken, der zeigt, worin dein Geld steckt
+- die Liste, standardmäßig **seltenstes zuerst** (umschaltbar auf Wert oder
+  Neueste)
+
+### Wie das getestet wird
+
+Der Kamera-Weg lässt sich schwer „von Hand" prüfen, deshalb tut es ein
+Roboter: Chromium bekommt statt einer echten Kamera **ein Video mit einem
+echten EAN-13-Strichcode** untergeschoben (erzeugt von
+`scripts/make-barcode-fixture.mjs`). Für die Seite ist das eine ganz normale
+Kamera. Der Test prüft, dass die App den Code daraus liest, das richtige
+Produkt zeigt und die Kamera danach wieder abschaltet.
+
+Dazu kommen 30 weitere automatische Tests für Prüfziffer, UPC-Umrechnung,
+unbekannte Codes, die Seltenheitsstufen und die Sammlung.

@@ -96,7 +96,16 @@ SELECT ${q(p.product_id)}, ${q(p.product_name)}, ps.id, ${q(p.product_type)}, ${
   ${n(p.market_reference_price)}, ${n(p.good_deal_threshold)}, ${n(p.great_deal_threshold)},
   ${q(p.availability_status)}, ${n(p.pokemonArtworkId)}, ${q(p.energyType)}
 FROM product_sets ps WHERE ps.set_code = ${q(p.set_code ?? p.set_name)}
-ON CONFLICT (slug) DO NOTHING;`);
+ON CONFLICT (slug) DO UPDATE SET
+  product_name = EXCLUDED.product_name,
+  ean = EXCLUDED.ean,
+  sku = EXCLUDED.sku,
+  reference_uvp = EXCLUDED.reference_uvp,
+  uvp_source = EXCLUDED.uvp_source,
+  market_reference_price = EXCLUDED.market_reference_price,
+  good_deal_threshold = EXCLUDED.good_deal_threshold,
+  great_deal_threshold = EXCLUDED.great_deal_threshold,
+  availability_status = EXCLUDED.availability_status;`);
 }
 push("");
 

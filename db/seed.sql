@@ -386,7 +386,16 @@ SELECT 'p-dunkelnacht-display', 'Dunkelnacht – 36er Booster Display', ps.id, '
   179.99, 165, 149,
   'aktuell', 94, 'darkness'
 FROM product_sets ps WHERE ps.set_code = 'me5'
-ON CONFLICT (slug) DO NOTHING;
+ON CONFLICT (slug) DO UPDATE SET
+  product_name = EXCLUDED.product_name,
+  ean = EXCLUDED.ean,
+  sku = EXCLUDED.sku,
+  reference_uvp = EXCLUDED.reference_uvp,
+  uvp_source = EXCLUDED.uvp_source,
+  market_reference_price = EXCLUDED.market_reference_price,
+  good_deal_threshold = EXCLUDED.good_deal_threshold,
+  great_deal_threshold = EXCLUDED.great_deal_threshold,
+  availability_status = EXCLUDED.availability_status;
 INSERT INTO products (slug, product_name, set_id, category, ean, sku, language, release_date,
   reference_uvp, uvp_source, market_reference_price, good_deal_threshold, great_deal_threshold,
   availability_status, pokemon_artwork_id, energy_type)
@@ -395,34 +404,70 @@ SELECT 'p-dunkelnacht-etb', 'Dunkelnacht – Top-Trainer-Box', ps.id, 'ETB', '08
   54.99, 49, 45,
   'aktuell', 248, 'darkness'
 FROM product_sets ps WHERE ps.set_code = 'me5'
-ON CONFLICT (slug) DO NOTHING;
+ON CONFLICT (slug) DO UPDATE SET
+  product_name = EXCLUDED.product_name,
+  ean = EXCLUDED.ean,
+  sku = EXCLUDED.sku,
+  reference_uvp = EXCLUDED.reference_uvp,
+  uvp_source = EXCLUDED.uvp_source,
+  market_reference_price = EXCLUDED.market_reference_price,
+  good_deal_threshold = EXCLUDED.good_deal_threshold,
+  great_deal_threshold = EXCLUDED.great_deal_threshold,
+  availability_status = EXCLUDED.availability_status;
 INSERT INTO products (slug, product_name, set_id, category, ean, sku, language, release_date,
   reference_uvp, uvp_source, market_reference_price, good_deal_threshold, great_deal_threshold,
   availability_status, pokemon_artwork_id, energy_type)
-SELECT 'p-reisegefaehrten-etb', 'Reisegefährten – Top-Trainer-Box', ps.id, 'ETB', '0820650850013', 'SV09-ETB-DE',
+SELECT 'p-reisegefaehrten-etb', 'Reisegefährten – Top-Trainer-Box', ps.id, 'ETB', '0820650850011', 'SV09-ETB-DE',
   'Deutsch', '2026-05-30', 54.99, 'The Pokémon Company, DE-UVP 05/2026',
   56.99, 49, 45,
   'aktuell', 658, 'water'
 FROM product_sets ps WHERE ps.set_code = 'sv09'
-ON CONFLICT (slug) DO NOTHING;
+ON CONFLICT (slug) DO UPDATE SET
+  product_name = EXCLUDED.product_name,
+  ean = EXCLUDED.ean,
+  sku = EXCLUDED.sku,
+  reference_uvp = EXCLUDED.reference_uvp,
+  uvp_source = EXCLUDED.uvp_source,
+  market_reference_price = EXCLUDED.market_reference_price,
+  good_deal_threshold = EXCLUDED.good_deal_threshold,
+  great_deal_threshold = EXCLUDED.great_deal_threshold,
+  availability_status = EXCLUDED.availability_status;
 INSERT INTO products (slug, product_name, set_id, category, ean, sku, language, release_date,
   reference_uvp, uvp_source, market_reference_price, good_deal_threshold, great_deal_threshold,
   availability_status, pokemon_artwork_id, energy_type)
-SELECT 'p-reisegefaehrten-display', 'Reisegefährten – 36er Booster Display', ps.id, 'Display', '0820650850020', 'SV09-DISPLAY-DE',
+SELECT 'p-reisegefaehrten-display', 'Reisegefährten – 36er Booster Display', ps.id, 'Display', '0820650850028', 'SV09-DISPLAY-DE',
   'Deutsch', '2026-05-30', 179.99, 'The Pokémon Company, DE-UVP 05/2026',
   184.99, 165, 149,
   'aktuell', 645, 'water'
 FROM product_sets ps WHERE ps.set_code = 'sv09'
-ON CONFLICT (slug) DO NOTHING;
+ON CONFLICT (slug) DO UPDATE SET
+  product_name = EXCLUDED.product_name,
+  ean = EXCLUDED.ean,
+  sku = EXCLUDED.sku,
+  reference_uvp = EXCLUDED.reference_uvp,
+  uvp_source = EXCLUDED.uvp_source,
+  market_reference_price = EXCLUDED.market_reference_price,
+  good_deal_threshold = EXCLUDED.good_deal_threshold,
+  great_deal_threshold = EXCLUDED.great_deal_threshold,
+  availability_status = EXCLUDED.availability_status;
 INSERT INTO products (slug, product_name, set_id, category, ean, sku, language, release_date,
   reference_uvp, uvp_source, market_reference_price, good_deal_threshold, great_deal_threshold,
   availability_status, pokemon_artwork_id, energy_type)
-SELECT 'p-zeitlose-rivalen-blister', 'Zeitlose Rivalen – 3er-Booster-Blister', ps.id, 'Blister', '0820650840014', 'SV08-3BLISTER-DE',
+SELECT 'p-zeitlose-rivalen-blister', 'Zeitlose Rivalen – 3er-Booster-Blister', ps.id, 'Blister', '0820650840012', 'SV08-3BLISTER-DE',
   'Deutsch', '2026-03-14', 14.99, 'The Pokémon Company, DE-UVP 03/2026',
   15.49, 13.5, 11.99,
   'aktuell', 25, 'lightning'
 FROM product_sets ps WHERE ps.set_code = 'sv08'
-ON CONFLICT (slug) DO NOTHING;
+ON CONFLICT (slug) DO UPDATE SET
+  product_name = EXCLUDED.product_name,
+  ean = EXCLUDED.ean,
+  sku = EXCLUDED.sku,
+  reference_uvp = EXCLUDED.reference_uvp,
+  uvp_source = EXCLUDED.uvp_source,
+  market_reference_price = EXCLUDED.market_reference_price,
+  good_deal_threshold = EXCLUDED.good_deal_threshold,
+  great_deal_threshold = EXCLUDED.great_deal_threshold,
+  availability_status = EXCLUDED.availability_status;
 INSERT INTO products (slug, product_name, set_id, category, ean, sku, language, release_date,
   reference_uvp, uvp_source, market_reference_price, good_deal_threshold, great_deal_threshold,
   availability_status, pokemon_artwork_id, energy_type)
@@ -431,7 +476,16 @@ SELECT 'p-mega-forces-tin', 'Mega Forces – Mini-Tin (3 Booster)', ps.id, 'Mini
   24.99, 21.5, 18.99,
   'aktuell', 384, 'dragon'
 FROM product_sets ps WHERE ps.set_code = 'mf1'
-ON CONFLICT (slug) DO NOTHING;
+ON CONFLICT (slug) DO UPDATE SET
+  product_name = EXCLUDED.product_name,
+  ean = EXCLUDED.ean,
+  sku = EXCLUDED.sku,
+  reference_uvp = EXCLUDED.reference_uvp,
+  uvp_source = EXCLUDED.uvp_source,
+  market_reference_price = EXCLUDED.market_reference_price,
+  good_deal_threshold = EXCLUDED.good_deal_threshold,
+  great_deal_threshold = EXCLUDED.great_deal_threshold,
+  availability_status = EXCLUDED.availability_status;
 INSERT INTO products (slug, product_name, set_id, category, ean, sku, language, release_date,
   reference_uvp, uvp_source, market_reference_price, good_deal_threshold, great_deal_threshold,
   availability_status, pokemon_artwork_id, energy_type)
@@ -440,88 +494,178 @@ SELECT 'p-fpc3-collection', 'First Partner Collection Serie 3', ps.id, 'Premium 
   42.99, 35, 31.99,
   'aktuell', 3, 'grass'
 FROM product_sets ps WHERE ps.set_code = 'fpc3'
-ON CONFLICT (slug) DO NOTHING;
+ON CONFLICT (slug) DO UPDATE SET
+  product_name = EXCLUDED.product_name,
+  ean = EXCLUDED.ean,
+  sku = EXCLUDED.sku,
+  reference_uvp = EXCLUDED.reference_uvp,
+  uvp_source = EXCLUDED.uvp_source,
+  market_reference_price = EXCLUDED.market_reference_price,
+  good_deal_threshold = EXCLUDED.good_deal_threshold,
+  great_deal_threshold = EXCLUDED.great_deal_threshold,
+  availability_status = EXCLUDED.availability_status;
 INSERT INTO products (slug, product_name, set_id, category, ean, sku, language, release_date,
   reference_uvp, uvp_source, market_reference_price, good_deal_threshold, great_deal_threshold,
   availability_status, pokemon_artwork_id, energy_type)
-SELECT 'p-obsidianflammen-etb', 'Obsidianflammen – Top-Trainer-Box (Glurak)', ps.id, 'ETB', '0820650800011', 'SV03-ETB-DE',
+SELECT 'p-obsidianflammen-etb', 'Obsidianflammen – Top-Trainer-Box (Glurak)', ps.id, 'ETB', '0820650800016', 'SV03-ETB-DE',
   'Deutsch', '2023-08-11', 49.99, 'The Pokémon Company, DE-UVP 08/2023',
   64.9, 56, 49,
   'aeltere_kollektion', 6, 'fire'
 FROM product_sets ps WHERE ps.set_code = 'sv03'
-ON CONFLICT (slug) DO NOTHING;
+ON CONFLICT (slug) DO UPDATE SET
+  product_name = EXCLUDED.product_name,
+  ean = EXCLUDED.ean,
+  sku = EXCLUDED.sku,
+  reference_uvp = EXCLUDED.reference_uvp,
+  uvp_source = EXCLUDED.uvp_source,
+  market_reference_price = EXCLUDED.market_reference_price,
+  good_deal_threshold = EXCLUDED.good_deal_threshold,
+  great_deal_threshold = EXCLUDED.great_deal_threshold,
+  availability_status = EXCLUDED.availability_status;
 INSERT INTO products (slug, product_name, set_id, category, ean, sku, language, release_date,
   reference_uvp, uvp_source, market_reference_price, good_deal_threshold, great_deal_threshold,
   availability_status, pokemon_artwork_id, energy_type)
-SELECT 'p-151-upc', 'Pokémon 151 – Ultra-Premium-Kollektion', ps.id, 'Premium Collection', '0820650800028', 'MEW-UPC-DE',
+SELECT 'p-151-upc', 'Pokémon 151 – Ultra-Premium-Kollektion', ps.id, 'Premium Collection', '0820650800023', 'MEW-UPC-DE',
   'Deutsch', '2023-09-22', 119.99, 'The Pokémon Company, DE-UVP 09/2023',
   229, 199, 169,
   'out_of_print', 151, 'psychic'
 FROM product_sets ps WHERE ps.set_code = 'mew'
-ON CONFLICT (slug) DO NOTHING;
+ON CONFLICT (slug) DO UPDATE SET
+  product_name = EXCLUDED.product_name,
+  ean = EXCLUDED.ean,
+  sku = EXCLUDED.sku,
+  reference_uvp = EXCLUDED.reference_uvp,
+  uvp_source = EXCLUDED.uvp_source,
+  market_reference_price = EXCLUDED.market_reference_price,
+  good_deal_threshold = EXCLUDED.good_deal_threshold,
+  great_deal_threshold = EXCLUDED.great_deal_threshold,
+  availability_status = EXCLUDED.availability_status;
 INSERT INTO products (slug, product_name, set_id, category, ean, sku, language, release_date,
   reference_uvp, uvp_source, market_reference_price, good_deal_threshold, great_deal_threshold,
   availability_status, pokemon_artwork_id, energy_type)
-SELECT 'p-paldeas-schicksale-etb', 'Paldeas Schicksale – Top-Trainer-Box', ps.id, 'ETB', '0820650810010', 'SV4P5-ETB-DE',
+SELECT 'p-paldeas-schicksale-etb', 'Paldeas Schicksale – Top-Trainer-Box', ps.id, 'ETB', '0820650810015', 'SV4P5-ETB-DE',
   'Deutsch', '2024-01-26', 49.99, 'The Pokémon Company, DE-UVP 01/2024',
   82.9, 69, 58,
   'out_of_print', 700, 'fairy'
 FROM product_sets ps WHERE ps.set_code = 'sv4pt5'
-ON CONFLICT (slug) DO NOTHING;
+ON CONFLICT (slug) DO UPDATE SET
+  product_name = EXCLUDED.product_name,
+  ean = EXCLUDED.ean,
+  sku = EXCLUDED.sku,
+  reference_uvp = EXCLUDED.reference_uvp,
+  uvp_source = EXCLUDED.uvp_source,
+  market_reference_price = EXCLUDED.market_reference_price,
+  good_deal_threshold = EXCLUDED.good_deal_threshold,
+  great_deal_threshold = EXCLUDED.great_deal_threshold,
+  availability_status = EXCLUDED.availability_status;
 INSERT INTO products (slug, product_name, set_id, category, ean, sku, language, release_date,
   reference_uvp, uvp_source, market_reference_price, good_deal_threshold, great_deal_threshold,
   availability_status, pokemon_artwork_id, energy_type)
-SELECT 'p-verlorener-ursprung-display', 'Verlorener Ursprung – Booster Display', ps.id, 'Display', '0820650790015', 'SWSH11-DISPLAY-DE',
+SELECT 'p-verlorener-ursprung-display', 'Verlorener Ursprung – Booster Display', ps.id, 'Display', '0820650790010', 'SWSH11-DISPLAY-DE',
   'Deutsch', '2022-09-09', 149.99, 'The Pokémon Company, DE-UVP 09/2022',
   299, 259, 219,
   'out_of_print', 487, 'darkness'
 FROM product_sets ps WHERE ps.set_code = 'swsh11'
-ON CONFLICT (slug) DO NOTHING;
+ON CONFLICT (slug) DO UPDATE SET
+  product_name = EXCLUDED.product_name,
+  ean = EXCLUDED.ean,
+  sku = EXCLUDED.sku,
+  reference_uvp = EXCLUDED.reference_uvp,
+  uvp_source = EXCLUDED.uvp_source,
+  market_reference_price = EXCLUDED.market_reference_price,
+  good_deal_threshold = EXCLUDED.good_deal_threshold,
+  great_deal_threshold = EXCLUDED.great_deal_threshold,
+  availability_status = EXCLUDED.availability_status;
 INSERT INTO products (slug, product_name, set_id, category, ean, sku, language, release_date,
   reference_uvp, uvp_source, market_reference_price, good_deal_threshold, great_deal_threshold,
   availability_status, pokemon_artwork_id, energy_type)
-SELECT 'p-brillante-sterne-etb', 'Brillante Sterne – Top-Trainer-Box (Arceus)', ps.id, 'ETB', '0820650790022', 'SWSH09-ETB-DE',
+SELECT 'p-brillante-sterne-etb', 'Brillante Sterne – Top-Trainer-Box (Arceus)', ps.id, 'ETB', '0820650790027', 'SWSH09-ETB-DE',
   'Deutsch', '2022-02-25', 49.99, 'The Pokémon Company, DE-UVP 02/2022',
   104, 89, 74,
   'out_of_print', 493, 'colorless'
 FROM product_sets ps WHERE ps.set_code = 'swsh09'
-ON CONFLICT (slug) DO NOTHING;
+ON CONFLICT (slug) DO UPDATE SET
+  product_name = EXCLUDED.product_name,
+  ean = EXCLUDED.ean,
+  sku = EXCLUDED.sku,
+  reference_uvp = EXCLUDED.reference_uvp,
+  uvp_source = EXCLUDED.uvp_source,
+  market_reference_price = EXCLUDED.market_reference_price,
+  good_deal_threshold = EXCLUDED.good_deal_threshold,
+  great_deal_threshold = EXCLUDED.great_deal_threshold,
+  availability_status = EXCLUDED.availability_status;
 INSERT INTO products (slug, product_name, set_id, category, ean, sku, language, release_date,
   reference_uvp, uvp_source, market_reference_price, good_deal_threshold, great_deal_threshold,
   availability_status, pokemon_artwork_id, energy_type)
-SELECT 'p-celebrations-etb', '25 Jahre – Celebrations Top-Trainer-Box', ps.id, 'ETB', '0820650780016', 'CEL25-ETB-DE',
+SELECT 'p-celebrations-etb', '25 Jahre – Celebrations Top-Trainer-Box', ps.id, 'ETB', '0820650780011', 'CEL25-ETB-DE',
   'Englisch', '2021-10-08', 44.99, 'TPCi, UVP 10/2021',
   139, 115, 95,
   'out_of_print', 25, 'lightning'
 FROM product_sets ps WHERE ps.set_code = 'cel25'
-ON CONFLICT (slug) DO NOTHING;
+ON CONFLICT (slug) DO UPDATE SET
+  product_name = EXCLUDED.product_name,
+  ean = EXCLUDED.ean,
+  sku = EXCLUDED.sku,
+  reference_uvp = EXCLUDED.reference_uvp,
+  uvp_source = EXCLUDED.uvp_source,
+  market_reference_price = EXCLUDED.market_reference_price,
+  good_deal_threshold = EXCLUDED.good_deal_threshold,
+  great_deal_threshold = EXCLUDED.great_deal_threshold,
+  availability_status = EXCLUDED.availability_status;
 INSERT INTO products (slug, product_name, set_id, category, ean, sku, language, release_date,
   reference_uvp, uvp_source, market_reference_price, good_deal_threshold, great_deal_threshold,
   availability_status, pokemon_artwork_id, energy_type)
-SELECT 'p-stellarkrone-etb', 'Stellarkrone – Top-Trainer-Box', ps.id, 'ETB', '0820650830015', 'SV07-ETB-DE',
+SELECT 'p-stellarkrone-etb', 'Stellarkrone – Top-Trainer-Box', ps.id, 'ETB', '0820650830013', 'SV07-ETB-DE',
   'Deutsch', '2024-09-13', 54.99, 'The Pokémon Company, DE-UVP 09/2024',
   58.9, 51, 46,
   'aeltere_kollektion', 282, 'psychic'
 FROM product_sets ps WHERE ps.set_code = 'sv07'
-ON CONFLICT (slug) DO NOTHING;
+ON CONFLICT (slug) DO UPDATE SET
+  product_name = EXCLUDED.product_name,
+  ean = EXCLUDED.ean,
+  sku = EXCLUDED.sku,
+  reference_uvp = EXCLUDED.reference_uvp,
+  uvp_source = EXCLUDED.uvp_source,
+  market_reference_price = EXCLUDED.market_reference_price,
+  good_deal_threshold = EXCLUDED.good_deal_threshold,
+  great_deal_threshold = EXCLUDED.great_deal_threshold,
+  availability_status = EXCLUDED.availability_status;
 INSERT INTO products (slug, product_name, set_id, category, ean, sku, language, release_date,
   reference_uvp, uvp_source, market_reference_price, good_deal_threshold, great_deal_threshold,
   availability_status, pokemon_artwork_id, energy_type)
-SELECT 'p-maskerade-bundle', 'Maskerade im Zwielicht – Booster Bundle (6 Packs)', ps.id, 'Booster Bundle', '0820650820019', 'SV06-BUNDLE-DE',
+SELECT 'p-maskerade-bundle', 'Maskerade im Zwielicht – Booster Bundle (6 Packs)', ps.id, 'Booster Bundle', '0820650820014', 'SV06-BUNDLE-DE',
   'Deutsch', '2024-05-24', 26.99, 'The Pokémon Company, DE-UVP 05/2024',
   33.5, 28, 24.5,
   'aeltere_kollektion', 658, 'water'
 FROM product_sets ps WHERE ps.set_code = 'sv06'
-ON CONFLICT (slug) DO NOTHING;
+ON CONFLICT (slug) DO UPDATE SET
+  product_name = EXCLUDED.product_name,
+  ean = EXCLUDED.ean,
+  sku = EXCLUDED.sku,
+  reference_uvp = EXCLUDED.reference_uvp,
+  uvp_source = EXCLUDED.uvp_source,
+  market_reference_price = EXCLUDED.market_reference_price,
+  good_deal_threshold = EXCLUDED.good_deal_threshold,
+  great_deal_threshold = EXCLUDED.great_deal_threshold,
+  availability_status = EXCLUDED.availability_status;
 INSERT INTO products (slug, product_name, set_id, category, ean, sku, language, release_date,
   reference_uvp, uvp_source, market_reference_price, good_deal_threshold, great_deal_threshold,
   availability_status, pokemon_artwork_id, energy_type)
-SELECT 'p-paradoxrift-premium', 'Paradoxrift – Premium-Kollektion Roaring Moon ex', ps.id, 'Premium Collection', '0820650820026', 'SV04-PREMIUM-DE',
+SELECT 'p-paradoxrift-premium', 'Paradoxrift – Premium-Kollektion Roaring Moon ex', ps.id, 'Premium Collection', '0820650820021', 'SV04-PREMIUM-DE',
   'Deutsch', '2023-11-03', 34.99, 'The Pokémon Company, DE-UVP 11/2023',
   51, 44, 37,
   'out_of_print', 373, 'dragon'
 FROM product_sets ps WHERE ps.set_code = 'sv04'
-ON CONFLICT (slug) DO NOTHING;
+ON CONFLICT (slug) DO UPDATE SET
+  product_name = EXCLUDED.product_name,
+  ean = EXCLUDED.ean,
+  sku = EXCLUDED.sku,
+  reference_uvp = EXCLUDED.reference_uvp,
+  uvp_source = EXCLUDED.uvp_source,
+  market_reference_price = EXCLUDED.market_reference_price,
+  good_deal_threshold = EXCLUDED.good_deal_threshold,
+  great_deal_threshold = EXCLUDED.great_deal_threshold,
+  availability_status = EXCLUDED.availability_status;
 
 -- Angebote (inkl. teilnehmender Filialen)
 INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,

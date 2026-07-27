@@ -1,4 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
+import { BARCODE_FIXTURE } from "./e2e/fixture-paths";
 
 /**
  * E2E-Tests gegen den echten statischen Export (out/).
@@ -25,9 +26,13 @@ export default defineConfig({
     screenshot: "only-on-failure",
   },
 
+  // Erzeugt vorab das Strichcode-Video für den Kamera-Test.
+  globalSetup: "./e2e/global-setup.ts",
+
   projects: [
     {
       name: "desktop",
+      testIgnore: /scanner-kamera\.spec\.ts/,
       use: {
         ...devices["Desktop Chrome"],
         // Vorinstalliertes Chromium der Umgebung nutzen (kein Download).
@@ -38,11 +43,33 @@ export default defineConfig({
     },
     {
       name: "mobile",
+      testIgnore: /scanner-kamera\.spec\.ts/,
       use: {
         ...devices["Pixel 7"],
         launchOptions: process.env.PW_CHROMIUM_PATH
           ? { executablePath: process.env.PW_CHROMIUM_PATH }
           : {},
+      },
+    },
+    {
+      // Eigenes Projekt, weil Chromium die Fake-Kamera nur beim Start
+      // annimmt: Statt einer echten Kamera bekommt der Browser ein Video
+      // mit einem echten EAN-13-Strichcode untergeschoben.
+      name: "scanner-kamera",
+      testMatch: /scanner-kamera\.spec\.ts/,
+      use: {
+        ...devices["Pixel 7"],
+        permissions: ["camera"],
+        launchOptions: {
+          ...(process.env.PW_CHROMIUM_PATH
+            ? { executablePath: process.env.PW_CHROMIUM_PATH }
+            : {}),
+          args: [
+            "--use-fake-ui-for-media-stream",
+            "--use-fake-device-for-media-stream",
+            `--use-file-for-fake-video-capture=${BARCODE_FIXTURE}`,
+          ],
+        },
       },
     },
   ],

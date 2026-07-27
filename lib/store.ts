@@ -21,6 +21,12 @@ export interface AlertRule {
 export interface PortfolioItem {
   product_id: string;
   qty: number;
+  /** ISO-Zeitpunkt der Aufnahme in die Sammlung (ältere Einträge haben ihn nicht) */
+  addedAt?: string;
+  /** wie es in die Sammlung kam */
+  source?: "scan" | "manuell";
+  /** der gescannte Strichcode, falls per Kamera erfasst */
+  barcode?: string;
 }
 
 interface PokeDropState {
@@ -48,9 +54,15 @@ interface PokeDropState {
   setAlertRule: (rule: AlertRule) => void;
   removeAlertRule: (productId: string) => void;
 
+  // Eigene Barcode-Zuordnungen: Strichcode -> product_id.
+  // Damit lernt der Scanner Produkte, deren EAN noch nicht im Katalog steht.
+  barcodeMappings: Record<string, string>;
+  addBarcodeMapping: (barcode: string, productId: string) => void;
+  removeBarcodeMapping: (barcode: string) => void;
+
   // Portfolio / Sammlung (Collection-Tracking)
   portfolio: PortfolioItem[];
-  addToPortfolio: (productId: string) => void;
+  addToPortfolio: (productId: string, meta?: Pick<PortfolioItem, "source" | "barcode">) => void;
   removeFromPortfolio: (productId: string) => void;
   setPortfolioQty: (productId: string, qty: number) => void;
   isInPortfolio: (productId: string) => boolean;
@@ -128,16 +140,48 @@ export const usePokeStore = create<PokeDropState>()(
           alertRules: state.alertRules.filter((r) => r.product_id !== productId),
         })),
 
+      barcodeMappings: {},
+      addBarcodeMapping: (barcode, productId) =>
+        set((state) => ({
+          barcodeMappings: { ...state.barcodeMappings, [barcode]: productId },
+        })),
+      removeBarcodeMapping: (barcode) =>
+        set((state) => {
+          const next = { ...state.barcodeMappings };
+          delete next[barcode];
+          return { barcodeMappings: next };
+        }),
+
       portfolio: [],
-      addToPortfolio: (productId) =>
+      addToPortfolio: (productId, meta) =>
         set((state) =>
           state.portfolio.find((p) => p.product_id === productId)
             ? {
                 portfolio: state.portfolio.map((p) =>
-                  p.product_id === productId ? { ...p, qty: p.qty + 1 } : p,
+                  p.product_id === productId
+                    ? {
+                        ...p,
+                        qty: p.qty + 1,
+                        // Ein späterer Scan darf die Herkunft ergänzen, aber
+                        // das ursprüngliche Aufnahmedatum nicht überschreiben.
+                        source: p.source ?? meta?.source,
+                        barcode: p.barcode ?? meta?.barcode,
+                      }
+                    : p,
                 ),
               }
-            : { portfolio: [...state.portfolio, { product_id: productId, qty: 1 }] },
+            : {
+                portfolio: [
+                  ...state.portfolio,
+                  {
+                    product_id: productId,
+                    qty: 1,
+                    addedAt: new Date().toISOString(),
+                    source: meta?.source ?? "manuell",
+                    barcode: meta?.barcode,
+                  },
+                ],
+              },
         ),
       removeFromPortfolio: (productId) =>
         set((state) => ({
@@ -181,6 +225,7 @@ export const usePokeStore = create<PokeDropState>()(
         savedEvents: s.savedEvents,
         alertRules: s.alertRules,
         portfolio: s.portfolio,
+        barcodeMappings: s.barcodeMappings,
         premium: s.premium,
         theme: s.theme,
         onboarded: s.onboarded,

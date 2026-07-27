@@ -114,3 +114,39 @@ es alles gibt.
 | Umkreis-Schieberegler auf der Startseite | entfernt, nur noch fünf Knöpfe | Einen Regler trifft man mit dem Daumen schlecht; fünf große Knöpfe sind schneller und eindeutiger. |
 | Untere Leiste am Handy | Start · Angebote · Live · Events · Sammlung | Scanner, Merkliste, Gerüchte und Pokémon Center sind über die Kacheln mit einem Tipp erreichbar – die Leiste bleibt bei fünf Einträgen lesbar. |
 | Chat-Knopf | auf dem Handy kleiner | In der alten Größe verdeckte er die Zahl auf der Events-Kachel. |
+
+---
+
+## 6. Scanner: echt statt Attrappe
+
+**Ausgangslage:** Rückmeldung – *„Der Karten Scanner funktioniert auch nicht."*
+Zu Recht: Der alte Scanner wartete 1,7 Sekunden und wählte dann per
+`Math.random()` ein Produkt aus dem Katalog.
+
+### Verglichene Möglichkeiten
+
+| | A · Bilderkennungs-Dienst | B · Strichcode auf dem Gerät | C · nur Suchfeld |
+|---|---|---|---|
+| Erkennt | Verpackung am Foto | die Nummer unter den Strichen | nichts, man tippt |
+| Zuverlässigkeit | rät bei ähnlichen Verpackungen | eindeutig | – |
+| Datenschutz | Bild geht an einen fremden Dienst | nichts verlässt das Gerät | – |
+| Kosten | laufend je Anfrage | keine | keine |
+| Auf GitHub Pages lauffähig | nein (bräuchte Schlüssel/Server) | **ja** | ja |
+
+**Gewählt: B**, mit C als Rückfallebene. Der Katalog besteht aus
+versiegelten Produkten – die haben alle einen Strichcode. Damit ist die
+Erkennung eindeutig statt geraten, kostet nichts und funktioniert auf einer
+rein statischen Website.
+
+### Folgeentscheidungen
+
+| Thema | Gewählt | Warum |
+|---|---|---|
+| Leseverfahren | eingebaute Browser-Erkennung, sonst ZXing | Chrome auf Android kann es selbst (schnell, stromsparend). ZXing wird nur nachgeladen, wenn nicht – z. B. auf dem iPhone. |
+| Schutz vor Lesefehlern | Prüfziffer **und** zweimal dieselbe Nummer | Ein verwackeltes Einzelbild darf niemals ein falsches Produkt anzeigen. |
+| Unbekannte Codes | einmal zuordnen, danach gemerkt | Sonst funktioniert der Scanner nur mit den 16 Katalogprodukten. So lernt er jede echte Packung dazu. |
+| Seltenheit | aus dem Marktaufschlag berechnet | Nachvollziehbar und automatisch aktuell – im Gegensatz zu einer handgepflegten Liste. |
+| Oberste Seltenheitsstufe | nur über den Marktpreis erreichbar | Sonst wäre jedes eingestellte Produkt ein „Sammlerstück" und die Auszeichnung wertlos. |
+| Scan → Sammlung | automatisch, mit Schalter und Rückgängig | Das ist der erwartete Ablauf. Der Schalter fängt Vielscanner ab, die erst prüfen wollen. |
+| Test der Kamera | Fake-Kamera mit erzeugtem Strichcode-Video | Nur so lässt sich belegen, dass wirklich gelesen wird – statt es zu behaupten. |
+| EAN-Prüfziffern im Katalog | 12 von 16 korrigiert | Sie waren erfunden und formal ungültig. Ein echter Scanner hätte sie nie erzeugen können. |
