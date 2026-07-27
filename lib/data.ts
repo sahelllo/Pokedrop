@@ -14,6 +14,7 @@ import type {
   ProductType,
 } from "@/types";
 import { daysLeft, evaluateDeal, rankScore } from "./deals";
+import { getDataset } from "./dataset";
 import {
   isWithinRadius,
   nearestParticipatingStore,
@@ -41,11 +42,11 @@ export {
 };
 
 export function getProduct(productId: string): Product | undefined {
-  return productsById.get(productId);
+  return getDataset().productsById.get(productId);
 }
 
 export function getOffersForProduct(productId: string): Offer[] {
-  return offers.filter((o) => o.product_id === productId);
+  return getDataset().offers.filter((o) => o.product_id === productId);
 }
 
 export interface DealFilters {
@@ -81,18 +82,19 @@ export function getDealViews(
   now = new Date(),
 ): DealView[] {
   const views: DealView[] = [];
+  const ds = getDataset();
 
-  for (const offer of offers) {
-    const product = productsById.get(offer.product_id);
-    const retailer = retailersByBrand.get(offer.retailer_brand);
+  for (const offer of ds.offers) {
+    const product = ds.productsById.get(offer.product_id);
+    const retailer = ds.retailersByBrand.get(offer.retailer_brand);
     if (!product || !retailer) continue;
 
-    const distanceKm = offerDistanceKm(offer, user, storesById);
+    const distanceKm = offerDistanceKm(offer, user, ds.storesById);
     if (!isWithinRadius(distanceKm, offer.validity_type, radiusKm)) continue;
 
     const evaluation = evaluateDeal(product, offer, now);
     const dLeft = daysLeft(offer, now);
-    const nearestStore = nearestParticipatingStore(offer, user, storesById);
+    const nearestStore = nearestParticipatingStore(offer, user, ds.storesById);
     const score = rankScore({
       evaluation,
       offer,
@@ -145,27 +147,34 @@ export function getDealViewForOffer(
   radiusKm: number,
   now = new Date(),
 ): DealView | undefined {
-  const product = productsById.get(offer.product_id);
-  const retailer = retailersByBrand.get(offer.retailer_brand);
+  const ds = getDataset();
+  const product = ds.productsById.get(offer.product_id);
+  const retailer = ds.retailersByBrand.get(offer.retailer_brand);
   if (!product || !retailer) return undefined;
-  const distanceKm = offerDistanceKm(offer, user, storesById);
+  const distanceKm = offerDistanceKm(offer, user, ds.storesById);
   const evaluation = evaluateDeal(product, offer, now);
   const dLeft = daysLeft(offer, now);
-  const nearestStore = nearestParticipatingStore(offer, user, storesById);
+  const nearestStore = nearestParticipatingStore(offer, user, ds.storesById);
   const score = rankScore({ evaluation, offer, distanceKm, radiusKm, daysLeft: dLeft });
   return { offer, product, retailer, nearestStore, distanceKm, evaluation, rankScore: score, daysLeft: dLeft };
 }
 
 /* ---- Filter-Optionslisten für die UI ---------------------------------- */
 
-export const ALL_SETS = Array.from(new Set(products.map((p) => p.set_name)));
-export const ALL_PRODUCT_TYPES = Array.from(
-  new Set(products.map((p) => p.product_type)),
-) as ProductType[];
-export const ALL_RETAILER_BRANDS = Array.from(
-  new Set(offers.map((o) => o.retailer_brand)),
-);
-export const ALL_LANGUAGES = Array.from(new Set(products.map((p) => p.language)));
+/* Aus dem aktiven Datensatz abgeleitet – Funktionen statt Konstanten, damit
+   sie nach dem Laden aus der Datenbank aktuell sind. */
+export function allSets(): string[] {
+  return Array.from(new Set(getDataset().products.map((p) => p.set_name))).sort();
+}
+export function allProductTypes(): ProductType[] {
+  return Array.from(new Set(getDataset().products.map((p) => p.product_type)));
+}
+export function allRetailerBrands(): string[] {
+  return Array.from(new Set(getDataset().offers.map((o) => o.retailer_brand))).sort();
+}
+export function allLanguages(): string[] {
+  return Array.from(new Set(getDataset().products.map((p) => p.language)));
+}
 
 /* ---- Events ----------------------------------------------------------- */
 
@@ -182,7 +191,7 @@ export function getEventsInRadius(
   now = new Date(),
 ): (PokeEvent & { distanceKm: number })[] {
   const out: (PokeEvent & { distanceKm: number })[] = [];
-  for (const ev of events) {
+  for (const ev of getDataset().events) {
     const distanceKm = haversineForEvent(user, ev);
     if (distanceKm > radiusKm) continue;
     if (!matchesEventWindow(ev, filters.window, now)) continue;
@@ -258,4 +267,16 @@ function upcomingWeekend(now: Date): { sat: Date; sun: Date } {
   return { sat, sun };
 }
 
-export const ALL_EVENT_TYPES = Array.from(new Set(events.map((e) => e.event_type)));
+export function allEventTypes(): string[] {
+  return Array.from(new Set(getDataset().events.map((e) => e.event_type)));
+}
+
+/** Live-Drops aus dem aktiven Datensatz, neueste zuerst. */
+export function allDrops() {
+  return [...getDataset().drops].sort((a, b) => a.minutes_ago - b.minutes_ago);
+}
+
+/** Gerüchte aus dem aktiven Datensatz, verlässlichste zuerst. */
+export function allRumors() {
+  return [...getDataset().rumors].sort((a, b) => b.confidence - a.confidence);
+}

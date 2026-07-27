@@ -6,8 +6,9 @@ import { motion } from "framer-motion";
 import { Flame, Sparkles, Zap, ChevronRight, Quote } from "lucide-react";
 import { usePokeStore } from "@/lib/store";
 import { useMounted } from "@/lib/use-mounted";
-import { getDealViews, type DealFilters } from "@/lib/data";
-import { liveDrops } from "@/data/drops";
+import { useDatasetVersion } from "@/lib/dataset";
+import { getDealViews, allDrops, type DealFilters } from "@/lib/data";
+
 import { testimonials, featuredIn, communityStats } from "@/data/community";
 import { DealCard } from "@/components/deal-card";
 import { LiveDropCard } from "@/components/live-drop-card";
@@ -25,11 +26,19 @@ export default function HomePage() {
   const location = usePokeStore((s) => s.location);
   const radiusKm = usePokeStore((s) => s.radiusKm);
   const [filters, setFilters] = React.useState<DealFilters>({});
+  const dataVersion = useDatasetVersion();
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   const views = React.useMemo(() => {
     if (!mounted) return [];
     return getDealViews(location, radiusKm, filters);
-  }, [mounted, location, radiusKm, filters]);
+  }, [mounted, location, radiusKm, filters, dataVersion]);
+  /* eslint-enable react-hooks/exhaustive-deps */
+
+  // dataVersion ist bewusst der Ausloeser: die Daten kommen ueber eine
+  // Modulreferenz, nicht als Argument.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const drops = React.useMemo(() => allDrops(), [dataVersion]);
 
   const topDeals = views.filter((v) => v.evaluation.badge === "TOP_DEAL").slice(0, 3);
 
@@ -82,7 +91,7 @@ export default function HomePage() {
           }
         />
         <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
-          {liveDrops.slice(0, 6).map((drop, i) => (
+          {drops.slice(0, 6).map((drop, i) => (
             <div key={drop.drop_id} className="w-[290px] shrink-0">
               <LiveDropCard drop={drop} index={i} />
             </div>

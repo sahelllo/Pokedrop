@@ -4,7 +4,8 @@ import * as React from "react";
 import { Calendar, List, Map as MapIcon, Repeat } from "lucide-react";
 import { usePokeStore } from "@/lib/store";
 import { useMounted } from "@/lib/use-mounted";
-import { getEventsInRadius, ALL_EVENT_TYPES, type EventFilters } from "@/lib/data";
+import { useDatasetVersion } from "@/lib/dataset";
+import { getEventsInRadius, allEventTypes, type EventFilters } from "@/lib/data";
 import { EventCard } from "@/components/event-card";
 import { EventCalendar } from "@/components/event-calendar";
 import { LocationRadius } from "@/components/location-radius";
@@ -28,7 +29,13 @@ export default function EventsPage() {
   const [types, setTypes] = React.useState<string[]>([]);
   const [onlyTrading, setOnlyTrading] = React.useState(false);
   const [selectedDay, setSelectedDay] = React.useState<string | null>(null);
+  const dataVersion = useDatasetVersion();
+  // dataVersion ist bewusst der Ausloeser: die Daten kommen ueber eine
+  // Modulreferenz, nicht als Argument.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const eventTypes = React.useMemo(() => allEventTypes(), [dataVersion]);
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   const events = React.useMemo(() => {
     if (!mounted) return [];
     return getEventsInRadius(location, radiusKm, {
@@ -36,7 +43,8 @@ export default function EventsPage() {
       types: types.length ? types : undefined,
       onlyTrading,
     });
-  }, [mounted, location, radiusKm, windowSel, types, onlyTrading]);
+  }, [mounted, location, radiusKm, windowSel, types, onlyTrading, dataVersion]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   const shown = selectedDay
     ? events.filter((e) => e.date_start.slice(0, 10) === selectedDay)
@@ -137,7 +145,7 @@ export default function EventsPage() {
           </button>
         </div>
         <div className="flex flex-wrap gap-1.5">
-          {ALL_EVENT_TYPES.map((t) => (
+          {eventTypes.map((t) => (
             <button
               key={t}
               onClick={() => toggleType(t)}

@@ -4,7 +4,8 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import { Check, Search, SlidersHorizontal, X } from "lucide-react";
 import type { DealFilters } from "@/lib/data";
-import { ALL_PRODUCT_TYPES, ALL_RETAILER_BRANDS, ALL_SETS } from "@/lib/data";
+import { allProductTypes, allRetailerBrands, allSets } from "@/lib/data";
+import { useDatasetVersion } from "@/lib/dataset";
 import { BADGE_META } from "@/lib/deals";
 import type { DealBadge } from "@/types";
 import { Input } from "@/components/ui/input";
@@ -22,6 +23,15 @@ export function FilterBar({
   resultCount: number;
 }) {
   const [expanded, setExpanded] = React.useState(false);
+  const dataVersion = useDatasetVersion();
+  // Die all*()-Funktionen lesen den aktiven Datensatz über eine Modulreferenz.
+  // dataVersion ist deshalb bewusst der Auslöser: es ändert sich, sobald die
+  // Daten aus der Datenbank geladen sind.
+  /* eslint-disable react-hooks/exhaustive-deps */
+  const sets = React.useMemo(() => allSets(), [dataVersion]);
+  const productTypes = React.useMemo(() => allProductTypes(), [dataVersion]);
+  const retailerBrands = React.useMemo(() => allRetailerBrands(), [dataVersion]);
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   function toggleArray<T>(key: keyof DealFilters, value: T) {
     const current = (filters[key] as T[] | undefined) ?? [];
@@ -113,19 +123,19 @@ export function FilterBar({
         >
           <ChipGroup
             label="Set"
-            options={ALL_SETS}
+            options={sets}
             selected={filters.sets ?? []}
             onToggle={(v) => toggleArray("sets", v)}
           />
           <ChipGroup
             label="Produktart"
-            options={ALL_PRODUCT_TYPES}
+            options={productTypes}
             selected={filters.productTypes ?? []}
             onToggle={(v) => toggleArray("productTypes", v as never)}
           />
           <ChipGroup
             label="Händler"
-            options={ALL_RETAILER_BRANDS}
+            options={retailerBrands}
             selected={filters.retailerBrands ?? []}
             onToggle={(v) => toggleArray("retailerBrands", v)}
           />

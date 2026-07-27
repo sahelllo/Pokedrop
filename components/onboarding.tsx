@@ -6,7 +6,8 @@ import { ArrowRight, Check, Crosshair, MapPin, Sparkles } from "lucide-react";
 import { usePokeStore } from "@/lib/store";
 import { useMounted } from "@/lib/use-mounted";
 import { KNOWN_CITIES } from "@/data/stores";
-import { ALL_SETS } from "@/lib/data";
+import { allSets } from "@/lib/data";
+import { useDatasetVersion } from "@/lib/dataset";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -27,6 +28,12 @@ function Onboarding() {
   const favoriteSets = usePokeStore((s) => s.favoriteSets);
   const toggleFavoriteSet = usePokeStore((s) => s.toggleFavoriteSet);
   const complete = usePokeStore((s) => s.completeOnboarding);
+  const dataVersion = useDatasetVersion();
+  // allSets() liest den aktiven Datensatz über eine Modulreferenz, nicht über
+  // ein Argument. dataVersion ist deshalb bewusst als Auslöser gesetzt: es
+  // ändert sich, sobald die Daten aus der Datenbank eintreffen.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const sets = React.useMemo(() => allSets(), [dataVersion]);
 
   const steps = ["Willkommen", "Standort", "Umkreis", "Lieblings-Sets"];
 
@@ -147,7 +154,7 @@ function Onboarding() {
                 <div>
                   <StepTitle icon={<Sparkles className="h-5 w-5" />} title="Deine Lieblings-Sets" subtitle="Optional – für passende Alerts. Später änderbar." />
                   <div className="flex max-h-56 flex-wrap gap-2 overflow-y-auto">
-                    {ALL_SETS.map((s) => {
+                    {sets.map((s: string) => {
                       const active = favoriteSets.includes(s);
                       return (
                         <button

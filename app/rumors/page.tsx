@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import { Radar, AlertTriangle } from "lucide-react";
-import { rumors } from "@/data/rumors";
+import { allRumors } from "@/lib/data";
+import { useDatasetVersion } from "@/lib/dataset";
 import { RumorCard } from "@/components/rumor-card";
 import { SectionHeading } from "@/components/section";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -16,7 +17,11 @@ const FILTERS: { value: string; label: string; match?: RumorStatus[] }[] = [
 ];
 
 export default function RumorsPage() {
-  const sorted = [...rumors].sort((a, b) => b.confidence - a.confidence);
+  const dataVersion = useDatasetVersion();
+  // dataVersion ist bewusst der Ausloeser: die Daten kommen ueber eine
+  // Modulreferenz, nicht als Argument.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const sorted = React.useMemo(() => allRumors(), [dataVersion]);
 
   return (
     <div className="space-y-5">

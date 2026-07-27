@@ -2,14 +2,19 @@
 
 import * as React from "react";
 import { Zap, Flame } from "lucide-react";
-import { liveDrops } from "@/data/drops";
+import { allDrops } from "@/lib/data";
+import { useDatasetVersion } from "@/lib/dataset";
 import { LiveDropCard } from "@/components/live-drop-card";
 import { SectionHeading } from "@/components/section";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { AlertDemoButton } from "@/components/alert-demo";
 
 export default function LivePage() {
-  const sorted = [...liveDrops].sort((a, b) => a.minutes_ago - b.minutes_ago);
+  const dataVersion = useDatasetVersion();
+  // dataVersion ist bewusst der Ausloeser: die Daten kommen ueber eine
+  // Modulreferenz, nicht als Argument.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const sorted = React.useMemo(() => allDrops(), [dataVersion]);
   const drops = sorted.filter((d) => d.kind === "drop");
   const restocks = sorted.filter((d) => d.kind === "restock");
   const news = sorted.filter((d) => d.kind === "new_product");
@@ -73,7 +78,7 @@ export default function LivePage() {
   );
 }
 
-function DropList({ items }: { items: typeof liveDrops }) {
+function DropList({ items }: { items: ReturnType<typeof allDrops> }) {
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
       {items.map((d, i) => (

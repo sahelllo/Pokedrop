@@ -1,15 +1,23 @@
 "use client";
 
 import { Store, TrendingUp, RefreshCw } from "lucide-react";
-import { liveDrops } from "@/data/drops";
+import * as React from "react";
+import { allDrops } from "@/lib/data";
+import { useDatasetVersion } from "@/lib/dataset";
 import { LiveDropCard } from "@/components/live-drop-card";
 import { SectionHeading, EmptyState } from "@/components/section";
 import { AlertDemoButton } from "@/components/alert-demo";
 
 export default function PokemonCenterPage() {
-  const pcDrops = liveDrops
-    .filter((d) => d.isPokemonCenter)
-    .sort((a, b) => a.minutes_ago - b.minutes_ago);
+  const dataVersion = useDatasetVersion();
+  // dataVersion ist bewusst der Ausloeser: die Daten kommen ueber eine
+  // Modulreferenz, nicht als Argument.
+  /* eslint-disable react-hooks/exhaustive-deps */
+  const pcDrops = React.useMemo(
+    () => allDrops().filter((d) => d.isPokemonCenter),
+    [dataVersion],
+  );
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   const restocks = pcDrops.filter((d) => d.kind === "restock");
   const drops = pcDrops.filter((d) => d.kind !== "restock");
