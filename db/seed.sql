@@ -523,6 +523,2636 @@ SELECT 'p-paradoxrift-premium', 'Paradoxrift – Premium-Kollektion Roaring Moon
 FROM product_sets ps WHERE ps.set_code = 'sv04'
 ON CONFLICT (slug) DO NOTHING;
 
+-- Angebote (inkl. teilnehmender Filialen)
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 42.99, 54.99, '2026-07-20', '2026-07-26',
+  'LOCAL', 'Prospekt', 'https://www.prospektangebote.de/geschaefte/edeka/angebote/pokemon-sammelkarten-angebot-56374012/', 'REGIONAL_CONFIRMED',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-reisegefaehrten-etb'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'Scheck-in-Center'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-reisegefaehrten-etb' AND o2.retailer_id = r.id
+      AND o2.price = 42.99 AND o2.valid_from = '2026-07-20'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'scheckin-lb-1'
+WHERE p.slug = 'p-reisegefaehrten-etb' AND o.price = 42.99 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 149, 179.99, '2026-07-21', '2026-07-28',
+  'NATIONAL', 'Prospekt', NULL, 'VERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-dunkelnacht-display'
+  AND r.retailer_group = 'kaufland' AND r.retailer_brand = 'Kaufland'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-dunkelnacht-display' AND o2.retailer_id = r.id
+      AND o2.price = 149 AND o2.valid_from = '2026-07-21'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-ob-1'
+WHERE p.slug = 'p-dunkelnacht-display' AND o.price = 149 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-du-1'
+WHERE p.slug = 'p-dunkelnacht-display' AND o.price = 149 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-s-1'
+WHERE p.slug = 'p-dunkelnacht-display' AND o.price = 149 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-m-1'
+WHERE p.slug = 'p-dunkelnacht-display' AND o.price = 149 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-b-1'
+WHERE p.slug = 'p-dunkelnacht-display' AND o.price = 149 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-l-1'
+WHERE p.slug = 'p-dunkelnacht-display' AND o.price = 149 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 44.99, 54.99, '2026-07-22', '2026-07-27',
+  'NATIONAL', 'Prospekt', NULL, 'VERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-dunkelnacht-etb'
+  AND r.retailer_group = 'netto_md' AND r.retailer_brand = 'Netto Marken-Discount'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-dunkelnacht-etb' AND o2.retailer_id = r.id
+      AND o2.price = 44.99 AND o2.valid_from = '2026-07-22'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'netto-ms-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 44.99 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'netto-hb-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 44.99 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 164.99, 229, '2026-07-19', '2026-07-31',
+  'STORE_GROUP', 'App', NULL, 'VERIFIED',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-151-upc'
+  AND r.retailer_group = 'mueller' AND r.retailer_brand = 'Müller'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-151-upc' AND o2.retailer_id = r.id
+      AND o2.price = 164.99 AND o2.valid_from = '2026-07-19'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'mueller-koeln-1'
+WHERE p.slug = 'p-151-upc' AND o.price = 164.99 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'mueller-ka-1'
+WHERE p.slug = 'p-151-upc' AND o.price = 164.99 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 47.9, 64.9, '2026-07-17', '2026-08-11',
+  'LOCAL', 'Händlerseite', NULL, 'VERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-obsidianflammen-etb'
+  AND r.retailer_group = 'gate' AND r.retailer_brand = 'Gate to the Games'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-obsidianflammen-etb' AND o2.retailer_id = r.id
+      AND o2.price = 47.9 AND o2.valid_from = '2026-07-17'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'gate-do-1'
+WHERE p.slug = 'p-obsidianflammen-etb' AND o.price = 47.9 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 219, 299, '2026-07-21', '2026-08-05',
+  'ONLINE', 'Online-Shop', NULL, 'VERIFIED',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-verlorener-ursprung-display'
+  AND r.retailer_group = 'fantasywelt' AND r.retailer_brand = 'FantasyWelt'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-verlorener-ursprung-display' AND o2.retailer_id = r.id
+      AND o2.price = 219 AND o2.valid_from = '2026-07-21'
+  );
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 11.99, 14.99, '2026-07-22', '2026-07-29',
+  'NATIONAL', 'Prospekt', NULL, 'VERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-zeitlose-rivalen-blister'
+  AND r.retailer_group = 'rossmann' AND r.retailer_brand = 'Rossmann'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-zeitlose-rivalen-blister' AND o2.retailer_id = r.id
+      AND o2.price = 11.99 AND o2.valid_from = '2026-07-22'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'rossmann-e-1'
+WHERE p.slug = 'p-zeitlose-rivalen-blister' AND o.price = 11.99 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 31.99, 39.99, '2026-07-21', '2026-07-25',
+  'NATIONAL', 'Prospekt', NULL, 'VERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-fpc3-collection'
+  AND r.retailer_group = 'penny' AND r.retailer_brand = 'PENNY'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-fpc3-collection' AND o2.retailer_id = r.id
+      AND o2.price = 31.99 AND o2.valid_from = '2026-07-21'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'penny-d-1'
+WHERE p.slug = 'p-fpc3-collection' AND o.price = 31.99 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'penny-dd-1'
+WHERE p.slug = 'p-fpc3-collection' AND o.price = 31.99 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 57.99, 82.9, '2026-07-20', '2026-07-27',
+  'REGIONAL', 'Prospekt', NULL, 'REGIONAL_CONFIRMED',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-paldeas-schicksale-etb'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'Marktkauf'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-paldeas-schicksale-etb' AND o2.retailer_id = r.id
+      AND o2.price = 57.99 AND o2.valid_from = '2026-07-20'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'marktkauf-ma-1'
+WHERE p.slug = 'p-paldeas-schicksale-etb' AND o.price = 57.99 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'marktkauf-do-1'
+WHERE p.slug = 'p-paldeas-schicksale-etb' AND o.price = 57.99 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 18.99, 24.99, '2026-07-22', '2026-07-28',
+  'STORE_GROUP', 'Prospekt', NULL, 'VERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-mega-forces-tin'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'Scheck-in-Center'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-mega-forces-tin' AND o2.retailer_id = r.id
+      AND o2.price = 18.99 AND o2.valid_from = '2026-07-22'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'scheckin-lb-1'
+WHERE p.slug = 'p-mega-forces-tin' AND o.price = 18.99 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-s-1'
+WHERE p.slug = 'p-mega-forces-tin' AND o.price = 18.99 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 74, 104, '2026-07-18', '2026-08-02',
+  'STORE_GROUP', 'Händlerseite', NULL, 'PROBABLE',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-brillante-sterne-etb'
+  AND r.retailer_group = 'galeria' AND r.retailer_brand = 'Galeria'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-brillante-sterne-etb' AND o2.retailer_id = r.id
+      AND o2.price = 74 AND o2.valid_from = '2026-07-18'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'galeria-koeln-1'
+WHERE p.slug = 'p-brillante-sterne-etb' AND o.price = 74 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'galeria-f-1'
+WHERE p.slug = 'p-brillante-sterne-etb' AND o.price = 74 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 94.9, 139, '2026-07-21', '2026-07-30',
+  'LOCAL', 'Community-Fund', NULL, 'COMMUNITY_UNVERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-celebrations-etb'
+  AND r.retailer_group = 'smyths' AND r.retailer_brand = 'Smyths Toys'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-celebrations-etb' AND o2.retailer_id = r.id
+      AND o2.price = 94.9 AND o2.valid_from = '2026-07-21'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'smyths-do-1'
+WHERE p.slug = 'p-celebrations-etb' AND o.price = 94.9 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 46.99, 58.9, '2026-07-21', '2026-07-27',
+  'REGIONAL', 'Prospekt', NULL, 'REGIONAL_CONFIRMED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-stellarkrone-etb'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'E-Center'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-stellarkrone-etb' AND o2.retailer_id = r.id
+      AND o2.price = 46.99 AND o2.valid_from = '2026-07-21'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-h-1'
+WHERE p.slug = 'p-stellarkrone-etb' AND o.price = 46.99 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-e-1'
+WHERE p.slug = 'p-stellarkrone-etb' AND o.price = 46.99 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 37.99, 51, '2026-07-16', '2026-08-06',
+  'LOCAL', 'Instagram', NULL, 'PROBABLE',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-paradoxrift-premium'
+  AND r.retailer_group = 'games_island' AND r.retailer_brand = 'Games Island'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-paradoxrift-premium' AND o2.retailer_id = r.id
+      AND o2.price = 37.99 AND o2.valid_from = '2026-07-16'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'games-island-m-1'
+WHERE p.slug = 'p-paradoxrift-premium' AND o.price = 37.99 AND o.valid_from = '2026-07-16'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 24.99, 33.5, '2026-07-22', '2026-07-26',
+  'REGIONAL', 'App', NULL, 'VERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-maskerade-bundle'
+  AND r.retailer_group = 'budni' AND r.retailer_brand = 'Budni'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-maskerade-bundle' AND o2.retailer_id = r.id
+      AND o2.price = 24.99 AND o2.valid_from = '2026-07-22'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'budni-hh-1'
+WHERE p.slug = 'p-maskerade-bundle' AND o.price = 24.99 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 154.99, 184.99, '2026-07-20', '2026-07-28',
+  'REGIONAL', 'Prospekt', NULL, 'REGIONAL_CONFIRMED',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-reisegefaehrten-display'
+  AND r.retailer_group = 'famila' AND r.retailer_brand = 'famila Nordwest'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-reisegefaehrten-display' AND o2.retailer_id = r.id
+      AND o2.price = 154.99 AND o2.valid_from = '2026-07-20'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'famila-hh-1'
+WHERE p.slug = 'p-reisegefaehrten-display' AND o.price = 154.99 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'famila-ki-1'
+WHERE p.slug = 'p-reisegefaehrten-display' AND o.price = 154.99 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 64.99, 54.99, '2026-07-21', '2026-08-21',
+  'ONLINE', 'Online-Shop', NULL, 'VERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-dunkelnacht-etb'
+  AND r.retailer_group = 'mediamarkt' AND r.retailer_brand = 'MediaMarkt'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-dunkelnacht-etb' AND o2.retailer_id = r.id
+      AND o2.price = 64.99 AND o2.valid_from = '2026-07-21'
+  );
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 13.17, 14.99, '2026-07-22', '2026-08-04',
+  'STORE_GROUP', 'Community-Fund', NULL, 'REGIONAL_CONFIRMED',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-zeitlose-rivalen-blister'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'E-Center'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-zeitlose-rivalen-blister' AND o2.retailer_id = r.id
+      AND o2.price = 13.17 AND o2.valid_from = '2026-07-22'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-d-1'
+WHERE p.slug = 'p-zeitlose-rivalen-blister' AND o.price = 13.17 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-ob-1'
+WHERE p.slug = 'p-zeitlose-rivalen-blister' AND o.price = 13.17 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-e-1'
+WHERE p.slug = 'p-zeitlose-rivalen-blister' AND o.price = 13.17 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 72.46, 82.9, '2026-07-18', '2026-07-25',
+  'LOCAL', 'App', NULL, 'VERIFIED',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-paldeas-schicksale-etb'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'E-Center'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-paldeas-schicksale-etb' AND o2.retailer_id = r.id
+      AND o2.price = 72.46 AND o2.valid_from = '2026-07-18'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-d-1'
+WHERE p.slug = 'p-paldeas-schicksale-etb' AND o.price = 72.46 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 37.370000000000005, 39.99, '2026-07-17', '2026-07-23',
+  'REGIONAL', 'Prospekt', NULL, 'COMMUNITY_UNVERIFIED',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-fpc3-collection'
+  AND r.retailer_group = 'famila' AND r.retailer_brand = 'famila Nordwest'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-fpc3-collection' AND o2.retailer_id = r.id
+      AND o2.price = 37.370000000000005 AND o2.valid_from = '2026-07-17'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'famila-hh-1'
+WHERE p.slug = 'p-fpc3-collection' AND o.price = 37.370000000000005 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'famila-ki-1'
+WHERE p.slug = 'p-fpc3-collection' AND o.price = 37.370000000000005 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 22.319999999999997, 24.99, '2026-07-20', '2026-07-23',
+  'STORE_GROUP', 'Community-Fund', NULL, 'COMMUNITY_UNVERIFIED',
+  'ausverkauft', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-mega-forces-tin'
+  AND r.retailer_group = 'kaufland' AND r.retailer_brand = 'Kaufland'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-mega-forces-tin' AND o2.retailer_id = r.id
+      AND o2.price = 22.319999999999997 AND o2.valid_from = '2026-07-20'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-l-1'
+WHERE p.slug = 'p-mega-forces-tin' AND o.price = 22.319999999999997 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-ob-1'
+WHERE p.slug = 'p-mega-forces-tin' AND o.price = 22.319999999999997 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-du-1'
+WHERE p.slug = 'p-mega-forces-tin' AND o.price = 22.319999999999997 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 50.25, 54.99, '2026-07-19', '2026-07-31',
+  'NATIONAL', 'Prospekt', NULL, 'REGIONAL_CONFIRMED',
+  'ausverkauft', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-dunkelnacht-etb'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'EDEKA'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-dunkelnacht-etb' AND o2.retailer_id = r.id
+      AND o2.price = 50.25 AND o2.valid_from = '2026-07-19'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-n-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 50.25 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-ob-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 50.25 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-e-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 50.25 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'marktkauf-do-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 50.25 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-koeln-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 50.25 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-d-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 50.25 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-lb-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 50.25 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 37.45, 33.5, '2026-07-21', '2026-08-03',
+  'REGIONAL', 'Händlerseite', NULL, 'PROBABLE',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-maskerade-bundle'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'E-Center'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-maskerade-bundle' AND o2.retailer_id = r.id
+      AND o2.price = 37.45 AND o2.valid_from = '2026-07-21'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-d-1'
+WHERE p.slug = 'p-maskerade-bundle' AND o.price = 37.45 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-ob-1'
+WHERE p.slug = 'p-maskerade-bundle' AND o.price = 37.45 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-e-1'
+WHERE p.slug = 'p-maskerade-bundle' AND o.price = 37.45 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'marktkauf-do-1'
+WHERE p.slug = 'p-maskerade-bundle' AND o.price = 37.45 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 80.97999999999999, 82.9, '2026-07-17', '2026-07-21',
+  'LOCAL', 'App', NULL, 'COMMUNITY_UNVERIFIED',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-paldeas-schicksale-etb'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'E-Center'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-paldeas-schicksale-etb' AND o2.retailer_id = r.id
+      AND o2.price = 80.97999999999999 AND o2.valid_from = '2026-07-17'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-e-1'
+WHERE p.slug = 'p-paldeas-schicksale-etb' AND o.price = 80.97999999999999 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 34.11, 33.5, '2026-07-19', '2026-07-23',
+  'REGIONAL', 'Händlerseite', NULL, 'VERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-maskerade-bundle'
+  AND r.retailer_group = 'mediamarkt' AND r.retailer_brand = 'MediaMarkt'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-maskerade-bundle' AND o2.retailer_id = r.id
+      AND o2.price = 34.11 AND o2.valid_from = '2026-07-19'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'mediamarkt-ob-1'
+WHERE p.slug = 'p-maskerade-bundle' AND o.price = 34.11 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'mediamarkt-m-1'
+WHERE p.slug = 'p-maskerade-bundle' AND o.price = 34.11 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'mediamarkt-hh-1'
+WHERE p.slug = 'p-maskerade-bundle' AND o.price = 34.11 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'mediamarkt-b-1'
+WHERE p.slug = 'p-maskerade-bundle' AND o.price = 34.11 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 50.42, 58.9, '2026-07-20', '2026-07-29',
+  'LOCAL', 'Instagram', NULL, 'COMMUNITY_UNVERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-stellarkrone-etb'
+  AND r.retailer_group = 'kaufland' AND r.retailer_brand = 'Kaufland'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-stellarkrone-etb' AND o2.retailer_id = r.id
+      AND o2.price = 50.42 AND o2.valid_from = '2026-07-20'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-du-1'
+WHERE p.slug = 'p-stellarkrone-etb' AND o.price = 50.42 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 26.439999999999998, 33.5, '2026-07-19', '2026-07-25',
+  'LOCAL', 'App', NULL, 'PROBABLE',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-maskerade-bundle'
+  AND r.retailer_group = 'kaufland' AND r.retailer_brand = 'Kaufland'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-maskerade-bundle' AND o2.retailer_id = r.id
+      AND o2.price = 26.439999999999998 AND o2.valid_from = '2026-07-19'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-ob-1'
+WHERE p.slug = 'p-maskerade-bundle' AND o.price = 26.439999999999998 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 77.53999999999999, 82.9, '2026-07-21', '2026-07-27',
+  'REGIONAL', 'App', NULL, 'PROBABLE',
+  'ausverkauft', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-paldeas-schicksale-etb'
+  AND r.retailer_group = 'games_island' AND r.retailer_brand = 'Games Island'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-paldeas-schicksale-etb' AND o2.retailer_id = r.id
+      AND o2.price = 77.53999999999999 AND o2.valid_from = '2026-07-21'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'games-island-m-1'
+WHERE p.slug = 'p-paldeas-schicksale-etb' AND o.price = 77.53999999999999 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 200.61, 229, '2026-07-19', '2026-07-22',
+  'NATIONAL', 'Instagram', NULL, 'COMMUNITY_UNVERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-151-upc'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'E-Center'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-151-upc' AND o2.retailer_id = r.id
+      AND o2.price = 200.61 AND o2.valid_from = '2026-07-19'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-h-1'
+WHERE p.slug = 'p-151-upc' AND o.price = 200.61 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-ob-1'
+WHERE p.slug = 'p-151-upc' AND o.price = 200.61 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-e-1'
+WHERE p.slug = 'p-151-upc' AND o.price = 200.61 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'marktkauf-do-1'
+WHERE p.slug = 'p-151-upc' AND o.price = 200.61 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-koeln-1'
+WHERE p.slug = 'p-151-upc' AND o.price = 200.61 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-d-1'
+WHERE p.slug = 'p-151-upc' AND o.price = 200.61 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-lb-1'
+WHERE p.slug = 'p-151-upc' AND o.price = 200.61 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 20.4, 24.99, '2026-07-17', '2026-07-20',
+  'NATIONAL', 'Prospekt', NULL, 'COMMUNITY_UNVERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-mega-forces-tin'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'E-Center'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-mega-forces-tin' AND o2.retailer_id = r.id
+      AND o2.price = 20.4 AND o2.valid_from = '2026-07-17'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-e-1'
+WHERE p.slug = 'p-mega-forces-tin' AND o.price = 20.4 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-ob-1'
+WHERE p.slug = 'p-mega-forces-tin' AND o.price = 20.4 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'marktkauf-do-1'
+WHERE p.slug = 'p-mega-forces-tin' AND o.price = 20.4 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-koeln-1'
+WHERE p.slug = 'p-mega-forces-tin' AND o.price = 20.4 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-d-1'
+WHERE p.slug = 'p-mega-forces-tin' AND o.price = 20.4 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-lb-1'
+WHERE p.slug = 'p-mega-forces-tin' AND o.price = 20.4 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'scheckin-lb-1'
+WHERE p.slug = 'p-mega-forces-tin' AND o.price = 20.4 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 24.759999999999998, 24.99, '2026-07-18', '2026-07-24',
+  'LOCAL', 'Händlerseite', NULL, 'REGIONAL_CONFIRMED',
+  'ausverkauft', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-mega-forces-tin'
+  AND r.retailer_group = 'mediamarkt' AND r.retailer_brand = 'MediaMarkt'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-mega-forces-tin' AND o2.retailer_id = r.id
+      AND o2.price = 24.759999999999998 AND o2.valid_from = '2026-07-18'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'mediamarkt-hh-1'
+WHERE p.slug = 'p-mega-forces-tin' AND o.price = 24.759999999999998 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 14.27, 14.99, '2026-07-17', '2026-07-24',
+  'STORE_GROUP', 'Händlerseite', NULL, 'REGIONAL_CONFIRMED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-zeitlose-rivalen-blister'
+  AND r.retailer_group = 'penny' AND r.retailer_brand = 'PENNY'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-zeitlose-rivalen-blister' AND o2.retailer_id = r.id
+      AND o2.price = 14.27 AND o2.valid_from = '2026-07-17'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'penny-d-1'
+WHERE p.slug = 'p-zeitlose-rivalen-blister' AND o.price = 14.27 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'penny-dd-1'
+WHERE p.slug = 'p-zeitlose-rivalen-blister' AND o.price = 14.27 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 103.35, 104, '2026-07-18', '2026-07-28',
+  'REGIONAL', 'Prospekt', NULL, 'VERIFIED',
+  'ausverkauft', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-brillante-sterne-etb'
+  AND r.retailer_group = 'kaufland' AND r.retailer_brand = 'Kaufland'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-brillante-sterne-etb' AND o2.retailer_id = r.id
+      AND o2.price = 103.35 AND o2.valid_from = '2026-07-18'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-m-1'
+WHERE p.slug = 'p-brillante-sterne-etb' AND o.price = 103.35 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-ob-1'
+WHERE p.slug = 'p-brillante-sterne-etb' AND o.price = 103.35 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-du-1'
+WHERE p.slug = 'p-brillante-sterne-etb' AND o.price = 103.35 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-s-1'
+WHERE p.slug = 'p-brillante-sterne-etb' AND o.price = 103.35 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 32.97, 39.99, '2026-07-21', '2026-07-26',
+  'STORE_GROUP', 'Prospekt', NULL, 'COMMUNITY_UNVERIFIED',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-fpc3-collection'
+  AND r.retailer_group = 'famila' AND r.retailer_brand = 'famila Nordwest'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-fpc3-collection' AND o2.retailer_id = r.id
+      AND o2.price = 32.97 AND o2.valid_from = '2026-07-21'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'famila-ki-1'
+WHERE p.slug = 'p-fpc3-collection' AND o.price = 32.97 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'famila-hh-1'
+WHERE p.slug = 'p-fpc3-collection' AND o.price = 32.97 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 47.160000000000004, 54.99, '2026-07-19', '2026-07-27',
+  'LOCAL', 'Prospekt', NULL, 'VERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-reisegefaehrten-etb'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'EDEKA'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-reisegefaehrten-etb' AND o2.retailer_id = r.id
+      AND o2.price = 47.160000000000004 AND o2.valid_from = '2026-07-19'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-koeln-1'
+WHERE p.slug = 'p-reisegefaehrten-etb' AND o.price = 47.160000000000004 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 71.77, 82.9, '2026-07-21', '2026-07-26',
+  'NATIONAL', 'Community-Fund', NULL, 'COMMUNITY_UNVERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-paldeas-schicksale-etb'
+  AND r.retailer_group = 'fantasywelt' AND r.retailer_brand = 'FantasyWelt'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-paldeas-schicksale-etb' AND o2.retailer_id = r.id
+      AND o2.price = 71.77 AND o2.valid_from = '2026-07-21'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'fantasywelt-bn-1'
+WHERE p.slug = 'p-paldeas-schicksale-etb' AND o.price = 71.77 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 102.16, 104, '2026-07-22', '2026-08-04',
+  'NATIONAL', 'Händlerseite', NULL, 'VERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-brillante-sterne-etb'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'E-Center'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-brillante-sterne-etb' AND o2.retailer_id = r.id
+      AND o2.price = 102.16 AND o2.valid_from = '2026-07-22'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-d-1'
+WHERE p.slug = 'p-brillante-sterne-etb' AND o.price = 102.16 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-ob-1'
+WHERE p.slug = 'p-brillante-sterne-etb' AND o.price = 102.16 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-e-1'
+WHERE p.slug = 'p-brillante-sterne-etb' AND o.price = 102.16 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'marktkauf-do-1'
+WHERE p.slug = 'p-brillante-sterne-etb' AND o.price = 102.16 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-koeln-1'
+WHERE p.slug = 'p-brillante-sterne-etb' AND o.price = 102.16 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-lb-1'
+WHERE p.slug = 'p-brillante-sterne-etb' AND o.price = 102.16 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'scheckin-lb-1'
+WHERE p.slug = 'p-brillante-sterne-etb' AND o.price = 102.16 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 27.79, 24.99, '2026-07-22', '2026-07-30',
+  'LOCAL', 'App', NULL, 'COMMUNITY_UNVERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-mega-forces-tin'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'EDEKA'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-mega-forces-tin' AND o2.retailer_id = r.id
+      AND o2.price = 27.79 AND o2.valid_from = '2026-07-22'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-koeln-1'
+WHERE p.slug = 'p-mega-forces-tin' AND o.price = 27.79 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 53.050000000000004, 58.9, '2026-07-20', '2026-07-25',
+  'LOCAL', 'App', NULL, 'COMMUNITY_UNVERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-stellarkrone-etb'
+  AND r.retailer_group = 'netto_md' AND r.retailer_brand = 'Netto Marken-Discount'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-stellarkrone-etb' AND o2.retailer_id = r.id
+      AND o2.price = 53.050000000000004 AND o2.valid_from = '2026-07-20'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'netto-hb-1'
+WHERE p.slug = 'p-stellarkrone-etb' AND o.price = 53.050000000000004 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 47.95, 58.9, '2026-07-20', '2026-08-02',
+  'LOCAL', 'Prospekt', NULL, 'VERIFIED',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-stellarkrone-etb'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'Scheck-in-Center'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-stellarkrone-etb' AND o2.retailer_id = r.id
+      AND o2.price = 47.95 AND o2.valid_from = '2026-07-20'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'scheckin-lb-1'
+WHERE p.slug = 'p-stellarkrone-etb' AND o.price = 47.95 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 21.38, 24.99, '2026-07-18', '2026-08-01',
+  'LOCAL', 'Instagram', NULL, 'VERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-mega-forces-tin'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'EDEKA'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-mega-forces-tin' AND o2.retailer_id = r.id
+      AND o2.price = 21.38 AND o2.valid_from = '2026-07-18'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-ob-1'
+WHERE p.slug = 'p-mega-forces-tin' AND o.price = 21.38 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 52.39, 54.99, '2026-07-17', '2026-07-30',
+  'STORE_GROUP', 'Instagram', NULL, 'REGIONAL_CONFIRMED',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-reisegefaehrten-etb'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'Scheck-in-Center'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-reisegefaehrten-etb' AND o2.retailer_id = r.id
+      AND o2.price = 52.39 AND o2.valid_from = '2026-07-17'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'scheckin-lb-1'
+WHERE p.slug = 'p-reisegefaehrten-etb' AND o.price = 52.39 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-ob-1'
+WHERE p.slug = 'p-reisegefaehrten-etb' AND o.price = 52.39 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-e-1'
+WHERE p.slug = 'p-reisegefaehrten-etb' AND o.price = 52.39 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 26.36, 24.99, '2026-07-21', '2026-08-03',
+  'LOCAL', 'Prospekt', NULL, 'COMMUNITY_UNVERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-mega-forces-tin'
+  AND r.retailer_group = 'mueller' AND r.retailer_brand = 'Müller'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-mega-forces-tin' AND o2.retailer_id = r.id
+      AND o2.price = 26.36 AND o2.valid_from = '2026-07-21'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'mueller-koeln-1'
+WHERE p.slug = 'p-mega-forces-tin' AND o.price = 26.36 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 60.74, 64.9, '2026-07-21', '2026-08-04',
+  'LOCAL', 'App', NULL, 'COMMUNITY_UNVERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-obsidianflammen-etb'
+  AND r.retailer_group = 'kodi' AND r.retailer_brand = 'KODi'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-obsidianflammen-etb' AND o2.retailer_id = r.id
+      AND o2.price = 60.74 AND o2.valid_from = '2026-07-21'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kodi-bo-1'
+WHERE p.slug = 'p-obsidianflammen-etb' AND o.price = 60.74 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 229.28, 229, '2026-07-21', '2026-07-29',
+  'NATIONAL', 'Community-Fund', NULL, 'VERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-151-upc'
+  AND r.retailer_group = 'kaufland' AND r.retailer_brand = 'Kaufland'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-151-upc' AND o2.retailer_id = r.id
+      AND o2.price = 229.28 AND o2.valid_from = '2026-07-21'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-l-1'
+WHERE p.slug = 'p-151-upc' AND o.price = 229.28 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-ob-1'
+WHERE p.slug = 'p-151-upc' AND o.price = 229.28 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-du-1'
+WHERE p.slug = 'p-151-upc' AND o.price = 229.28 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-s-1'
+WHERE p.slug = 'p-151-upc' AND o.price = 229.28 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-m-1'
+WHERE p.slug = 'p-151-upc' AND o.price = 229.28 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-b-1'
+WHERE p.slug = 'p-151-upc' AND o.price = 229.28 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 191.47, 229, '2026-07-19', '2026-08-02',
+  'NATIONAL', 'Community-Fund', NULL, 'REGIONAL_CONFIRMED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-151-upc'
+  AND r.retailer_group = 'gate' AND r.retailer_brand = 'Gate to the Games'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-151-upc' AND o2.retailer_id = r.id
+      AND o2.price = 191.47 AND o2.valid_from = '2026-07-19'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'gate-do-1'
+WHERE p.slug = 'p-151-upc' AND o.price = 191.47 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'gate-s-1'
+WHERE p.slug = 'p-151-upc' AND o.price = 191.47 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'gate-b-1'
+WHERE p.slug = 'p-151-upc' AND o.price = 191.47 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 32.940000000000005, 39.99, '2026-07-22', '2026-08-03',
+  'STORE_GROUP', 'Instagram', NULL, 'PROBABLE',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-fpc3-collection'
+  AND r.retailer_group = 'netto_md' AND r.retailer_brand = 'Netto Marken-Discount'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-fpc3-collection' AND o2.retailer_id = r.id
+      AND o2.price = 32.940000000000005 AND o2.valid_from = '2026-07-22'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'netto-ms-1'
+WHERE p.slug = 'p-fpc3-collection' AND o.price = 32.940000000000005 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'netto-hb-1'
+WHERE p.slug = 'p-fpc3-collection' AND o.price = 32.940000000000005 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 56.89, 54.99, '2026-07-19', '2026-07-27',
+  'NATIONAL', 'Community-Fund', NULL, 'PROBABLE',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-dunkelnacht-etb'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'Marktkauf'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-dunkelnacht-etb' AND o2.retailer_id = r.id
+      AND o2.price = 56.89 AND o2.valid_from = '2026-07-19'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'marktkauf-do-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 56.89 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-ob-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 56.89 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-e-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 56.89 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-koeln-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 56.89 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-d-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 56.89 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-lb-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 56.89 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'scheckin-lb-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 56.89 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 56.36, 51, '2026-07-22', '2026-08-05',
+  'REGIONAL', 'Prospekt', NULL, 'VERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-paradoxrift-premium'
+  AND r.retailer_group = 'smyths' AND r.retailer_brand = 'Smyths Toys'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-paradoxrift-premium' AND o2.retailer_id = r.id
+      AND o2.price = 56.36 AND o2.valid_from = '2026-07-22'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'smyths-fr-1'
+WHERE p.slug = 'p-paradoxrift-premium' AND o.price = 56.36 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'smyths-do-1'
+WHERE p.slug = 'p-paradoxrift-premium' AND o.price = 56.36 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 15.6, 14.99, '2026-07-20', '2026-07-28',
+  'REGIONAL', 'Händlerseite', NULL, 'VERIFIED',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-zeitlose-rivalen-blister'
+  AND r.retailer_group = 'netto_md' AND r.retailer_brand = 'Netto Marken-Discount'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-zeitlose-rivalen-blister' AND o2.retailer_id = r.id
+      AND o2.price = 15.6 AND o2.valid_from = '2026-07-20'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'netto-ms-1'
+WHERE p.slug = 'p-zeitlose-rivalen-blister' AND o.price = 15.6 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'netto-hb-1'
+WHERE p.slug = 'p-zeitlose-rivalen-blister' AND o.price = 15.6 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 49.81, 54.99, '2026-07-18', '2026-08-01',
+  'NATIONAL', 'Instagram', NULL, 'VERIFIED',
+  'ausverkauft', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-reisegefaehrten-etb'
+  AND r.retailer_group = 'smyths' AND r.retailer_brand = 'Smyths Toys'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-reisegefaehrten-etb' AND o2.retailer_id = r.id
+      AND o2.price = 49.81 AND o2.valid_from = '2026-07-18'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'smyths-fr-1'
+WHERE p.slug = 'p-reisegefaehrten-etb' AND o.price = 49.81 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'smyths-do-1'
+WHERE p.slug = 'p-reisegefaehrten-etb' AND o.price = 49.81 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 33.410000000000004, 33.5, '2026-07-22', '2026-08-05',
+  'NATIONAL', 'App', NULL, 'REGIONAL_CONFIRMED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-maskerade-bundle'
+  AND r.retailer_group = 'mediamarkt' AND r.retailer_brand = 'MediaMarkt'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-maskerade-bundle' AND o2.retailer_id = r.id
+      AND o2.price = 33.410000000000004 AND o2.valid_from = '2026-07-22'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'mediamarkt-ob-1'
+WHERE p.slug = 'p-maskerade-bundle' AND o.price = 33.410000000000004 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'mediamarkt-m-1'
+WHERE p.slug = 'p-maskerade-bundle' AND o.price = 33.410000000000004 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'mediamarkt-hh-1'
+WHERE p.slug = 'p-maskerade-bundle' AND o.price = 33.410000000000004 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'mediamarkt-b-1'
+WHERE p.slug = 'p-maskerade-bundle' AND o.price = 33.410000000000004 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 41.03, 51, '2026-07-18', '2026-07-31',
+  'NATIONAL', 'Prospekt', NULL, 'PROBABLE',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-paradoxrift-premium'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'Marktkauf'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-paradoxrift-premium' AND o2.retailer_id = r.id
+      AND o2.price = 41.03 AND o2.valid_from = '2026-07-18'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'marktkauf-do-1'
+WHERE p.slug = 'p-paradoxrift-premium' AND o.price = 41.03 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-ob-1'
+WHERE p.slug = 'p-paradoxrift-premium' AND o.price = 41.03 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-e-1'
+WHERE p.slug = 'p-paradoxrift-premium' AND o.price = 41.03 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-koeln-1'
+WHERE p.slug = 'p-paradoxrift-premium' AND o.price = 41.03 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-d-1'
+WHERE p.slug = 'p-paradoxrift-premium' AND o.price = 41.03 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-lb-1'
+WHERE p.slug = 'p-paradoxrift-premium' AND o.price = 41.03 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'scheckin-lb-1'
+WHERE p.slug = 'p-paradoxrift-premium' AND o.price = 41.03 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 43.38, 54.99, '2026-07-19', '2026-07-22',
+  'NATIONAL', 'Händlerseite', NULL, 'REGIONAL_CONFIRMED',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-reisegefaehrten-etb'
+  AND r.retailer_group = 'netto_md' AND r.retailer_brand = 'Netto Marken-Discount'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-reisegefaehrten-etb' AND o2.retailer_id = r.id
+      AND o2.price = 43.38 AND o2.valid_from = '2026-07-19'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'netto-hb-1'
+WHERE p.slug = 'p-reisegefaehrten-etb' AND o.price = 43.38 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'netto-ms-1'
+WHERE p.slug = 'p-reisegefaehrten-etb' AND o.price = 43.38 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 110.17999999999999, 104, '2026-07-21', '2026-08-03',
+  'LOCAL', 'Händlerseite', NULL, 'VERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-brillante-sterne-etb'
+  AND r.retailer_group = 'mueller' AND r.retailer_brand = 'Müller'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-brillante-sterne-etb' AND o2.retailer_id = r.id
+      AND o2.price = 110.17999999999999 AND o2.valid_from = '2026-07-21'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'mueller-ka-1'
+WHERE p.slug = 'p-brillante-sterne-etb' AND o.price = 110.17999999999999 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 52.95, 58.9, '2026-07-18', '2026-07-29',
+  'NATIONAL', 'Händlerseite', NULL, 'COMMUNITY_UNVERIFIED',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-stellarkrone-etb'
+  AND r.retailer_group = 'gate' AND r.retailer_brand = 'Gate to the Games'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-stellarkrone-etb' AND o2.retailer_id = r.id
+      AND o2.price = 52.95 AND o2.valid_from = '2026-07-18'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'gate-do-1'
+WHERE p.slug = 'p-stellarkrone-etb' AND o.price = 52.95 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'gate-s-1'
+WHERE p.slug = 'p-stellarkrone-etb' AND o.price = 52.95 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'gate-b-1'
+WHERE p.slug = 'p-stellarkrone-etb' AND o.price = 52.95 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 25.88, 24.99, '2026-07-17', '2026-07-22',
+  'LOCAL', 'Prospekt', NULL, 'PROBABLE',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-mega-forces-tin'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'EDEKA'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-mega-forces-tin' AND o2.retailer_id = r.id
+      AND o2.price = 25.88 AND o2.valid_from = '2026-07-17'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-f-1'
+WHERE p.slug = 'p-mega-forces-tin' AND o.price = 25.88 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 54.02, 54.99, '2026-07-20', '2026-07-31',
+  'NATIONAL', 'App', NULL, 'REGIONAL_CONFIRMED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-dunkelnacht-etb'
+  AND r.retailer_group = 'rofu' AND r.retailer_brand = 'ROFU Kinderland'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-dunkelnacht-etb' AND o2.retailer_id = r.id
+      AND o2.price = 54.02 AND o2.valid_from = '2026-07-20'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'rofu-a-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 54.02 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 98, 104, '2026-07-18', '2026-08-01',
+  'REGIONAL', 'Prospekt', NULL, 'VERIFIED',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-brillante-sterne-etb'
+  AND r.retailer_group = 'rewe' AND r.retailer_brand = 'REWE Center'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-brillante-sterne-etb' AND o2.retailer_id = r.id
+      AND o2.price = 98 AND o2.valid_from = '2026-07-18'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'rewecenter-koeln-1'
+WHERE p.slug = 'p-brillante-sterne-etb' AND o.price = 98 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 56.46, 54.99, '2026-07-21', '2026-07-24',
+  'LOCAL', 'Händlerseite', NULL, 'REGIONAL_CONFIRMED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-dunkelnacht-etb'
+  AND r.retailer_group = 'kodi' AND r.retailer_brand = 'KODi'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-dunkelnacht-etb' AND o2.retailer_id = r.id
+      AND o2.price = 56.46 AND o2.valid_from = '2026-07-21'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kodi-bo-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 56.46 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 37.09, 39.99, '2026-07-18', '2026-07-25',
+  'STORE_GROUP', 'Instagram', NULL, 'COMMUNITY_UNVERIFIED',
+  'ausverkauft', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-fpc3-collection'
+  AND r.retailer_group = 'kaufland' AND r.retailer_brand = 'Kaufland'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-fpc3-collection' AND o2.retailer_id = r.id
+      AND o2.price = 37.09 AND o2.valid_from = '2026-07-18'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-m-1'
+WHERE p.slug = 'p-fpc3-collection' AND o.price = 37.09 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-ob-1'
+WHERE p.slug = 'p-fpc3-collection' AND o.price = 37.09 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-du-1'
+WHERE p.slug = 'p-fpc3-collection' AND o.price = 37.09 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 206.79000000000002, 229, '2026-07-18', '2026-07-28',
+  'NATIONAL', 'App', NULL, 'COMMUNITY_UNVERIFIED',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-151-upc'
+  AND r.retailer_group = 'penny' AND r.retailer_brand = 'PENNY'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-151-upc' AND o2.retailer_id = r.id
+      AND o2.price = 206.79000000000002 AND o2.valid_from = '2026-07-18'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'penny-dd-1'
+WHERE p.slug = 'p-151-upc' AND o.price = 206.79000000000002 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'penny-d-1'
+WHERE p.slug = 'p-151-upc' AND o.price = 206.79000000000002 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 71.35, 64.9, '2026-07-20', '2026-07-24',
+  'STORE_GROUP', 'Händlerseite', NULL, 'PROBABLE',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-obsidianflammen-etb'
+  AND r.retailer_group = 'mediamarkt' AND r.retailer_brand = 'MediaMarkt'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-obsidianflammen-etb' AND o2.retailer_id = r.id
+      AND o2.price = 71.35 AND o2.valid_from = '2026-07-20'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'mediamarkt-hh-1'
+WHERE p.slug = 'p-obsidianflammen-etb' AND o.price = 71.35 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'mediamarkt-ob-1'
+WHERE p.slug = 'p-obsidianflammen-etb' AND o.price = 71.35 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'mediamarkt-m-1'
+WHERE p.slug = 'p-obsidianflammen-etb' AND o.price = 71.35 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 57.080000000000005, 54.99, '2026-07-21', '2026-07-26',
+  'NATIONAL', 'Händlerseite', NULL, 'VERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-reisegefaehrten-etb'
+  AND r.retailer_group = 'galeria' AND r.retailer_brand = 'Galeria'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-reisegefaehrten-etb' AND o2.retailer_id = r.id
+      AND o2.price = 57.080000000000005 AND o2.valid_from = '2026-07-21'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'galeria-f-1'
+WHERE p.slug = 'p-reisegefaehrten-etb' AND o.price = 57.080000000000005 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'galeria-koeln-1'
+WHERE p.slug = 'p-reisegefaehrten-etb' AND o.price = 57.080000000000005 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 70.14, 64.9, '2026-07-21', '2026-07-27',
+  'NATIONAL', 'Community-Fund', NULL, 'REGIONAL_CONFIRMED',
+  'ausverkauft', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-obsidianflammen-etb'
+  AND r.retailer_group = 'games_island' AND r.retailer_brand = 'Games Island'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-obsidianflammen-etb' AND o2.retailer_id = r.id
+      AND o2.price = 70.14 AND o2.valid_from = '2026-07-21'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'games-island-m-1'
+WHERE p.slug = 'p-obsidianflammen-etb' AND o.price = 70.14 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 64.92, 58.9, '2026-07-17', '2026-07-26',
+  'NATIONAL', 'Community-Fund', NULL, 'VERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-stellarkrone-etb'
+  AND r.retailer_group = 'kaufland' AND r.retailer_brand = 'Kaufland'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-stellarkrone-etb' AND o2.retailer_id = r.id
+      AND o2.price = 64.92 AND o2.valid_from = '2026-07-17'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-m-1'
+WHERE p.slug = 'p-stellarkrone-etb' AND o.price = 64.92 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-ob-1'
+WHERE p.slug = 'p-stellarkrone-etb' AND o.price = 64.92 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-du-1'
+WHERE p.slug = 'p-stellarkrone-etb' AND o.price = 64.92 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-s-1'
+WHERE p.slug = 'p-stellarkrone-etb' AND o.price = 64.92 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-b-1'
+WHERE p.slug = 'p-stellarkrone-etb' AND o.price = 64.92 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-l-1'
+WHERE p.slug = 'p-stellarkrone-etb' AND o.price = 64.92 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 29.2, 33.5, '2026-07-19', '2026-07-30',
+  'NATIONAL', 'Händlerseite', NULL, 'VERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-maskerade-bundle'
+  AND r.retailer_group = 'galeria' AND r.retailer_brand = 'Galeria'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-maskerade-bundle' AND o2.retailer_id = r.id
+      AND o2.price = 29.2 AND o2.valid_from = '2026-07-19'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'galeria-f-1'
+WHERE p.slug = 'p-maskerade-bundle' AND o.price = 29.2 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'galeria-koeln-1'
+WHERE p.slug = 'p-maskerade-bundle' AND o.price = 29.2 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 82.17, 104, '2026-07-18', '2026-07-31',
+  'LOCAL', 'App', NULL, 'COMMUNITY_UNVERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-brillante-sterne-etb'
+  AND r.retailer_group = 'rossmann' AND r.retailer_brand = 'Rossmann'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-brillante-sterne-etb' AND o2.retailer_id = r.id
+      AND o2.price = 82.17 AND o2.valid_from = '2026-07-18'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'rossmann-e-1'
+WHERE p.slug = 'p-brillante-sterne-etb' AND o.price = 82.17 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 50.75, 64.9, '2026-07-17', '2026-07-26',
+  'NATIONAL', 'Instagram', NULL, 'VERIFIED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-obsidianflammen-etb'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'Marktkauf'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-obsidianflammen-etb' AND o2.retailer_id = r.id
+      AND o2.price = 50.75 AND o2.valid_from = '2026-07-17'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'marktkauf-do-1'
+WHERE p.slug = 'p-obsidianflammen-etb' AND o.price = 50.75 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-ob-1'
+WHERE p.slug = 'p-obsidianflammen-etb' AND o.price = 50.75 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-e-1'
+WHERE p.slug = 'p-obsidianflammen-etb' AND o.price = 50.75 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-koeln-1'
+WHERE p.slug = 'p-obsidianflammen-etb' AND o.price = 50.75 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-d-1'
+WHERE p.slug = 'p-obsidianflammen-etb' AND o.price = 50.75 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-lb-1'
+WHERE p.slug = 'p-obsidianflammen-etb' AND o.price = 50.75 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'scheckin-lb-1'
+WHERE p.slug = 'p-obsidianflammen-etb' AND o.price = 50.75 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 57.09, 58.9, '2026-07-18', '2026-07-21',
+  'REGIONAL', 'Händlerseite', NULL, 'REGIONAL_CONFIRMED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-stellarkrone-etb'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'EDEKA'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-stellarkrone-etb' AND o2.retailer_id = r.id
+      AND o2.price = 57.09 AND o2.valid_from = '2026-07-18'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-koeln-1'
+WHERE p.slug = 'p-stellarkrone-etb' AND o.price = 57.09 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-ob-1'
+WHERE p.slug = 'p-stellarkrone-etb' AND o.price = 57.09 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-e-1'
+WHERE p.slug = 'p-stellarkrone-etb' AND o.price = 57.09 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'marktkauf-do-1'
+WHERE p.slug = 'p-stellarkrone-etb' AND o.price = 57.09 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 95.86, 104, '2026-07-22', '2026-08-05',
+  'REGIONAL', 'App', NULL, 'REGIONAL_CONFIRMED',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-brillante-sterne-etb'
+  AND r.retailer_group = 'kaufland' AND r.retailer_brand = 'Kaufland'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-brillante-sterne-etb' AND o2.retailer_id = r.id
+      AND o2.price = 95.86 AND o2.valid_from = '2026-07-22'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-ob-1'
+WHERE p.slug = 'p-brillante-sterne-etb' AND o.price = 95.86 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-du-1'
+WHERE p.slug = 'p-brillante-sterne-etb' AND o.price = 95.86 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-s-1'
+WHERE p.slug = 'p-brillante-sterne-etb' AND o.price = 95.86 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kaufland-m-1'
+WHERE p.slug = 'p-brillante-sterne-etb' AND o.price = 95.86 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 58.81, 54.99, '2026-07-22', '2026-07-31',
+  'REGIONAL', 'Community-Fund', NULL, 'COMMUNITY_UNVERIFIED',
+  'ausverkauft', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-reisegefaehrten-etb'
+  AND r.retailer_group = 'gate' AND r.retailer_brand = 'Gate to the Games'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-reisegefaehrten-etb' AND o2.retailer_id = r.id
+      AND o2.price = 58.81 AND o2.valid_from = '2026-07-22'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'gate-b-1'
+WHERE p.slug = 'p-reisegefaehrten-etb' AND o.price = 58.81 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'gate-do-1'
+WHERE p.slug = 'p-reisegefaehrten-etb' AND o.price = 58.81 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'gate-s-1'
+WHERE p.slug = 'p-reisegefaehrten-etb' AND o.price = 58.81 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 13.73, 14.99, '2026-07-20', '2026-08-02',
+  'STORE_GROUP', 'Prospekt', NULL, 'VERIFIED',
+  'ausverkauft', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-zeitlose-rivalen-blister'
+  AND r.retailer_group = 'kodi' AND r.retailer_brand = 'KODi'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-zeitlose-rivalen-blister' AND o2.retailer_id = r.id
+      AND o2.price = 13.73 AND o2.valid_from = '2026-07-20'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'kodi-bo-1'
+WHERE p.slug = 'p-zeitlose-rivalen-blister' AND o.price = 13.73 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 55.120000000000005, 54.99, '2026-07-22', '2026-07-27',
+  'NATIONAL', 'Händlerseite', NULL, 'PROBABLE',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-dunkelnacht-etb'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'EDEKA'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-dunkelnacht-etb' AND o2.retailer_id = r.id
+      AND o2.price = 55.120000000000005 AND o2.valid_from = '2026-07-22'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-ob-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 55.120000000000005 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-e-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 55.120000000000005 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'marktkauf-do-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 55.120000000000005 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-koeln-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 55.120000000000005 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-d-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 55.120000000000005 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-lb-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 55.120000000000005 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'scheckin-lb-1'
+WHERE p.slug = 'p-dunkelnacht-etb' AND o.price = 55.120000000000005 AND o.valid_from = '2026-07-22'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 69.05999999999999, 64.9, '2026-07-20', '2026-07-29',
+  'NATIONAL', 'Community-Fund', NULL, 'REGIONAL_CONFIRMED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-obsidianflammen-etb'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'E-Center'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-obsidianflammen-etb' AND o2.retailer_id = r.id
+      AND o2.price = 69.05999999999999 AND o2.valid_from = '2026-07-20'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-h-1'
+WHERE p.slug = 'p-obsidianflammen-etb' AND o.price = 69.05999999999999 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-ob-1'
+WHERE p.slug = 'p-obsidianflammen-etb' AND o.price = 69.05999999999999 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-e-1'
+WHERE p.slug = 'p-obsidianflammen-etb' AND o.price = 69.05999999999999 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'marktkauf-do-1'
+WHERE p.slug = 'p-obsidianflammen-etb' AND o.price = 69.05999999999999 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-koeln-1'
+WHERE p.slug = 'p-obsidianflammen-etb' AND o.price = 69.05999999999999 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-d-1'
+WHERE p.slug = 'p-obsidianflammen-etb' AND o.price = 69.05999999999999 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-lb-1'
+WHERE p.slug = 'p-obsidianflammen-etb' AND o.price = 69.05999999999999 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 64.00999999999999, 58.9, '2026-07-20', '2026-07-30',
+  'LOCAL', 'App', NULL, 'COMMUNITY_UNVERIFIED',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-stellarkrone-etb'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'E-Center'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-stellarkrone-etb' AND o2.retailer_id = r.id
+      AND o2.price = 64.00999999999999 AND o2.valid_from = '2026-07-20'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-e-1'
+WHERE p.slug = 'p-stellarkrone-etb' AND o.price = 64.00999999999999 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 51.510000000000005, 58.9, '2026-07-21', '2026-08-03',
+  'LOCAL', 'Händlerseite', NULL, 'VERIFIED',
+  'ausverkauft', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-stellarkrone-etb'
+  AND r.retailer_group = 'smyths' AND r.retailer_brand = 'Smyths Toys'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-stellarkrone-etb' AND o2.retailer_id = r.id
+      AND o2.price = 51.510000000000005 AND o2.valid_from = '2026-07-21'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'smyths-do-1'
+WHERE p.slug = 'p-stellarkrone-etb' AND o.price = 51.510000000000005 AND o.valid_from = '2026-07-21'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 37.190000000000005, 39.99, '2026-07-18', '2026-07-30',
+  'REGIONAL', 'App', NULL, 'PROBABLE',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-fpc3-collection'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'E-Center'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-fpc3-collection' AND o2.retailer_id = r.id
+      AND o2.price = 37.190000000000005 AND o2.valid_from = '2026-07-18'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-s-1'
+WHERE p.slug = 'p-fpc3-collection' AND o.price = 37.190000000000005 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'edeka-ob-1'
+WHERE p.slug = 'p-fpc3-collection' AND o.price = 37.190000000000005 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-e-1'
+WHERE p.slug = 'p-fpc3-collection' AND o.price = 37.190000000000005 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'marktkauf-do-1'
+WHERE p.slug = 'p-fpc3-collection' AND o.price = 37.190000000000005 AND o.valid_from = '2026-07-18'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 40.72, 39.99, '2026-07-17', '2026-07-23',
+  'LOCAL', 'Community-Fund', NULL, 'REGIONAL_CONFIRMED',
+  'verfuegbar', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-fpc3-collection'
+  AND r.retailer_group = 'edeka' AND r.retailer_brand = 'E-Center'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-fpc3-collection' AND o2.retailer_id = r.id
+      AND o2.price = 40.72 AND o2.valid_from = '2026-07-17'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'ecenter-h-1'
+WHERE p.slug = 'p-fpc3-collection' AND o.price = 40.72 AND o.valid_from = '2026-07-17'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 43.09, 54.99, '2026-07-20', '2026-07-24',
+  'STORE_GROUP', 'App', NULL, 'VERIFIED',
+  'ausverkauft', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-reisegefaehrten-etb'
+  AND r.retailer_group = 'penny' AND r.retailer_brand = 'PENNY'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-reisegefaehrten-etb' AND o2.retailer_id = r.id
+      AND o2.price = 43.09 AND o2.valid_from = '2026-07-20'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'penny-dd-1'
+WHERE p.slug = 'p-reisegefaehrten-etb' AND o.price = 43.09 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'penny-d-1'
+WHERE p.slug = 'p-reisegefaehrten-etb' AND o.price = 43.09 AND o.valid_from = '2026-07-20'
+ON CONFLICT DO NOTHING;
+INSERT INTO offers (product_id, retailer_id, price, regular_price, valid_from, valid_until,
+  validity_type, source_type, source_url, verification_status, stock_signal, stock_signal_at)
+SELECT p.id, r.id, 228.59, 229, '2026-07-19', '2026-07-24',
+  'LOCAL', 'Händlerseite', NULL, 'VERIFIED',
+  'wenig_bestand', '2026-07-22'::timestamptz
+FROM products p, retailers r
+WHERE p.slug = 'p-151-upc'
+  AND r.retailer_group = 'netto_md' AND r.retailer_brand = 'Netto Marken-Discount'
+  AND NOT EXISTS (
+    SELECT 1 FROM offers o2 JOIN products p2 ON p2.id = o2.product_id
+    WHERE p2.slug = 'p-151-upc' AND o2.retailer_id = r.id
+      AND o2.price = 228.59 AND o2.valid_from = '2026-07-19'
+  );
+INSERT INTO offer_locations (offer_id, location_id)
+SELECT o.id, rl.id
+FROM offers o
+  JOIN products p ON p.id = o.product_id
+  JOIN retailer_locations rl ON rl.external_store_id = 'netto-ms-1'
+WHERE p.slug = 'p-151-upc' AND o.price = 228.59 AND o.valid_from = '2026-07-19'
+ON CONFLICT DO NOTHING;
+
+-- Live Drops & Restocks
+INSERT INTO drops (product_id, retailer_id, kind, is_pokemon_center, price, availability, hot, source_name, source_url, drop_at)
+SELECT p.id,
+  (SELECT id FROM retailers WHERE display_name = 'Pokémon Center' LIMIT 1),
+  'restock', true, 54.99, 'verfuegbar', true,
+  'Pokémon Center', 'https://www.pokemoncenter.com/', now() - (2 * INTERVAL '1 minute')
+FROM products p WHERE p.slug = 'p-dunkelnacht-etb'
+  AND NOT EXISTS (SELECT 1 FROM drops dd JOIN products pp ON pp.id = dd.product_id
+                  WHERE pp.slug = 'p-dunkelnacht-etb' AND dd.source_name = 'Pokémon Center' AND dd.kind = 'restock');
+INSERT INTO drops (product_id, retailer_id, kind, is_pokemon_center, price, availability, hot, source_name, source_url, drop_at)
+SELECT p.id,
+  (SELECT id FROM retailers WHERE display_name = 'Pokémon Center' LIMIT 1),
+  'restock', true, 119.99, 'wenig_bestand', true,
+  'Pokémon Center', NULL, now() - (6 * INTERVAL '1 minute')
+FROM products p WHERE p.slug = 'p-151-upc'
+  AND NOT EXISTS (SELECT 1 FROM drops dd JOIN products pp ON pp.id = dd.product_id
+                  WHERE pp.slug = 'p-151-upc' AND dd.source_name = 'Pokémon Center' AND dd.kind = 'restock');
+INSERT INTO drops (product_id, retailer_id, kind, is_pokemon_center, price, availability, hot, source_name, source_url, drop_at)
+SELECT p.id,
+  (SELECT id FROM retailers WHERE display_name = 'Pokémon Center' LIMIT 1),
+  'drop', true, 179.99, 'verfuegbar', true,
+  'Pokémon Center', NULL, now() - (11 * INTERVAL '1 minute')
+FROM products p WHERE p.slug = 'p-reisegefaehrten-display'
+  AND NOT EXISTS (SELECT 1 FROM drops dd JOIN products pp ON pp.id = dd.product_id
+                  WHERE pp.slug = 'p-reisegefaehrten-display' AND dd.source_name = 'Pokémon Center' AND dd.kind = 'drop');
+INSERT INTO drops (product_id, retailer_id, kind, is_pokemon_center, price, availability, hot, source_name, source_url, drop_at)
+SELECT p.id,
+  (SELECT id FROM retailers WHERE display_name = 'FantasyWelt' LIMIT 1),
+  'new_product', false, 22.99, 'verfuegbar', false,
+  'FantasyWelt', 'https://www.fantasywelt.de/', now() - (18 * INTERVAL '1 minute')
+FROM products p WHERE p.slug = 'p-mega-forces-tin'
+  AND NOT EXISTS (SELECT 1 FROM drops dd JOIN products pp ON pp.id = dd.product_id
+                  WHERE pp.slug = 'p-mega-forces-tin' AND dd.source_name = 'FantasyWelt' AND dd.kind = 'new_product');
+INSERT INTO drops (product_id, retailer_id, kind, is_pokemon_center, price, availability, hot, source_name, source_url, drop_at)
+SELECT p.id,
+  (SELECT id FROM retailers WHERE display_name = 'Games Island' LIMIT 1),
+  'restock', false, 39.99, 'wenig_bestand', false,
+  'Games Island', NULL, now() - (24 * INTERVAL '1 minute')
+FROM products p WHERE p.slug = 'p-fpc3-collection'
+  AND NOT EXISTS (SELECT 1 FROM drops dd JOIN products pp ON pp.id = dd.product_id
+                  WHERE pp.slug = 'p-fpc3-collection' AND dd.source_name = 'Games Island' AND dd.kind = 'restock');
+INSERT INTO drops (product_id, retailer_id, kind, is_pokemon_center, price, availability, hot, source_name, source_url, drop_at)
+SELECT p.id,
+  (SELECT id FROM retailers WHERE display_name = 'Gate to the Games' LIMIT 1),
+  'restock', false, 59.9, 'verfuegbar', false,
+  'Gate to the Games', NULL, now() - (33 * INTERVAL '1 minute')
+FROM products p WHERE p.slug = 'p-obsidianflammen-etb'
+  AND NOT EXISTS (SELECT 1 FROM drops dd JOIN products pp ON pp.id = dd.product_id
+                  WHERE pp.slug = 'p-obsidianflammen-etb' AND dd.source_name = 'Gate to the Games' AND dd.kind = 'restock');
+INSERT INTO drops (product_id, retailer_id, kind, is_pokemon_center, price, availability, hot, source_name, source_url, drop_at)
+SELECT p.id,
+  (SELECT id FROM retailers WHERE display_name = 'Pokémon Center' LIMIT 1),
+  'drop', true, 179.99, 'ausverkauft', true,
+  'Pokémon Center', NULL, now() - (41 * INTERVAL '1 minute')
+FROM products p WHERE p.slug = 'p-dunkelnacht-display'
+  AND NOT EXISTS (SELECT 1 FROM drops dd JOIN products pp ON pp.id = dd.product_id
+                  WHERE pp.slug = 'p-dunkelnacht-display' AND dd.source_name = 'Pokémon Center' AND dd.kind = 'drop');
+INSERT INTO drops (product_id, retailer_id, kind, is_pokemon_center, price, availability, hot, source_name, source_url, drop_at)
+SELECT p.id,
+  (SELECT id FROM retailers WHERE display_name = 'Smyths Toys Online' LIMIT 1),
+  'restock', false, 49.99, 'wenig_bestand', false,
+  'Smyths Toys Online', NULL, now() - (52 * INTERVAL '1 minute')
+FROM products p WHERE p.slug = 'p-paldeas-schicksale-etb'
+  AND NOT EXISTS (SELECT 1 FROM drops dd JOIN products pp ON pp.id = dd.product_id
+                  WHERE pp.slug = 'p-paldeas-schicksale-etb' AND dd.source_name = 'Smyths Toys Online' AND dd.kind = 'restock');
+INSERT INTO drops (product_id, retailer_id, kind, is_pokemon_center, price, availability, hot, source_name, source_url, drop_at)
+SELECT p.id,
+  (SELECT id FROM retailers WHERE display_name = 'Müller Online' LIMIT 1),
+  'new_product', false, 14.99, 'verfuegbar', false,
+  'Müller Online', NULL, now() - (68 * INTERVAL '1 minute')
+FROM products p WHERE p.slug = 'p-zeitlose-rivalen-blister'
+  AND NOT EXISTS (SELECT 1 FROM drops dd JOIN products pp ON pp.id = dd.product_id
+                  WHERE pp.slug = 'p-zeitlose-rivalen-blister' AND dd.source_name = 'Müller Online' AND dd.kind = 'new_product');
+INSERT INTO drops (product_id, retailer_id, kind, is_pokemon_center, price, availability, hot, source_name, source_url, drop_at)
+SELECT p.id,
+  (SELECT id FROM retailers WHERE display_name = 'Pokémon Center' LIMIT 1),
+  'restock', true, 54.99, 'verfuegbar', false,
+  'Pokémon Center', NULL, now() - (84 * INTERVAL '1 minute')
+FROM products p WHERE p.slug = 'p-stellarkrone-etb'
+  AND NOT EXISTS (SELECT 1 FROM drops dd JOIN products pp ON pp.id = dd.product_id
+                  WHERE pp.slug = 'p-stellarkrone-etb' AND dd.source_name = 'Pokémon Center' AND dd.kind = 'restock');
+INSERT INTO drops (product_id, retailer_id, kind, is_pokemon_center, price, availability, hot, source_name, source_url, drop_at)
+SELECT p.id,
+  (SELECT id FROM retailers WHERE display_name = 'FantasyWelt' LIMIT 1),
+  'restock', false, 34.99, 'wenig_bestand', false,
+  'FantasyWelt', NULL, now() - (96 * INTERVAL '1 minute')
+FROM products p WHERE p.slug = 'p-paradoxrift-premium'
+  AND NOT EXISTS (SELECT 1 FROM drops dd JOIN products pp ON pp.id = dd.product_id
+                  WHERE pp.slug = 'p-paradoxrift-premium' AND dd.source_name = 'FantasyWelt' AND dd.kind = 'restock');
+INSERT INTO drops (product_id, retailer_id, kind, is_pokemon_center, price, availability, hot, source_name, source_url, drop_at)
+SELECT p.id,
+  (SELECT id FROM retailers WHERE display_name = 'Games Island' LIMIT 1),
+  'new_product', false, 26.99, 'verfuegbar', false,
+  'Games Island', NULL, now() - (122 * INTERVAL '1 minute')
+FROM products p WHERE p.slug = 'p-maskerade-bundle'
+  AND NOT EXISTS (SELECT 1 FROM drops dd JOIN products pp ON pp.id = dd.product_id
+                  WHERE pp.slug = 'p-maskerade-bundle' AND dd.source_name = 'Games Island' AND dd.kind = 'new_product');
+
+-- Geruechte
+INSERT INTO rumors (product_id, title, body, status, source_type, source_handle, source_count, confidence, posted_at)
+VALUES ((SELECT id FROM products WHERE slug = 'p-dunkelnacht-display'),
+  'Kaufland plant offenbar Dunkelnacht-Display-Aktion zum Wochenstart', 'Mehrere Prospekt-Leaks zeigen ein Display-Angebot deutlich unter UVP. Noch keine offizielle Bestätigung aus dem Zentraleinkauf.', 'MULTI_SOURCE_RUMOR', 'Instagram', '@prospekt.leaks.de',
+  3, 0.62, now() - (27 * INTERVAL '1 minute'))
+ON CONFLICT DO NOTHING;
+INSERT INTO rumors (product_id, title, body, status, source_type, source_handle, source_count, confidence, posted_at)
+VALUES ((SELECT id FROM products WHERE slug = 'p-151-upc'),
+  'Pokémon Center: Restock der 151 UPC angeblich diese Woche', 'Ein Händler-Teaser deutet auf eine erneute Verfügbarkeit der Ultra-Premium-Kollektion hin. Wird als wahrscheinlich eingestuft.', 'LIKELY', 'Instagram', '@pokeradarde',
+  2, 0.78, now() - (54 * INTERVAL '1 minute'))
+ON CONFLICT DO NOTHING;
+INSERT INTO rumors (product_id, title, body, status, source_type, source_handle, source_count, confidence, posted_at)
+VALUES ((SELECT id FROM products WHERE slug = 'p-mega-forces-tin'),
+  'Lokaler Kartenladen kündigt Mega-Forces-Nachschub an (Köln)', 'Story-Ankündigung eines Kölner Shops zu neuer Lieferung. Kurzfristig, daher schnell prüfen.', 'RUMOR', 'Instagram', '@cardcorner.koeln',
+  1, 0.4, now() - (12 * INTERVAL '1 minute'))
+ON CONFLICT DO NOTHING;
+INSERT INTO rumors (product_id, title, body, status, source_type, source_handle, source_count, confidence, posted_at)
+VALUES ((SELECT id FROM products WHERE slug = 'p-reisegefaehrten-etb'),
+  'Netto-Prospekt KW31: Reisegefährten-ETB im Anmarsch?', 'Frühe Prospektvorschau in einer Facebook-Gruppe geteilt. Zwei unabhängige Poster berichten dasselbe.', 'MULTI_SOURCE_RUMOR', 'Facebook', 'Schnäppchen-Gruppe NRW',
+  2, 0.58, now() - (88 * INTERVAL '1 minute'))
+ON CONFLICT DO NOTHING;
+INSERT INTO rumors (product_id, title, body, status, source_type, source_handle, source_count, confidence, posted_at)
+VALUES (NULL,
+  'Rossmann-App: Coupon auf Sammelkarten angeblich ab Donnerstag', 'Nutzerhinweis über einen bevorstehenden App-Coupon. Noch keine weitere Quelle.', 'RUMOR', 'Community-Fund', 'PokeDrop-Community',
+  1, 0.35, now() - (40 * INTERVAL '1 minute'))
+ON CONFLICT DO NOTHING;
+INSERT INTO rumors (product_id, title, body, status, source_type, source_handle, source_count, confidence, posted_at)
+VALUES ((SELECT id FROM products WHERE slug = 'p-fpc3-collection'),
+  'First Partner Collection Serie 3 – breite Verfügbarkeit bestätigt', 'Offizielle Händlerkommunikation bestätigt die Auslieferung. Kann in den regulären Drop-Bereich überführt werden.', 'CONFIRMED', 'Händlerseite', 'Distributor DE',
+  4, 0.95, now() - (150 * INTERVAL '1 minute'))
+ON CONFLICT DO NOTHING;
+INSERT INTO rumors (product_id, title, body, status, source_type, source_handle, source_count, confidence, posted_at)
+VALUES ((SELECT id FROM products WHERE slug = 'p-stellarkrone-etb'),
+  'Gerücht: Stellarkrone-Nachdruck sorgt für fallende Marktpreise', 'Diskussion in mehreren Sammler-Communities über einen möglichen Reprint. Auswirkung auf Deal-Schwellen wird beobachtet.', 'MULTI_SOURCE_RUMOR', 'Instagram', '@tcg.insights',
+  3, 0.55, now() - (210 * INTERVAL '1 minute'))
+ON CONFLICT DO NOTHING;
+INSERT INTO rumors (product_id, title, body, status, source_type, source_handle, source_count, confidence, posted_at)
+VALUES (NULL,
+  'MediaMarkt-Aktion zu Booster-Displays am kommenden Samstag?', 'Ein Marktmitarbeiter soll eine lokale Wochenendaktion erwähnt haben. Sehr unsicher, nur eine Quelle.', 'RUMOR', 'Community-Fund', 'PokeDrop-Community',
+  1, 0.3, now() - (75 * INTERVAL '1 minute'))
+ON CONFLICT DO NOTHING;
+
 -- Events
 INSERT INTO events (event_name, event_type, date_start, date_end, opening_hours, venue_name,
   street, postal_code, city, location, organizer, official_source, ticket_price, ticket_url,
