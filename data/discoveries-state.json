@@ -59,6 +59,10 @@
     "status": "in_stock",
     "preis": 4.99
   },
+  "disc-shopify-www-celestial-gameshop-de-11013339709707": {
+    "status": "in_stock",
+    "preis": 6
+  },
   "disc-shopify-www-cardstore-at-15257336283480": {
     "status": "in_stock",
     "preis": 8
@@ -114,9 +118,5 @@
   "disc-shopify-www-cardstore-at-14781136240984": {
     "status": "in_stock",
     "preis": 39
-  },
-  "disc-shopify-www-cardstore-at-14899247743320": {
-    "status": "in_stock",
-    "preis": 45
   }
 }
