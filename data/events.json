@@ -1,6 +1,15 @@
 {
   "events": [
     {
+      "art": "auf_lager",
+      "sku": "dunkelnacht-display",
+      "produkt": "Mega-Entwicklung: Dunkelnacht — Booster-Display (36)",
+      "shop": "CardBuddys",
+      "preis": 189.95,
+      "url": "https://www.cardbuddys.de/products/mega-entwicklungen-wachsendes-chaos-booster-display-de-kopie",
+      "zeit": "2026-07-31T16:25:38.318Z"
+    },
+    {
       "art": "preis_gefallen",
       "sku": "disc-shopify-www-cardstore-at-14781136240984",
       "produkt": "Pokémon Rayquaza Playmat / Spielmatte",

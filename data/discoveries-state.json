@@ -47,10 +47,6 @@
     "status": "in_stock",
     "preis": 3.49
   },
-  "disc-shopify-www-cardbuddys-de-15846004490571": {
-    "status": "in_stock",
-    "preis": 3.95
-  },
   "disc-shopify-webbas-kartenecke-de-12110102987016": {
     "status": "in_stock",
     "preis": 4.99
@@ -86,6 +82,10 @@
   "disc-shopify-www-cardbuddys-de-15852246139211": {
     "status": "in_stock",
     "preis": 14.95
+  },
+  "disc-shopify-www-cardbuddys-de-15822911537483": {
+    "status": "in_stock",
+    "preis": 15.95
   },
   "disc-shopify-lairos-shop-7442029183176": {
     "status": "in_stock",
