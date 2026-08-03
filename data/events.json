@@ -1,6 +1,16 @@
 {
   "events": [
     {
+      "art": "preis_gefallen",
+      "sku": "dunkelnacht-ttb",
+      "produkt": "Mega-Entwicklung: Dunkelnacht — Top-Trainer-Box",
+      "shop": "Webbas Kartenecke",
+      "preis": 61.99,
+      "vorher": 63.99,
+      "url": "https://webbas-kartenecke.de/products/pokemon-tcg-mega-entwicklungen-dunkelnacht-top-trainer-box-ttb-deutsch",
+      "zeit": "2026-08-03T12:38:26.825Z"
+    },
+    {
       "art": "auf_lager",
       "sku": "dunkelnacht-display",
       "produkt": "Mega-Entwicklung: Dunkelnacht — Booster-Display (36)",
