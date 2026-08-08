@@ -1,8 +1,4 @@
 {
-  "disc-kaufda-3c11858f43e1675f": {
-    "status": "in_stock",
-    "preis": 2.69
-  },
   "disc-shopify-lairos-shop-7241283829960": {
     "status": "in_stock",
     "preis": 2.9
@@ -64,6 +60,10 @@
     "preis": 4.99
   },
   "disc-shopify-webbas-kartenecke-de-11986163302664": {
+    "status": "in_stock",
+    "preis": 4.99
+  },
+  "disc-kaufda-ffecb820ffc2f4dc": {
     "status": "in_stock",
     "preis": 4.99
   },
