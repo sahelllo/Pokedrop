@@ -83,6 +83,18 @@
     "status": "in_stock",
     "preis": 12.95
   },
+  "disc-shopify-www-celestial-gameshop-de-10965205221643": {
+    "status": "in_stock",
+    "preis": 12.99
+  },
+  "disc-shopify-www-celestial-gameshop-de-11017711026443": {
+    "status": "in_stock",
+    "preis": 14.99
+  },
+  "disc-shopify-www-celestial-gameshop-de-11017693430027": {
+    "status": "in_stock",
+    "preis": 16.99
+  },
   "disc-shopify-lairos-shop-7442029183176": {
     "status": "in_stock",
     "preis": 17.9
@@ -106,17 +118,5 @@
   "disc-shopify-lairos-shop-7172266623176": {
     "status": "in_stock",
     "preis": 25
-  },
-  "disc-shopify-lairos-shop-9286692798799": {
-    "status": "in_stock",
-    "preis": 25.9
-  },
-  "disc-shopify-www-celestial-gameshop-de-11016916467979": {
-    "status": "in_stock",
-    "preis": 26.16
-  },
-  "disc-shopify-www-celestial-gameshop-de-11016916336907": {
-    "status": "in_stock",
-    "preis": 26.16
   }
 }
