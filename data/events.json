@@ -2,6 +2,16 @@
   "events": [
     {
       "art": "preis_gefallen",
+      "sku": "disc-shopify-www-cardstore-at-14816699941208",
+      "produkt": "Pokémon Lucario Playmat / Spielmatte",
+      "shop": "CardStore.at",
+      "preis": 20,
+      "vorher": 21,
+      "url": "https://www.cardstore.at/products/pokemon-lucario-playmat-spielmatte",
+      "zeit": "2026-08-20T17:19:05.847Z"
+    },
+    {
+      "art": "preis_gefallen",
       "sku": "disc-shopify-www-cardstore-at-9966669005144",
       "produkt": "Pokémon Super-Premium-Kollektion Glurak-ex (DE)",
       "shop": "CardStore.at",
