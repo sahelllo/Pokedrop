@@ -2,6 +2,66 @@
   "events": [
     {
       "art": "preis_gefallen",
+      "sku": "disc-shopify-www-cardstore-at-9966669005144",
+      "produkt": "Pokémon Super-Premium-Kollektion Glurak-ex (DE)",
+      "shop": "CardStore.at",
+      "preis": 74.62,
+      "vorher": 75,
+      "url": "https://www.cardstore.at/products/pokemon-super-premium-kollektion-glurak-ex-de-vorbestellung-04-10-2024",
+      "zeit": "2026-08-23T06:59:05.161Z"
+    },
+    {
+      "art": "preis_gefallen",
+      "sku": "disc-shopify-www-cardstore-at-14781136240984",
+      "produkt": "Pokémon Rayquaza Playmat / Spielmatte",
+      "shop": "CardStore.at",
+      "preis": 39.31,
+      "vorher": 40,
+      "url": "https://www.cardstore.at/products/pokemon-rayquaza-playmat-spielmatte",
+      "zeit": "2026-08-23T06:59:05.161Z"
+    },
+    {
+      "art": "preis_gefallen",
+      "sku": "disc-shopify-www-cardstore-at-14816699941208",
+      "produkt": "Pokémon Lucario Playmat / Spielmatte",
+      "shop": "CardStore.at",
+      "preis": 20.16,
+      "vorher": 21,
+      "url": "https://www.cardstore.at/products/pokemon-lucario-playmat-spielmatte",
+      "zeit": "2026-08-23T06:59:05.161Z"
+    },
+    {
+      "art": "preis_gefallen",
+      "sku": "disc-shopify-www-cardstore-at-15257336283480",
+      "produkt": "Pokémon - Mega-Entwicklung Booster (DE)",
+      "shop": "CardStore.at",
+      "preis": 7.55,
+      "vorher": 8,
+      "url": "https://www.cardstore.at/products/pokemon-mega-entwicklung-booster-de",
+      "zeit": "2026-08-23T06:59:05.161Z"
+    },
+    {
+      "art": "preis_gefallen",
+      "sku": "disc-shopify-www-cardstore-at-14746632257880",
+      "produkt": "047/078 Melmetal V Englisch Pokémon GO",
+      "shop": "CardStore.at",
+      "preis": 2.82,
+      "vorher": 3,
+      "url": "https://www.cardstore.at/products/047-078-melmetal-v-englisch-pokemon-go",
+      "zeit": "2026-08-23T06:59:05.161Z"
+    },
+    {
+      "art": "preis_gefallen",
+      "sku": "disc-shopify-www-cardstore-at-14746634092888",
+      "produkt": "058/078 Slaking V Englisch Pokémon GO",
+      "shop": "CardStore.at",
+      "preis": 2.82,
+      "vorher": 3,
+      "url": "https://www.cardstore.at/products/058-078-slaking-v-englisch-pokemon-go",
+      "zeit": "2026-08-23T06:59:05.161Z"
+    },
+    {
+      "art": "preis_gefallen",
       "sku": "disc-shopify-www-cardstore-at-14781136240984",
       "produkt": "Pokémon Rayquaza Playmat / Spielmatte",
       "shop": "CardStore.at",
