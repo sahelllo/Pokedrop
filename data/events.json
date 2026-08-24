@@ -2,6 +2,36 @@
   "events": [
     {
       "art": "preis_gefallen",
+      "sku": "disc-shopify-www-cardstore-at-15257336283480",
+      "produkt": "Pokémon - Mega-Entwicklung Booster (DE)",
+      "shop": "CardStore.at",
+      "preis": 7.55,
+      "vorher": 8,
+      "url": "https://www.cardstore.at/products/pokemon-mega-entwicklung-booster-de",
+      "zeit": "2026-08-24T18:15:51.798Z"
+    },
+    {
+      "art": "preis_gefallen",
+      "sku": "disc-shopify-www-cardstore-at-14746632257880",
+      "produkt": "047/078 Melmetal V Englisch Pokémon GO",
+      "shop": "CardStore.at",
+      "preis": 2.82,
+      "vorher": 3,
+      "url": "https://www.cardstore.at/products/047-078-melmetal-v-englisch-pokemon-go",
+      "zeit": "2026-08-24T18:15:51.798Z"
+    },
+    {
+      "art": "preis_gefallen",
+      "sku": "disc-shopify-www-cardstore-at-14746634092888",
+      "produkt": "058/078 Slaking V Englisch Pokémon GO",
+      "shop": "CardStore.at",
+      "preis": 2.82,
+      "vorher": 3,
+      "url": "https://www.cardstore.at/products/058-078-slaking-v-englisch-pokemon-go",
+      "zeit": "2026-08-24T18:15:51.798Z"
+    },
+    {
+      "art": "preis_gefallen",
       "sku": "disc-shopify-www-cardstore-at-9966669005144",
       "produkt": "Pokémon Super-Premium-Kollektion Glurak-ex (DE)",
       "shop": "CardStore.at",
