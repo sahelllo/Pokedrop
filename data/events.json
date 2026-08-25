@@ -1,6 +1,15 @@
 {
   "events": [
     {
+      "art": "auf_lager",
+      "sku": "dunkelnacht-booster",
+      "produkt": "Mega-Entwicklung: Dunkelnacht — Boosterpack",
+      "shop": "CardBuddys",
+      "preis": 5.95,
+      "url": "https://www.cardbuddys.de/products/mega-entwicklungen-dunkelnacht-booster-de",
+      "zeit": "2026-08-25T02:43:43.326Z"
+    },
+    {
       "art": "preis_gefallen",
       "sku": "disc-shopify-www-cardstore-at-9966669005144",
       "produkt": "Pokémon Super-Premium-Kollektion Glurak-ex (DE)",
