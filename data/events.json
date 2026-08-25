@@ -1,6 +1,16 @@
 {
   "events": [
     {
+      "art": "preis_gefallen",
+      "sku": "disc-shopify-www-cardstore-at-14781136240984",
+      "produkt": "Pokémon Rayquaza Playmat / Spielmatte",
+      "shop": "CardStore.at",
+      "preis": 39,
+      "vorher": 40,
+      "url": "https://www.cardstore.at/products/pokemon-rayquaza-playmat-spielmatte",
+      "zeit": "2026-08-25T17:22:29.623Z"
+    },
+    {
       "art": "auf_lager",
       "sku": "dunkelnacht-booster",
       "produkt": "Mega-Entwicklung: Dunkelnacht — Boosterpack",
