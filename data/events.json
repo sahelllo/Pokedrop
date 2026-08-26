@@ -2,6 +2,16 @@
   "events": [
     {
       "art": "preis_gefallen",
+      "sku": "disc-shopify-www-cardstore-at-9966669005144",
+      "produkt": "Pokémon Super-Premium-Kollektion Glurak-ex (DE)",
+      "shop": "CardStore.at",
+      "preis": 74,
+      "vorher": 75,
+      "url": "https://www.cardstore.at/products/pokemon-super-premium-kollektion-glurak-ex-de-vorbestellung-04-10-2024",
+      "zeit": "2026-08-26T03:12:09.940Z"
+    },
+    {
+      "art": "preis_gefallen",
       "sku": "disc-shopify-www-cardstore-at-14781136240984",
       "produkt": "Pokémon Rayquaza Playmat / Spielmatte",
       "shop": "CardStore.at",
