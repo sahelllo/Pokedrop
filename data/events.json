@@ -2,6 +2,16 @@
   "events": [
     {
       "art": "preis_gefallen",
+      "sku": "disc-shopify-www-celestial-gameshop-de-10980037689611",
+      "produkt": "Pokémon (PKM) - Mega-Darkrai ex Tin 131",
+      "shop": "Celestial Gameshop",
+      "preis": 29.99,
+      "vorher": 34.99,
+      "url": "https://www.celestial-gameshop.de/products/pkm-tin-131",
+      "zeit": "2026-08-28T11:13:17.855Z"
+    },
+    {
+      "art": "preis_gefallen",
       "sku": "disc-shopify-www-cardstore-at-9966669005144",
       "produkt": "Pokémon Super-Premium-Kollektion Glurak-ex (DE)",
       "shop": "CardStore.at",
