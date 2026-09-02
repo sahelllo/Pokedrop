@@ -111,12 +111,12 @@
     "status": "in_stock",
     "preis": 26.9
   },
-  "disc-shopify-www-celestial-gameshop-de-11030911975691": {
-    "status": "in_stock",
-    "preis": 27.64
-  },
   "disc-shopify-lairos-shop-7319320690888": {
     "status": "in_stock",
     "preis": 29.9
+  },
+  "disc-shopify-www-cardstore-at-14781136240984": {
+    "status": "in_stock",
+    "preis": 39
   }
 }
