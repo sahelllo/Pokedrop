@@ -31,10 +31,6 @@
     "status": "in_stock",
     "preis": 2.95
   },
-  "disc-shopify-www-cardbuddys-de-15822932246859": {
-    "status": "in_stock",
-    "preis": 2.95
-  },
   "disc-shopify-webbas-kartenecke-de-12136185364744": {
     "status": "in_stock",
     "preis": 2.99
@@ -78,6 +74,10 @@
   "disc-shopify-www-cardbuddys-de-15909807849803": {
     "status": "in_stock",
     "preis": 12.95
+  },
+  "disc-shopify-www-cardbuddys-de-15875741483339": {
+    "status": "in_stock",
+    "preis": 14.95
   },
   "disc-shopify-www-celestial-gameshop-de-11033103565067": {
     "status": "in_stock",
