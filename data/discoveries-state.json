@@ -27,10 +27,6 @@
     "status": "in_stock",
     "preis": 2.95
   },
-  "disc-shopify-www-cardbuddys-de-15843754279243": {
-    "status": "in_stock",
-    "preis": 2.95
-  },
   "disc-shopify-webbas-kartenecke-de-12136185364744": {
     "status": "in_stock",
     "preis": 2.99
@@ -64,6 +60,10 @@
     "preis": 12.95
   },
   "disc-shopify-www-cardbuddys-de-15986729779531": {
+    "status": "in_stock",
+    "preis": 14.95
+  },
+  "disc-shopify-www-cardbuddys-de-15852246139211": {
     "status": "in_stock",
     "preis": 14.95
   },
