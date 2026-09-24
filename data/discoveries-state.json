@@ -1,4 +1,8 @@
 {
+  "disc-shopify-www-cardbuddys-de-15953475109195": {
+    "status": "in_stock",
+    "preis": 1.95
+  },
   "disc-shopify-webbas-kartenecke-de-12213859287304": {
     "status": "in_stock",
     "preis": 2.49
@@ -10,6 +14,10 @@
   "disc-shopify-lairos-shop-7241283829960": {
     "status": "in_stock",
     "preis": 2.9
+  },
+  "disc-shopify-www-cardbuddys-de-15846004490571": {
+    "status": "in_stock",
+    "preis": 2.95
   },
   "disc-shopify-www-cardbuddys-de-15909533876555": {
     "status": "in_stock",
@@ -59,6 +67,10 @@
     "status": "in_stock",
     "preis": 3.95
   },
+  "disc-shopify-www-cardbuddys-de-16021939552587": {
+    "status": "in_stock",
+    "preis": 6.95
+  },
   "disc-shopify-www-cardstore-at-15257336283480": {
     "status": "in_stock",
     "preis": 8
@@ -66,18 +78,6 @@
   "disc-shopify-www-cardbuddys-de-15822924546379": {
     "status": "in_stock",
     "preis": 9.95
-  },
-  "disc-shopify-www-cardbuddys-de-16019682197835": {
-    "status": "in_stock",
-    "preis": 10.95
-  },
-  "disc-shopify-www-cardbuddys-de-15909807849803": {
-    "status": "in_stock",
-    "preis": 12.95
-  },
-  "disc-shopify-www-cardbuddys-de-15986729779531": {
-    "status": "in_stock",
-    "preis": 14.95
   },
   "disc-shopify-lairos-shop-7442029183176": {
     "status": "in_stock",
@@ -115,8 +115,8 @@
     "status": "in_stock",
     "preis": 29.99
   },
-  "disc-shopify-www-cardstore-at-14781136240984": {
+  "disc-shopify-www-celestial-gameshop-de-10998068412683": {
     "status": "in_stock",
-    "preis": 39
+    "preis": 34.99
   }
 }
