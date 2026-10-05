@@ -2,6 +2,16 @@
   "events": [
     {
       "art": "preis_gefallen",
+      "sku": "jubilaeum-30",
+      "produkt": "30 Jahre Pokémon — Jubiläums-Set",
+      "shop": "Gate to the Games",
+      "preis": 0.99,
+      "vorher": 94.29,
+      "url": "https://www.gate-to-the-games.de/pokemon-30-jahre",
+      "zeit": "2026-10-05T18:48:52.576Z"
+    },
+    {
+      "art": "preis_gefallen",
       "sku": "disc-shopify-www-cardstore-at-14781136240984",
       "produkt": "Pokémon Rayquaza Playmat / Spielmatte",
       "shop": "CardStore.at",
