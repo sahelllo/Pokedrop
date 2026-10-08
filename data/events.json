@@ -5,6 +5,16 @@
       "sku": "jubilaeum-30",
       "produkt": "30 Jahre Pokémon — Jubiläums-Set",
       "shop": "Gate to the Games",
+      "preis": 0.69,
+      "vorher": 0.99,
+      "url": "https://www.gate-to-the-games.de/pokemon-30-jahre",
+      "zeit": "2026-10-08T07:33:08.767Z"
+    },
+    {
+      "art": "preis_gefallen",
+      "sku": "jubilaeum-30",
+      "produkt": "30 Jahre Pokémon — Jubiläums-Set",
+      "shop": "Gate to the Games",
       "preis": 0.99,
       "vorher": 94.29,
       "url": "https://www.gate-to-the-games.de/pokemon-30-jahre",
