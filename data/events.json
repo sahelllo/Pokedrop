@@ -2,6 +2,16 @@
   "events": [
     {
       "art": "preis_gefallen",
+      "sku": "disc-shopify-www-cardstore-at-9966669005144",
+      "produkt": "Pokémon Super-Premium-Kollektion Glurak-ex (DE)",
+      "shop": "CardStore.at",
+      "preis": 71,
+      "vorher": 72,
+      "url": "https://www.cardstore.at/products/pokemon-super-premium-kollektion-glurak-ex-de-vorbestellung-04-10-2024",
+      "zeit": "2026-10-12T09:25:42.361Z"
+    },
+    {
+      "art": "preis_gefallen",
       "sku": "jubilaeum-30",
       "produkt": "30 Jahre Pokémon — Jubiläums-Set",
       "shop": "Gate to the Games",
