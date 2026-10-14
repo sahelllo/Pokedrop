@@ -79,6 +79,10 @@
     "status": "in_stock",
     "preis": 8
   },
+  "disc-kaufda-39f8482a0ba6cd9b": {
+    "status": "in_stock",
+    "preis": 14.99
+  },
   "disc-shopify-lairos-shop-7442029183176": {
     "status": "in_stock",
     "preis": 17.9
@@ -114,9 +118,5 @@
   "disc-shopify-www-cardstore-at-14781136240984": {
     "status": "in_stock",
     "preis": 38
-  },
-  "disc-shopify-www-cardstore-at-9966669005144": {
-    "status": "in_stock",
-    "preis": 71
   }
 }
