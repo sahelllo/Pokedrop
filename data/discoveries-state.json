@@ -79,10 +79,6 @@
     "status": "in_stock",
     "preis": 10.95
   },
-  "disc-kaufda-7c4b4876c9a0359e": {
-    "status": "in_stock",
-    "preis": 14.99
-  },
   "disc-shopify-lairos-shop-7442029183176": {
     "status": "in_stock",
     "preis": 17.9
@@ -102,6 +98,10 @@
   "disc-shopify-lairos-shop-7095885365448": {
     "status": "in_stock",
     "preis": 24.9
+  },
+  "disc-kaufda-9c8dca4727ab8ccb": {
+    "status": "in_stock",
+    "preis": 24.99
   },
   "disc-shopify-lairos-shop-7172266623176": {
     "status": "in_stock",
