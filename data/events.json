@@ -2,6 +2,16 @@
   "events": [
     {
       "art": "preis_gefallen",
+      "sku": "disc-shopify-www-cardbuddys-de-16019682197835",
+      "produkt": "30th Celebration M6a Booster JP",
+      "shop": "CardBuddys",
+      "preis": 9.95,
+      "vorher": 10.95,
+      "url": "https://www.cardbuddys.de/products/30th-celebration-m6a-booster-jp",
+      "zeit": "2026-10-28T15:49:48.951Z"
+    },
+    {
+      "art": "preis_gefallen",
       "sku": "disc-shopify-www-cardstore-at-14781136240984",
       "produkt": "Pokémon Rayquaza Playmat / Spielmatte",
       "shop": "CardStore.at",
