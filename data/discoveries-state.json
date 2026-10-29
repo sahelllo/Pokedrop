@@ -75,6 +75,10 @@
     "status": "in_stock",
     "preis": 9.95
   },
+  "disc-kaufda-e539bd5fb27bac1e": {
+    "status": "in_stock",
+    "preis": 9.99
+  },
   "disc-shopify-www-cardbuddys-de-15909807849803": {
     "status": "in_stock",
     "preis": 12.95
@@ -114,9 +118,5 @@
   "disc-shopify-www-celestial-gameshop-de-11076325441803": {
     "status": "in_stock",
     "preis": 27.75
-  },
-  "disc-shopify-lairos-shop-7319320690888": {
-    "status": "in_stock",
-    "preis": 29.9
   }
 }
