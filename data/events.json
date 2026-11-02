@@ -2,6 +2,16 @@
   "events": [
     {
       "art": "preis_gefallen",
+      "sku": "jubilaeum-30",
+      "produkt": "30 Jahre Pokémon — Jubiläums-Set",
+      "shop": "Gate to the Games",
+      "preis": 0.69,
+      "vorher": 2.89,
+      "url": "https://www.gate-to-the-games.de/pokemon-30-jahre",
+      "zeit": "2026-11-02T13:52:55.115Z"
+    },
+    {
+      "art": "preis_gefallen",
       "sku": "disc-shopify-www-cardbuddys-de-16019682197835",
       "produkt": "30th Celebration M6a Booster JP",
       "shop": "CardBuddys",
