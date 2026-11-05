@@ -23,14 +23,6 @@
     "status": "in_stock",
     "preis": 2.99
   },
-  "disc-shopify-webbas-kartenecke-de-10719248089352": {
-    "status": "in_stock",
-    "preis": 2.99
-  },
-  "disc-shopify-webbas-kartenecke-de-10719242518792": {
-    "status": "in_stock",
-    "preis": 2.99
-  },
   "disc-shopify-www-cardstore-at-14746634092888": {
     "status": "in_stock",
     "preis": 3
@@ -38,10 +30,6 @@
   "disc-shopify-www-cardstore-at-14746632257880": {
     "status": "in_stock",
     "preis": 3
-  },
-  "disc-shopify-webbas-kartenecke-de-10719251005704": {
-    "status": "in_stock",
-    "preis": 3.49
   },
   "disc-shopify-www-cardbuddys-de-16011307549003": {
     "status": "in_stock",
@@ -55,6 +43,14 @@
     "status": "in_stock",
     "preis": 4.99
   },
+  "disc-shopify-webbas-kartenecke-de-11260908634376": {
+    "status": "in_stock",
+    "preis": 4.99
+  },
+  "disc-shopify-webbas-kartenecke-de-10739503661320": {
+    "status": "in_stock",
+    "preis": 4.99
+  },
   "disc-shopify-www-cardbuddys-de-16026020774219": {
     "status": "in_stock",
     "preis": 5.95
@@ -62,6 +58,10 @@
   "disc-shopify-www-celestial-gameshop-de-11025266540811": {
     "status": "in_stock",
     "preis": 6
+  },
+  "disc-shopify-webbas-kartenecke-de-12214171861256": {
+    "status": "in_stock",
+    "preis": 6.99
   },
   "disc-shopify-www-cardstore-at-15257336283480": {
     "status": "in_stock",
